@@ -14,19 +14,6 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="usuario"
-        options={{
-          headerShown: false,
-          title: "Perfil",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="index"
         options={{
           headerShown: false,
@@ -40,6 +27,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="QRScanner"
+        options={{
+          headerShown: false,
+          title: "QR",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "camera" : "camera-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="mapa"
         options={{
           headerShown: false,
@@ -47,6 +47,19 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "location" : "location-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="usuario"
+        options={{
+          headerShown: false,
+          title: "Perfil",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
               color={color}
             />
           ),

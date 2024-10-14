@@ -46,16 +46,18 @@ const Index = () => {
         <View style={styles.header}>
           <Icon
             name="information-outline"
-            color={"black"}
+            color="black"
             size={50}
             onPress={handleOpenModal}
             style={{
               backgroundColor: "#FFFFFF",
               borderRadius: 20,
               borderWidth: 0.5,
+              alignSelf: "flex-end",
             }}
           />
         </View>
+
         <View style={{ alignItems: "center" }}>
           <ModalInfo
             visible={state.visible}
@@ -129,7 +131,6 @@ const Index = () => {
 const styles = StyleSheet.create({
   header: {
     padding: 15,
-    alignItems: "flex-end",
   },
   container: {
     alignItems: "center",
@@ -149,3 +150,4 @@ const styles = StyleSheet.create({
 });
 
 export default Index;
+
