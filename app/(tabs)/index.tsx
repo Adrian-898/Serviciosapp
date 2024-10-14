@@ -1,70 +1,151 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from "react";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  ImageBackground,
+  SafeAreaView,
+} from "react-native";
+import { StatusBar } from "react-native";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import Icon2 from "@expo/vector-icons/MaterialIcons";
+import ModalInfo from "@/components/ModalInfo";
+import Button from "@/components/Button";
+import Fondo from "@/assets/images/cinta-costera.jpg";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+// propiedades de ModalInfo
+interface ModalState {
+  visible: boolean;
+  text: string;
 }
 
+const Index = () => {
+  const barHeight = StatusBar.currentHeight;
+
+  const [state, setState] = useState<ModalState>({
+    visible: false,
+    text: "Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a los que puedes acceder desde los enlaces disponibles en esta pantalla.",
+  });
+  // al presionar el boton de informacion:
+  const handleOpenModal = () => {
+    setState({ ...state, visible: true });
+  };
+  // al presionar el boton CERRAR cuando esta abierto el boton informacion
+  const handleCloseModal = () => {
+    setState({ ...state, visible: false });
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, paddingTop: barHeight }}>
+      <ImageBackground
+        source={Fondo}
+        style={{ flex: 1 }}
+        resizeMode="cover"
+        onError={() => console.log("Error cargando imagen de fondo...")}
+      >
+        <View style={styles.header}>
+          <Icon
+            name="information-outline"
+            color={"black"}
+            size={50}
+            onPress={handleOpenModal}
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderRadius: 20,
+              borderWidth: 0.5,
+            }}
+          />
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <ModalInfo
+            visible={state.visible}
+            onClose={handleCloseModal}
+            text={state.text}
+          />
+        </View>
+        <ScrollView contentContainerStyle={styles.container}>
+          <View
+            style={{ flexDirection: "row", paddingTop: 20, marginBottom: 20 }}
+          >
+            <Icon
+              name="car-emergency"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Emergencias" url="https://www.google.com" />
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+            <Icon
+              name="car-brake-parking"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Parquímetro" url="https://www.google.com" />
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+            <Icon2
+              name="electrical-services"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Servicios" url="https://www.google.com" />
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+            <Icon2
+              name="currency-exchange"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Comercio" url="https://www.google.com" />
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+            <Icon
+              name="account-alert"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Denuncias" url="https://www.google.com" />
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+            <Icon
+              name="alert-rhombus"
+              size={40}
+              color={"black"}
+              style={styles.icon}
+            />
+            <Button title="Multas" url="https://www.google.com" />
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
+  );
+};
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  header: {
+    padding: 15,
+    alignItems: "flex-end",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  container: {
+    alignItems: "center",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  icon: {
+    backgroundColor: "white",
+    borderWidth: 0.5,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    marginHorizontal: 10,
+    verticalAlign: "middle",
+    shadowColor: "black",
+    shadowOpacity: 5,
+    shadowRadius: 20,
+    elevation: 10,
   },
 });
+
+export default Index;
