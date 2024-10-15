@@ -22,17 +22,17 @@ interface ModalState {
 const Index = () => {
   const barHeight = StatusBar.currentHeight;
 
-  const [state, setState] = useState<ModalState>({
+  const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     text: "Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a los que puedes acceder desde los enlaces disponibles en esta pantalla.",
   });
   // al presionar el boton de informacion:
   const handleOpenModal = () => {
-    setState({ ...state, visible: true });
+    setModalState({ ...modalState, visible: true });
   };
   // al presionar el boton CERRAR cuando esta abierto el boton informacion
   const handleCloseModal = () => {
-    setState({ ...state, visible: false });
+    setModalState({ ...modalState, visible: false });
   };
 
   return (
@@ -60,9 +60,9 @@ const Index = () => {
 
         <View style={{ alignItems: "center" }}>
           <ModalInfo
-            visible={state.visible}
+            visible={modalState.visible}
             onClose={handleCloseModal}
-            text={state.text}
+            text={modalState.text}
           />
         </View>
         <ScrollView contentContainerStyle={styles.container}>

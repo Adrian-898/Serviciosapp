@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, View, Text } from "react-native";
 import { StatusBar } from "react-native";
+import useUsers from "@/api/users";
 
 const Usuario = () => {
   const barHeight = StatusBar.currentHeight;

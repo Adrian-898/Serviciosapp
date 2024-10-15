@@ -7,15 +7,39 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import {
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from "@tanstack/react-query";
+import { useAppState } from "@/hooks/useAppState";
+import { useOnlineManager } from "@/hooks/useOnlineManager";
+//import { DevToolsBubble } from "react-native-react-query-devtools";
 
 // Previene al splash screen de ocultarse antes de que los recursos esten cargados.
 SplashScreen.preventAutoHideAsync();
+
+function onAppStateChange(status: AppStateStatus) {
+  // React Query ya soporta el refetch al reconectarse por defecto en web
+  if (Platform.OS !== "web") {
+    focusManager.setFocused(status === "active");
+  }
+}
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: 1000 * 60 * 60 * 24, // 24 horas de duracion de cache
+        retry: 2, // queries fallidos se reintentan 2 veces
+      },
+    },
   });
 
   useEffect(() => {
@@ -24,17 +48,22 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useAppState(onAppStateChange);
+  useOnlineManager();
+
   if (!loaded) {
     return null;
   }
 
   // Layout de navegacion de la app, el primer Stack.screen contiene la carpeta con las pestañas (tabs)
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

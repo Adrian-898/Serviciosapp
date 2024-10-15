@@ -10,14 +10,28 @@ import {
   StatusBar,
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import QRInput from "@/components/QRInput";
 
+// altura de la barra superior del dispositivo
 const barHeight = StatusBar.currentHeight;
 
-const QRCodeScanner = () => {
-  const [permission, requestPermission] = useCameraPermissions();
-  const [scanned, setScanned] = useState(false);
-  const [loading, setLoading] = useState(false);
+interface InputState {
+  visible: boolean;
+}
 
+const QRCodeScanner = () => {
+  // estado del permiso de uso de la camara
+  const [permission, requestPermission] = useCameraPermissions();
+  const [loading, setLoading] = useState(false);
+  const [scanned, setScanned] = useState(false);
+
+  // estado de visibilidad del input manual de datos
+  const [inputState, setInputState] = useState<InputState>({
+    visible: false,
+  });
+
+  // funcion ejecutada al leer un QR
   const handleBarCodeScanned = ({
     type,
     data,
@@ -32,6 +46,29 @@ const QRCodeScanner = () => {
     );
   };
 
+  // boton para ingresar datos manualmente
+  const InputButton = () => {
+    return (
+      <Icon
+        name="form-textbox"
+        color={"white"}
+        size={60}
+        onPress={handleOpenInput}
+        style={styles.inputButton}
+      />
+    );
+  };
+
+  // función ejecutada al presionar el boton de ingresar datos manualmente
+  const handleOpenInput = () => {
+    setInputState({ visible: true });
+  };
+
+  const handleSubmitInput = () => {
+    setInputState({ visible: false });
+  };
+
+  // se piden permisos de uso de cámara al montar el componente principal QRCodeScanner
   useEffect(() => {
     const loadCamera = async () => {
       try {
@@ -46,6 +83,7 @@ const QRCodeScanner = () => {
     loadCamera();
   }, []);
 
+  // se muestra un indicador de carga si no se ha respondido a la solicitud de permisos
   if (loading || !permission) {
     return (
       <SafeAreaView style={styles.centered}>
@@ -54,16 +92,21 @@ const QRCodeScanner = () => {
     );
   }
 
+  // si se niega el permiso de uso de la camara se muestra el mensaje siguiente
   if (!permission.granted) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.message}>
-          No se ha concedido el permiso para usar la cámara.
+          Se ha negado el permiso para usar la cámara, puede ingresar
+          manualmente el dato con el boton, o conceder los permisos.
         </Text>
+        <InputButton />
+        <QRInput visible={inputState.visible} onSubmit={handleSubmitInput} />
       </SafeAreaView>
     );
   }
 
+  // al aceptar permisos de uso de camara se carga la misma con los demas componentes.
   return (
     <SafeAreaView style={styles.container}>
       <CameraView
@@ -78,9 +121,12 @@ const QRCodeScanner = () => {
         <Text style={styles.title}>Escanea un código QR</Text>
       </View>
 
+      <InputButton />
+      <QRInput visible={inputState.visible} onSubmit={handleSubmitInput} />
+
       {scanned && (
         <Button
-          title="Presiona para escanear nuevamente"
+          title="Presiona para escanear de nuevo"
           onPress={() => setScanned(false)}
         />
       )}
@@ -91,7 +137,6 @@ const QRCodeScanner = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: barHeight,
     flexDirection: "column",
     justifyContent: "center",
   },
@@ -122,6 +167,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
     fontSize: 20,
+  },
+  inputButton: {
+    position: "absolute",
+    backgroundColor: "black",
+    opacity: 0.5,
+    padding: 10,
+    borderRadius: 20,
+    right: 20,
+    bottom: 60,
   },
 });
 
