@@ -74,6 +74,10 @@ const QRCodeScanner = () => {
         }}
       />
 
+      <View style={styles.back}>
+        <Text style={styles.title}>Escanea un código QR</Text>
+      </View>
+
       {scanned && (
         <Button
           title="Presiona para escanear nuevamente"
@@ -103,17 +107,20 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
-  top: {
-    backgroundColor: "red",
+  back: {
+    marginTop: barHeight,
+    position: "absolute",
+    backgroundColor: "black",
     alignSelf: "center",
+    opacity: 0.5,
+    top: 20,
+    padding: 15,
+    borderRadius: 15,
   },
   title: {
-    position: "absolute",
-    backgroundColor: "red",
-    color: "white",
-    borderRadius: 15,
-    padding: 15,
-    marginTop: 15,
+    position: "relative",
+    textAlign: "center",
+    color: "#FFFFFF",
     fontSize: 20,
   },
 });
