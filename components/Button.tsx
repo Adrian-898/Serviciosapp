@@ -14,7 +14,7 @@ const Button: React.FC<Props> = ({ title, url }) => {
     if (canOpen) {
       await Linking.openURL(url);
     } else {
-      console.log(`Cannot open URL: ${url}`);
+      console.log(`No se puede abrir la URL: ${url}`);
     }
   };
 

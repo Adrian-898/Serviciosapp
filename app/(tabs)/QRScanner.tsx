@@ -5,9 +5,9 @@ import {
   SafeAreaView,
   View,
   Button,
-  Alert,
   ActivityIndicator,
   StatusBar,
+  Linking,
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -16,10 +16,6 @@ import QRInput from "@/components/QRInput";
 // altura de la barra superior del dispositivo
 const barHeight = StatusBar.currentHeight;
 
-interface InputState {
-  visible: boolean;
-}
-
 const QRCodeScanner = () => {
   // estado del permiso de uso de la camara
   const [permission, requestPermission] = useCameraPermissions();
@@ -27,23 +23,24 @@ const QRCodeScanner = () => {
   const [scanned, setScanned] = useState(false);
 
   // estado de visibilidad del input manual de datos
-  const [inputState, setInputState] = useState<InputState>({
-    visible: false,
-  });
+  const [inputState, setInputState] = useState<boolean>(false);
 
   // funcion ejecutada al leer un QR
-  const handleBarCodeScanned = ({
+  const handleBarCodeScanned = async ({
     type,
     data,
   }: {
     type: string;
     data: string;
-  }): void => {
+  }) => {
     setScanned(true);
-    Alert.alert(
-      "Información:",
-      `Código QR de tipo ${type} con los datos: ${data} ha sido escaneado`
-    );
+
+    const canOpen = await Linking.canOpenURL(data);
+    if (canOpen) {
+      await Linking.openURL(data);
+    } else {
+      console.log(`No se puede abrir la URL: ${data}`);
+    }
   };
 
   // boton para ingresar datos manualmente
@@ -61,11 +58,12 @@ const QRCodeScanner = () => {
 
   // función ejecutada al presionar el boton de ingresar datos manualmente
   const handleOpenInput = () => {
-    setInputState({ visible: true });
+    setInputState(true);
   };
 
-  const handleSubmitInput = () => {
-    setInputState({ visible: false });
+  // control de los datos ingresados
+  const handleCloseInput = () => {
+    setInputState(false);
   };
 
   // se piden permisos de uso de cámara al montar el componente principal QRCodeScanner
@@ -100,8 +98,12 @@ const QRCodeScanner = () => {
           Se ha negado el permiso para usar la cámara, puede ingresar
           manualmente el dato con el boton, o conceder los permisos.
         </Text>
-        <InputButton />
-        <QRInput visible={inputState.visible} onSubmit={handleSubmitInput} />
+
+        <View style={{ flex: 1 }}>
+          <InputButton />
+        </View>
+
+        <QRInput visible={inputState} onClose={handleCloseInput} />
       </SafeAreaView>
     );
   }
@@ -121,8 +123,11 @@ const QRCodeScanner = () => {
         <Text style={styles.title}>Escanea un código QR</Text>
       </View>
 
-      <InputButton />
-      <QRInput visible={inputState.visible} onSubmit={handleSubmitInput} />
+      <View>
+        <InputButton />
+      </View>
+
+      <QRInput visible={inputState} onClose={handleCloseInput} />
 
       {scanned && (
         <Button
@@ -137,7 +142,6 @@ const QRCodeScanner = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
     justifyContent: "center",
   },
   centered: {
@@ -146,8 +150,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   message: {
+    position: "absolute",
+    alignSelf: "center",
     textAlign: "center",
-    paddingBottom: 10,
+    fontSize: 18,
+    marginHorizontal: 20,
   },
   camera: {
     flex: 1,
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     right: 20,
-    bottom: 60,
+    bottom: 20,
   },
 });
 

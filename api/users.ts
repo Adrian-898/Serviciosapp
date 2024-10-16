@@ -1,16 +1,18 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const useUsers = () => {
-  const { isPending, error, data, isFetching } = useQuery({
-    queryKey: ["users"],
+  const { status, error, data, isFetching } = useQuery({
+    queryKey: ["repoData"],
     queryFn: async () => {
       // query function
-      const response = await fetch("");
-      return response.json();
+      const response = await fetch(
+        "https://api.github.com/repos/TanStack/query"
+      );
+      return await response.json();
     },
   });
 
-  return { isPending, error, data, isFetching };
+  return { status, error, data, isFetching };
 };
 
 export default useUsers;
