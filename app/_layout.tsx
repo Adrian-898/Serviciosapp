@@ -3,17 +3,17 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Platform, AppStateStatus } from "react-native";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import {
   QueryClient,
   QueryClientProvider,
   focusManager,
 } from "@tanstack/react-query";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { Platform, AppStateStatus } from "react-native";
+import { useColorScheme } from "react-native";
 import { useAppState } from "@/hooks/useAppState";
 import { useOnlineManager } from "@/hooks/useOnlineManager";
 //import { DevToolsBubble } from "react-native-react-query-devtools";
@@ -67,3 +67,4 @@ export default function RootLayout() {
     </QueryClientProvider>
   );
 }
+

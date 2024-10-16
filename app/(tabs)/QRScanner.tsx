@@ -26,24 +26,21 @@ const QRCodeScanner = () => {
   const [inputState, setInputState] = useState<boolean>(false);
 
   // funcion ejecutada al leer un QR
-  const handleBarCodeScanned = async ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
+  const handleBarCodeScanned = async ({ data }: { data: string }) => {
     setScanned(true);
+    const url = "https://";
 
-    const canOpen = await Linking.canOpenURL(data);
-    if (canOpen) {
-      await Linking.openURL(data);
-    } else {
-      console.log(`No se puede abrir la URL: ${data}`);
+    try {
+      const canOpen = await Linking.canOpenURL(url + data);
+      if (canOpen) {
+        await Linking.openURL(url + data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  // boton para ingresar datos manualmente
+  // boton para abrir la ventana de ingresar datos manualmente
   const InputButton = () => {
     return (
       <Icon
@@ -74,7 +71,7 @@ const QRCodeScanner = () => {
         await requestPermission();
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        console.log(error);
         setLoading(false);
       }
     };

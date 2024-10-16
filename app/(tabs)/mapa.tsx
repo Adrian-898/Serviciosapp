@@ -55,7 +55,7 @@ const useGetCurrentLocation = () => {
       };
       setOrigin(current);
     } catch (error) {
-      console.error("Error obteniendo la ubicacion actual");
+      console.log(error);
       Alert.alert("Error:", "No se pudo obtener su ubicación actual");
     }
   }, []);
@@ -74,22 +74,30 @@ const Mapa = () => {
 
   // Funcion que solicita permisos de ubicacion al usuario
   const getLocationPermission = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
 
-    if (status !== "granted") {
-      Alert.alert(
-        "Atención:",
-        "Se ha negado el permiso para acceder a la ubicación."
-      );
-      return;
+      if (status !== "granted") {
+        Alert.alert(
+          "Atención:",
+          "Se ha negado el permiso para acceder a la ubicación."
+        );
+        return;
+      }
+
+      getCurrentLocation();
+    } catch (error) {
+      console.log(error);
     }
-
-    getCurrentLocation();
   };
 
   // se piden permisos de ubicacion una sola vez al iniciar la app
   useEffect(() => {
-    getLocationPermission();
+    try {
+      getLocationPermission();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // componente Pin en el mapa

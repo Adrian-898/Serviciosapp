@@ -10,11 +10,13 @@ interface Props {
 const Button: React.FC<Props> = ({ title, url }) => {
   // al presionar se verifica que la url se puede abrir, de no poder se envia un error a la consola
   const handlePress = async () => {
-    const canOpen = await Linking.canOpenURL(url);
-    if (canOpen) {
-      await Linking.openURL(url);
-    } else {
-      console.log(`No se puede abrir la URL: ${url}`);
+    try {
+      const canOpen = await Linking.canOpenURL(url);
+      if (canOpen) {
+        await Linking.openURL(url);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
