@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   closeButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#CCC",
     padding: 10,
     borderRadius: 10,
   },

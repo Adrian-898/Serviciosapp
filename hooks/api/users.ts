@@ -4,7 +4,6 @@ const useUsers = () => {
   const { status, error, data, isFetching } = useQuery({
     queryKey: ["repoData"],
     queryFn: async () => {
-      // query function
       try {
         const response = await fetch(
           "https://api.github.com/repos/TanStack/query"

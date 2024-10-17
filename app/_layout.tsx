@@ -37,7 +37,8 @@ export default function RootLayout() {
     defaultOptions: {
       queries: {
         gcTime: 1000 * 60 * 60 * 12, // 12 horas de duracion de cache
-        retry: 2, // queries fallidos se reintentan 2 veces
+        retry: 3, // queries fallidos se reintentan 2 veces
+        networkMode: "online", // modo de operacion de queries, "online" requiere conexion
       },
     },
   });
@@ -67,3 +68,4 @@ export default function RootLayout() {
     </QueryClientProvider>
   );
 }
+

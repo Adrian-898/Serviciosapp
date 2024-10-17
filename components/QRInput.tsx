@@ -18,14 +18,19 @@ interface QRInputProps {
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro
 const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
-  const [url, setUrl] = useState<string>("");
+  const [parquimetro, setParquimetro] = useState<string>("");
+  const [puesto, setPuesto] = useState<string>("");
 
-  const handleTextChange = (newText: string) => {
-    setUrl(newText);
+  const handleParquimetroChange = (newText: string) => {
+    setParquimetro(newText);
+  };
+
+  const handlePuestoChange = (newText: string) => {
+    setPuesto(newText);
   };
 
   const handleLoadInput = async () => {
-    const URL = "https://" + url;
+    const URL = "https://" + parquimetro + puesto;
 
     try {
       const canOpen = await Linking.canOpenURL(URL);
@@ -36,7 +41,8 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
       console.log(error);
     }
 
-    setUrl("");
+    setParquimetro("");
+    setPuesto("");
   };
 
   if (!visible) return null;
@@ -44,17 +50,26 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.closeButton}>
-        <Icon name="close" color={"red"} size={50} onPress={onClose} />
+        <Icon name="close" color={"#d00b27"} size={50} onPress={onClose} />
       </View>
 
-      <Text style={styles.label}>Dato</Text>
+      <Text style={styles.label}>Parquímetro</Text>
       <TextInput
         style={styles.input}
-        placeholder="Ingresa tu dato"
-        value={url}
-        onChangeText={handleTextChange}
+        placeholder="Ingresa tu parquímetro"
+        value={parquimetro}
+        onChangeText={handleParquimetroChange}
       ></TextInput>
-      <Button title="Buscar" onPress={handleLoadInput} />
+      <Text style={styles.label}>Puesto</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Ingresa tu puesto"
+        value={puesto}
+        onChangeText={handlePuestoChange}
+      ></TextInput>
+      <View style={styles.buscarButton}>
+        <Button title="Buscar" onPress={handleLoadInput} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -71,20 +86,22 @@ const styles = StyleSheet.create({
   },
   label: {
     marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 5,
     fontSize: 20,
     fontWeight: "bold",
   },
   input: {
-    backgroundColor: "#eaeaea",
+    backgroundColor: "#EAEAEA",
     fontSize: 18,
     padding: 10,
-    marginBottom: 20,
     borderRadius: 10,
+  },
+  buscarButton: {
+    marginTop: 20,
   },
   closeButton: {
     alignSelf: "flex-end",
-    backgroundColor: "#eaeaea",
+    backgroundColor: "#EAEAEA",
     position: "absolute",
     borderRadius: 10,
     top: 10,

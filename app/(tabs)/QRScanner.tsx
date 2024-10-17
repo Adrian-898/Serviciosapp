@@ -9,7 +9,11 @@ import {
   StatusBar,
   Linking,
 } from "react-native";
-import { CameraView, useCameraPermissions } from "expo-camera";
+import {
+  CameraView,
+  useCameraPermissions,
+  BarcodeScanningResult,
+} from "expo-camera";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 
@@ -19,21 +23,22 @@ const barHeight = StatusBar.currentHeight;
 const QRCodeScanner = () => {
   // estado del permiso de uso de la camara
   const [permission, requestPermission] = useCameraPermissions();
-  const [loading, setLoading] = useState(false);
-  const [scanned, setScanned] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [scanned, setScanned] = useState<boolean>(false);
 
   // estado de visibilidad del input manual de datos
   const [inputState, setInputState] = useState<boolean>(false);
 
   // funcion ejecutada al leer un QR
-  const handleBarCodeScanned = async ({ data }: { data: string }) => {
+  const handleBarCodeScanned = async (Scan: BarcodeScanningResult) => {
     setScanned(true);
-    const url = "https://";
+    const { data } = Scan;
+    const URL = "https://" + data;
 
     try {
-      const canOpen = await Linking.canOpenURL(url + data);
+      const canOpen = await Linking.canOpenURL(URL);
       if (canOpen) {
-        await Linking.openURL(url + data);
+        await Linking.openURL(URL);
       }
     } catch (error) {
       console.log(error);
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "black",
     alignSelf: "center",
-    opacity: 0.5,
+    opacity: 0.7,
     top: 20,
     padding: 15,
     borderRadius: 15,
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
   inputButton: {
     position: "absolute",
     backgroundColor: "black",
-    opacity: 0.5,
+    opacity: 0.7,
     padding: 10,
     borderRadius: 20,
     right: 20,
