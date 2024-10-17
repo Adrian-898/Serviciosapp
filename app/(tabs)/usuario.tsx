@@ -5,12 +5,17 @@ import useUsers from "@/api/users";
 
 const Usuario = () => {
   const barHeight = StatusBar.currentHeight;
-  const user = useUsers();
+  const { status, error, data, isFetching } = useUsers();
 
-  if (user.status === "pending") return <Text>Cargando...</Text>;
+  if (status === "pending") return <Text>Cargando...</Text>;
 
-  if (user.error)
-    return <Text>Ha ocurrido un error: {user.error.message}</Text>;
+  if (error) return <Text>Ha ocurrido un error: {error.message}</Text>;
+
+  const fullName = data?.full_name || "Nombre no disponible";
+  const description = data?.description || "Descripción no disponible";
+  const subscribersCount = data?.subscribers_count || 0;
+  const stargazersCount = data?.stargazers_count || 0;
+  const forksCount = data?.forks_count || 0;
 
   return (
     <SafeAreaView
@@ -21,20 +26,12 @@ const Usuario = () => {
         justifyContent: "center",
       }}
     >
-      <Text style={styles.header}>{user.data.full_name}</Text>
-      <Text>{user.data.description}</Text>
-      <Text style={{ fontWeight: "bold", padding: 10 }}>
-        Suscriptores: {user.data.subscribers_count}
-      </Text>
-      <Text style={{ fontWeight: "bold", padding: 10 }}>
-        Estrellas: {user.data.stargazers_count}
-      </Text>
-      <Text style={{ fontWeight: "bold", padding: 10 }}>
-        Forks: {user.data.forks_count}
-      </Text>
-      <Text style={{ fontWeight: "bold", padding: 10, marginTop: 20 }}>
-        {user.isFetching ? "Actualizando..." : ""}
-      </Text>
+      <Text style={styles.header}>{fullName}</Text>
+      <Text>{description}</Text>
+      <Text style={styles.title}>Suscriptores: {subscribersCount}</Text>
+      <Text style={styles.title}>Estrellas: {stargazersCount}</Text>
+      <Text style={styles.title}>Forks: {forksCount}</Text>
+      {isFetching && <Text style={styles.fetching}>"Actualizando..."</Text>}
     </SafeAreaView>
   );
 };
@@ -44,6 +41,15 @@ const styles = StyleSheet.create({
     fontSize: 32,
     padding: 5,
     marginBottom: 20,
+  },
+  title: {
+    fontWeight: "bold",
+    padding: 10,
+  },
+  fetching: {
+    fontWeight: "bold",
+    padding: 10,
+    marginTop: 20,
   },
 });
 
