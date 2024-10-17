@@ -115,6 +115,7 @@ const QRCodeScanner = () => {
     <SafeAreaView style={styles.container}>
       <CameraView
         style={styles.camera}
+        autofocus="on"
         onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         barcodeScannerSettings={{
           barcodeTypes: ["qr"],
