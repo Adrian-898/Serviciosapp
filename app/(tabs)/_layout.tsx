@@ -66,19 +66,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="post"
-        options={{
-          headerShown: false,
-          title: "Test",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
     </Tabs>
   );
 }
+
