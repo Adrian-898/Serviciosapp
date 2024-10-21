@@ -13,26 +13,19 @@ import ModalInfo from "@/components/ModalInfo";
 import Button from "@/components/Button";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 
-// propiedades de ModalInfo
-interface ModalState {
-  visible: boolean;
-  text: string;
-}
-
 const Index = () => {
   const barHeight = StatusBar.currentHeight;
 
-  const [modalState, setModalState] = useState<ModalState>({
-    visible: false,
-    text: "Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a los que puedes acceder desde los enlaces disponibles en esta pantalla.",
-  });
+  // estado del modal, visible o no visible
+  const [modalState, setModalState] = useState<boolean>(false);
+
   // al presionar el boton de informacion:
   const handleOpenModal = () => {
-    setModalState({ ...modalState, visible: true });
+    setModalState(true);
   };
   // al presionar el boton CERRAR cuando esta abierto el boton informacion
   const handleCloseModal = () => {
-    setModalState({ ...modalState, visible: false });
+    setModalState(false);
   };
 
   return (
@@ -59,11 +52,7 @@ const Index = () => {
         </View>
 
         <View style={{ alignItems: "center" }}>
-          <ModalInfo
-            visible={modalState.visible}
-            onClose={handleCloseModal}
-            text={modalState.text}
-          />
+          <ModalInfo visible={modalState} onClose={handleCloseModal} />
         </View>
         <ScrollView contentContainerStyle={styles.container}>
           <View

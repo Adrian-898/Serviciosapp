@@ -11,7 +11,7 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
 import { useAppState } from "@/hooks/useAppState";
@@ -33,15 +33,20 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        gcTime: 1000 * 60 * 60 * 6, // 6 horas de duracion de cache
-        retry: 0, // queries fallidos se reintentan 2 veces
-        networkMode: "online", // modo de operacion de queries, "online" requiere conexion
-      },
-    },
-  });
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            gcTime: 1000 * 60 * 60 * 6, // 6 horas de duracion de cache
+            retry: 0, // queries fallidos se reintentan 2 veces
+            staleTime: 1000 * 30, // evita refetch inmediato
+            networkMode: "online", // modo de operacion de queries, "online" requiere conexion
+          },
+        },
+      })
+  );
 
   useEffect(() => {
     if (loaded) {

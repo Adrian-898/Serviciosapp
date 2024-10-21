@@ -6,11 +6,10 @@ import { useWindowDimensions } from "react-native";
 interface ModalInfoProps {
   visible: boolean;
   onClose: () => void;
-  text: string;
 }
 
 // componente modal, retorna el bloque de informacion y el boton de cerrar si la variable visible es true
-const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose, text }) => {
+const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
   // obtiene el ancho de la pantalla
   const WindowWidth = useWindowDimensions().width;
 
@@ -25,7 +24,10 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose, text }) => {
         width: WindowWidth - 50,
       }}
     >
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}>
+        Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
+        los que puedes acceder desde los enlaces disponibles en esta pantalla.
+      </Text>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Text style={styles.closeButtonText}>CERRAR</Text>
       </TouchableOpacity>
