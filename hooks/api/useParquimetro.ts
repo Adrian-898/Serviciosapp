@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const useParquimetro = () => {
   const { status, error, data, isFetching } = useQuery({
-    queryKey: ["Data"],
+    queryKey: ["parquimetros"],
     queryFn: async () => {
       try {
         const response = await fetch("https://");
