@@ -20,7 +20,7 @@ interface Location {
   longitudeDelta: number;
 }
 
-// interfaz personalizada para almacenar informacion de los lugares que se quiere marcar en el mapa
+// interfaz para almacenar informacion de los lugares que se quiere marcar en el mapa
 interface Lugar {
   lat: number;
   lng: number;
@@ -43,7 +43,7 @@ const lugares: Lugar[] = [
 
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {
-  // Ubicacion inicial donde cargar el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
+  // Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
   const [origin, setOrigin] = useState<Location>({
     latitude: 10.597032,
     longitude: -66.930431,
@@ -73,14 +73,11 @@ const useGetCurrentLocation = () => {
 // componente principal
 const Mapa = () => {
   const barHeight = StatusBar.currentHeight;
-  const { origin, getCurrentLocation } = useGetCurrentLocation();
-
-  // estos dos hooks obtienen las dimensiones actuales de la pantalla
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
-
   const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
   const [locationEnabled, setLocationEnabled] = useState<boolean>(false);
+  const { origin, getCurrentLocation } = useGetCurrentLocation();
 
   // Funcion que solicita permisos de ubicacion al usuario
   const getLocationPermission = async () => {
@@ -106,9 +103,11 @@ const Mapa = () => {
     setLocationEnabled(servicesEnabled);
   };
 
-  // se piden permisos de ubicacion al iniciar la app
   useEffect(() => {
+    // se piden permisos de ubicacion al iniciar la app
     getLocationPermission();
+
+    // check cada 3 segundos del estado de la ubicacion, si esta activada o no por el usuario (distinto a permisos de uso de ubicacion)
     const interval = setInterval(() => {
       if (permissionGranted) {
         checkLocationServices();
@@ -172,34 +171,40 @@ const Mapa = () => {
           ))
         }
       </MapView>
-      {permissionGranted && !locationEnabled && (
-        <View style={styles.alertContainer}>
-          <Icon
-            name="exclamation"
-            color={"red"}
-            size={80}
-            style={styles.alertIcon}
-          />
-          <Text style={styles.alertMessage}>
-            El acceso a la ubicación está desactivado, actívalo en la
-            configuración de tu dispositivo.
-          </Text>
-        </View>
-      )}
-      {!permissionGranted && (
-        <View style={styles.alertContainer}>
-          <Icon
-            name="exclamation"
-            color={"red"}
-            size={80}
-            style={styles.alertIcon}
-          />
-          <Text style={styles.alertMessage} adjustsFontSizeToFit={true}>
-            Los permisos de ubicación fueron negados, ve a la configuración de
-            la App para otorgar los permisos
-          </Text>
-        </View>
-      )}
+      {
+        // muestra un mensaje si no se otorgan permisos de ubicacion
+        permissionGranted && !locationEnabled && (
+          <View style={styles.alertContainer}>
+            <Icon
+              name="exclamation"
+              color={"red"}
+              size={80}
+              style={styles.alertIcon}
+            />
+            <Text style={styles.alertMessage}>
+              El acceso a la ubicación está desactivado, actívalo en la
+              configuración de tu dispositivo.
+            </Text>
+          </View>
+        )
+      }
+      {
+        // muestra un mensaje si hay permisos pero no esta activado el uso de la ubicacion
+        !permissionGranted && (
+          <View style={styles.alertContainer}>
+            <Icon
+              name="exclamation"
+              color={"red"}
+              size={80}
+              style={styles.alertIcon}
+            />
+            <Text style={styles.alertMessage} adjustsFontSizeToFit={true}>
+              Los permisos de ubicación fueron negados, ve a la configuración de
+              la App para otorgar los permisos
+            </Text>
+          </View>
+        )
+      }
     </SafeAreaView>
   );
 };
