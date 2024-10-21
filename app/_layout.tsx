@@ -39,8 +39,8 @@ export default function RootLayout() {
       new QueryClient({
         defaultOptions: {
           queries: {
-            gcTime: 1000 * 60 * 60 * 6, // 6 horas de duracion de cache
-            retry: 0, // queries fallidos se reintentan 2 veces
+            gcTime: 1000 * 60 * 60, // 1 hora de duracion de cache
+            retry: 2, // queries fallidos se reintentan 2 veces
             staleTime: 1000 * 30, // evita refetch inmediato
             networkMode: "online", // modo de operacion de queries, "online" requiere conexion
           },
