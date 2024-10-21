@@ -42,12 +42,7 @@ const Index = () => {
             color="black"
             size={50}
             onPress={handleOpenModal}
-            style={{
-              backgroundColor: "#FFFFFF",
-              borderRadius: 20,
-              borderWidth: 0.5,
-              alignSelf: "flex-end",
-            }}
+            style={styles.info}
           />
         </View>
 
@@ -127,7 +122,7 @@ const styles = StyleSheet.create({
   icon: {
     backgroundColor: "white",
     borderWidth: 0.5,
-    borderRadius: 20,
+    borderRadius: 10,
     paddingHorizontal: 10,
     marginHorizontal: 10,
     verticalAlign: "middle",
@@ -136,7 +131,16 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10,
   },
+  info: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 0.5,
+    alignSelf: "flex-end",
+    shadowColor: "black",
+    shadowOpacity: 5,
+    shadowRadius: 20,
+    elevation: 10,
+  },
 });
 
 export default Index;
-

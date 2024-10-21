@@ -35,7 +35,7 @@ const lugares: Lugar[] = [
 
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {
-  // Ubicacion inicial donde cargar el mapa (coordenadas de la guaira), independiente de la ubicacion del usuario
+  // Ubicacion inicial donde cargar el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
   const [origin, setOrigin] = useState<Location>({
     latitude: 10.597032,
     longitude: -66.930431,
@@ -56,7 +56,10 @@ const useGetCurrentLocation = () => {
       setOrigin(current);
     } catch (error) {
       console.log(error);
-      Alert.alert("Error:", "No se pudo obtener su ubicación actual");
+      Alert.alert(
+        "Error:",
+        "No se pudo obtener tu ubicación actual, verifica que el botón de acceso está activado"
+      );
     }
   }, []);
 
@@ -80,7 +83,7 @@ const Mapa = () => {
       if (status !== "granted") {
         Alert.alert(
           "Atención:",
-          "Se ha negado el permiso para acceder a la ubicación."
+          "Se ha negado el permiso para acceder a la ubicación"
         );
         return;
       }
@@ -91,7 +94,7 @@ const Mapa = () => {
     }
   };
 
-  // se piden permisos de ubicacion una sola vez al iniciar la app
+  // se piden permisos de ubicacion al iniciar la app
   useEffect(() => {
     try {
       getLocationPermission();
