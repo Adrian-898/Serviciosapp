@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -20,6 +21,8 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.title}>
@@ -27,7 +30,10 @@ const Login = () => {
       </ThemedText>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          console.log(values);
+          router.push("/(tabs)/home");
+        }}
         validationSchema={validationSchema}
       >
         {({

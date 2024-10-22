@@ -45,7 +45,7 @@ const Home = () => {
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.navigate("/auth/register")}
+              onPress={() => router.push("/auth/register")}
             >
               <Text style={styles.buttonText}>Registrarse</Text>
             </TouchableOpacity>
