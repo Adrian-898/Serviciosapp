@@ -11,6 +11,7 @@ import {
   View,
   ActivityIndicator,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import useParquimetro from "@/hooks/api/useParquimetro";
@@ -155,7 +156,9 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
           placeholderTextColor={"black"}
         ></TextInput>
 
-        <Button title="Buscar" onPress={handleLoadInput} />
+        <TouchableOpacity onPress={handleLoadInput} style={styles.button}>
+          <Text style={styles.buttonText}>Buscar</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -225,6 +228,21 @@ const styles = StyleSheet.create({
   },
   searchText: {
     fontSize: 18,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: "#001f7e",
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOpacity: 5,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 });
 

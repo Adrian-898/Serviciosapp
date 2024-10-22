@@ -1,14 +1,92 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+} from "react-native";
+import { StatusBar } from "react-native";
+import { useRouter } from "expo-router";
+import Fondo from "@/assets/images/cinta-costera.jpg";
 
-const index = () => {
+const Home = () => {
+  const barHeight = StatusBar.currentHeight;
+  const router = useRouter();
+
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1, paddingTop: barHeight }}>
+      <ImageBackground
+        source={Fondo}
+        style={{ flex: 1 }}
+        resizeMode="cover"
+        onError={() => console.log("Error cargando imagen de fondo...")}
+      >
+        <View style={styles.container}>
+          <View style={styles.continue}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.navigate("/(tabs)/home")}
+            >
+              <Text style={styles.buttonText}>
+                Continuar sin iniciar sesión
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.loginRegister}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.navigate("/auth/login")}
+            >
+              <Text style={styles.buttonText}>Iniciar sesión</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.navigate("/auth/register")}
+            >
+              <Text style={styles.buttonText}>Registrarse</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
-export default index;
+const styles = StyleSheet.create({
+  container: { flex: 1, flexDirection: "column" },
+  button: {
+    padding: 10,
+    marginHorizontal: 20,
+    backgroundColor: "#001f7e",
+    borderWidth: 0.5,
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOpacity: 5,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  continue: {
+    alignSelf: "center",
+    marginVertical: 20,
+  },
+  loginRegister: {
+    flexDirection: "row",
+    position: "absolute",
+    justifyContent: "center",
+    alignSelf: "center",
+    bottom: 0,
+    margin: 20,
+  },
+  buttonText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+  },
+});
 
-const styles = StyleSheet.create({});
+export default Home;
