@@ -27,7 +27,7 @@ const Home = () => {
           <View style={styles.continue}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.navigate("/(tabs)/home")}
+              onPress={() => router.push("/(tabs)/home")}
             >
               <Text style={styles.buttonText}>
                 Continuar sin iniciar sesión
@@ -38,7 +38,7 @@ const Home = () => {
           <View style={styles.loginRegister}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.navigate("/auth/login")}
+              onPress={() => router.push("/auth/login")}
             >
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>

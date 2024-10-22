@@ -158,9 +158,9 @@ const Mapa = () => {
           width: windowWidth,
           height: windowHeight,
         }}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-        loadingEnabled={true}
+        showsUserLocation
+        showsMyLocationButton
+        loadingEnabled
         toolbarEnabled={false}
         showsPointsOfInterest={false}
         showsIndoors={false}
