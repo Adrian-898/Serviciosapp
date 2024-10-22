@@ -5,12 +5,13 @@ import {
   useWindowDimensions,
   Alert,
   Text,
-  View,
   StyleSheet,
 } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StatusBar } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
 interface Location {
@@ -123,7 +124,7 @@ const Mapa = () => {
       coordinate={{ latitude: coord.lat, longitude: coord.lng }}
       pinColor="red"
     >
-      <Callout style={{ width: 150 }}>
+      <Callout>
         <Text
           style={{
             alignSelf: "center",
@@ -136,6 +137,18 @@ const Mapa = () => {
       </Callout>
     </Marker>
   );
+
+  //Icono de alerta
+  const Alerta = () => {
+    return (
+      <Icon
+        name="exclamation"
+        color={"red"}
+        size={80}
+        style={styles.alertIcon}
+      />
+    );
+  };
 
   // renderiza el mapa y los Pins
   return (
@@ -174,35 +187,33 @@ const Mapa = () => {
       {
         // muestra un mensaje si no se otorgan permisos de ubicacion
         permissionGranted && !locationEnabled && (
-          <View style={styles.alertContainer}>
-            <Icon
-              name="exclamation"
-              color={"red"}
-              size={80}
-              style={styles.alertIcon}
-            />
-            <Text style={styles.alertMessage}>
+          <ThemedView style={styles.alertContainer}>
+            <Alerta />
+            <ThemedText
+              type="defaultSemiBold"
+              style={styles.alertMessage}
+              adjustsFontSizeToFit={true}
+            >
               El acceso a la ubicación está desactivado, actívalo en la
               configuración de tu dispositivo.
-            </Text>
-          </View>
+            </ThemedText>
+          </ThemedView>
         )
       }
       {
         // muestra un mensaje si hay permisos pero no esta activado el uso de la ubicacion
         !permissionGranted && (
-          <View style={styles.alertContainer}>
-            <Icon
-              name="exclamation"
-              color={"red"}
-              size={80}
-              style={styles.alertIcon}
-            />
-            <Text style={styles.alertMessage} adjustsFontSizeToFit={true}>
+          <ThemedView style={styles.alertContainer}>
+            <Alerta />
+            <ThemedText
+              type="defaultSemiBold"
+              style={styles.alertMessage}
+              adjustsFontSizeToFit={true}
+            >
               Los permisos de ubicación fueron negados, ve a la configuración de
               la App para otorgar los permisos
-            </Text>
-          </View>
+            </ThemedText>
+          </ThemedView>
         )
       }
     </SafeAreaView>
@@ -212,17 +223,17 @@ const Mapa = () => {
 const styles = StyleSheet.create({
   alertContainer: {
     flexDirection: "row",
-    backgroundColor: "white",
     position: "absolute",
     alignItems: "center",
     alignSelf: "center",
-    borderRadius: 10,
-    bottom: 50,
     maxWidth: "95%",
     maxHeight: "30%",
+    borderRadius: 10,
+    bottom: 50,
+    paddingRight: 10,
   },
   alertIcon: { margin: 10 },
-  alertMessage: { color: "black", fontSize: 18, flex: 1 },
+  alertMessage: { flex: 1 },
 });
 
 export default Mapa;

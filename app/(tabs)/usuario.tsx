@@ -1,15 +1,23 @@
 import React from "react";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { StatusBar } from "react-native";
 import useUsers from "@/hooks/api/users";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
 const Usuario = () => {
   const barHeight = StatusBar.currentHeight;
   const { status, error, data, isFetching } = useUsers();
 
-  if (status === "pending") return <Text>Cargando...</Text>;
+  if (status === "pending")
+    return <ThemedText type="defaultSemiBold">Cargando...</ThemedText>;
 
-  if (error) return <Text>Ha ocurrido un error: {error.message}</Text>;
+  if (error)
+    return (
+      <ThemedText type="defaultSemiBold">
+        Ha ocurrido un error: {error.message}
+      </ThemedText>
+    );
 
   const fullName = data?.full_name || "Nombre no disponible";
   const description = data?.description || "Descripción no disponible";
@@ -18,7 +26,7 @@ const Usuario = () => {
   const forksCount = data?.forks_count || 0;
 
   return (
-    <SafeAreaView
+    <ThemedView
       style={{
         flex: 1,
         paddingTop: barHeight,
@@ -26,13 +34,25 @@ const Usuario = () => {
         justifyContent: "center",
       }}
     >
-      <Text style={styles.header}>{fullName}</Text>
-      <Text>{description}</Text>
-      <Text style={styles.title}>Suscriptores: {subscribersCount}</Text>
-      <Text style={styles.title}>Estrellas: {stargazersCount}</Text>
-      <Text style={styles.title}>Forks: {forksCount}</Text>
-      {isFetching && <Text style={styles.fetching}>"Actualizando..."</Text>}
-    </SafeAreaView>
+      <ThemedText type="title" style={styles.header}>
+        {fullName}
+      </ThemedText>
+      <ThemedText>{description}</ThemedText>
+      <ThemedText type="subtitle" style={styles.subtitle}>
+        Suscriptores: {subscribersCount}
+      </ThemedText>
+      <ThemedText type="subtitle" style={styles.subtitle}>
+        Estrellas: {stargazersCount}
+      </ThemedText>
+      <ThemedText type="subtitle" style={styles.subtitle}>
+        Forks: {forksCount}
+      </ThemedText>
+      {isFetching && (
+        <ThemedText type="defaultSemiBold" style={styles.fetching}>
+          "Actualizando..."
+        </ThemedText>
+      )}
+    </ThemedView>
   );
 };
 
@@ -42,8 +62,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 20,
   },
-  title: {
-    fontWeight: "bold",
+  subtitle: {
     padding: 10,
   },
   fetching: {

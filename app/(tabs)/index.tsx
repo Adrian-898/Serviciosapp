@@ -13,7 +13,7 @@ import ModalInfo from "@/components/ModalInfo";
 import Button from "@/components/Button";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 
-const Index = () => {
+const Home = () => {
   const barHeight = StatusBar.currentHeight;
 
   // estado del modal, visible o no visible
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Index;
+export default Home;
