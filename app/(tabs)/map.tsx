@@ -72,7 +72,7 @@ const useGetCurrentLocation = () => {
 };
 
 // componente principal
-const Mapa = () => {
+const Map = () => {
   const barHeight = StatusBar.currentHeight;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -236,4 +236,4 @@ const styles = StyleSheet.create({
   alertMessage: { flex: 1 },
 });
 
-export default Mapa;
+export default Map;
