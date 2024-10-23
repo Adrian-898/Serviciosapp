@@ -1,35 +1,46 @@
 import React, { useState, useEffect } from "react";
 import {
-  Alert,
   Text,
   StyleSheet,
   TextInput,
-  Button,
   Linking,
   KeyboardAvoidingView,
   SafeAreaView,
   View,
-  ActivityIndicator,
   Platform,
   TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import useParquimetro from "@/hooks/api/useParquimetro";
 import Icon from "@expo/vector-icons/FontAwesome";
+import { Formik } from "formik";
+import * as yup from "yup";
 
-// parametros del componente
+// parametros del componente principal
 interface QRInputProps {
   visible: boolean;
   onClose: () => void;
 }
 
+// esquema de validacion de datos
+const validationSchema = yup.object().shape({
+  parquimetro: yup
+    .string()
+    .required("Se requiere seleccionar un parquímetro")
+    .label("Parquimetro"),
+  puesto: yup
+    .number()
+    .required("Se requiere ingresar un puesto")
+    .positive("El número de puesto debe ser mayor a 0")
+    .integer("El número de puesto debe ser un número entero")
+    .label("Puesto"),
+});
+
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
 const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
   // const { status, error, data, isFetching } = useParquimetro();
-  const [parquimetro, setParquimetro] = useState<string>("");
-  const [puesto, setPuesto] = useState<string>("");
 
-  // prueba
+  // array de prueba
   const park = [
     "",
     "parquimetro 1",
@@ -40,15 +51,11 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
     "parquimetro C6",
   ];
 
-  const handleParquimetroChange = (newParquimetro: string) => {
-    setParquimetro(newParquimetro);
-  };
-
-  const handlePuestoChange = (newPuesto: string) => {
-    setPuesto(newPuesto);
-  };
-
-  const handleLoadInput = async () => {
+  // submit al presionar el boton "Buscar"
+  const handleLoadInput = async (
+    parquimetro: string,
+    puesto: number | undefined
+  ) => {
     const URL = `https://${parquimetro}/${puesto}`;
 
     try {
@@ -59,9 +66,8 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
     } catch (error) {
       console.log(error);
     }
-
-    setPuesto("");
   };
+
   /*
   if (status === "pending") {
     return (
@@ -83,13 +89,11 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
     Alert.alert("Ha ocurrido un error: ", error?.message);
   }
   */
+
   if (!visible) return null;
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "position"}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={"height"}>
       <Icon
         name="close"
         color={"#d00b27"}
@@ -98,67 +102,102 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
         style={styles.closeButton}
       />
 
+      {/*Formulario Parquimetro y Puesto*/}
       <SafeAreaView style={styles.container2}>
-        <Text style={styles.label}>Parquímetro</Text>
-        <SelectDropdown
-          data={park}
-          statusBarTranslucent={true}
-          defaultValueByIndex={0}
-          onSelect={(selectedItem, index) => {
-            handleParquimetroChange(selectedItem);
-            console.log(selectedItem, index);
+        <Formik
+          initialValues={{ parquimetro: "", puesto: undefined }}
+          onSubmit={(values) => {
+            console.log(values);
+            handleLoadInput(values.parquimetro, values.puesto);
           }}
-          renderButton={(selectedItem, isOpen) => {
-            return (
-              <View style={styles.dropdownButton}>
-                <Text style={styles.dropdownButtonText}>
-                  {selectedItem || "Ingresa tu parquímetro"}
-                </Text>
-                <Icon
-                  name={isOpen ? "chevron-left" : "chevron-down"}
-                  size={25}
-                  color="#444"
-                />
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItem,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+          validationSchema={validationSchema}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View>
+              <Text style={styles.label}>Parquímetro</Text>
+              <SelectDropdown
+                data={park}
+                statusBarTranslucent={true}
+                defaultValueByIndex={0}
+                onBlur={() => handleBlur("parquimetro")}
+                onSelect={(selectedItem, index) => {
+                  values.parquimetro = selectedItem;
+                  handleChange("parquimetro");
                 }}
+                renderButton={(selectedItem, isOpen) => {
+                  return (
+                    <View style={styles.dropdownButton}>
+                      <Text style={styles.dropdownButtonText}>
+                        {selectedItem || "Seleccionar parquímetro"}
+                      </Text>
+                      <Icon
+                        name={isOpen ? "chevron-left" : "chevron-down"}
+                        size={25}
+                        color="#444"
+                      />
+                    </View>
+                  );
+                }}
+                renderItem={(item, index, isSelected) => {
+                  return (
+                    <View
+                      style={{
+                        ...styles.dropdownItem,
+                        ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                      }}
+                    >
+                      <Text style={styles.dropdownItemText}>{item}</Text>
+                    </View>
+                  );
+                }}
+                showsVerticalScrollIndicator={false}
+                dropdownStyle={styles.dropdown}
+                search={true}
+                searchPlaceHolder="Busca tu parquímetro"
+                searchPlaceHolderColor="black"
+                searchInputStyle={styles.search}
+                searchInputTxtColor="#151E26"
+                searchInputTxtStyle={styles.searchText}
+                renderSearchInputLeftIcon={() => {
+                  return <Icon name="search" color={"#72808D"} size={18} />;
+                }}
+              />
+
+              {errors.parquimetro && (
+                <Text style={styles.errorText}>{errors.parquimetro}</Text>
+              )}
+
+              <Text style={styles.label}>Puesto</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Ingresar puesto"
+                placeholderTextColor={"black"}
+                onChangeText={handleChange("puesto")}
+                onBlur={handleBlur("puesto")}
+                value={values.puesto}
+                keyboardType="number-pad"
+              />
+
+              {errors.puesto && (
+                <Text style={styles.errorText}>{errors.puesto}</Text>
+              )}
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleSubmit()}
               >
-                <Text style={styles.dropdownItemText}>{item}</Text>
-              </View>
-            );
-          }}
-          showsVerticalScrollIndicator={false}
-          dropdownStyle={styles.dropdown}
-          search={true}
-          searchPlaceHolder="Ingresa tu parquímetro"
-          searchPlaceHolderColor="black"
-          searchInputStyle={styles.search}
-          searchInputTxtColor="#151E26"
-          searchInputTxtStyle={styles.searchText}
-          renderSearchInputLeftIcon={() => {
-            return <Icon name="search" color={"#72808D"} size={18} />;
-          }}
-        />
-
-        <Text style={styles.label}>Puesto</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingresa tu puesto"
-          value={puesto}
-          onChangeText={handlePuestoChange}
-          placeholderTextColor={"black"}
-        ></TextInput>
-
-        <TouchableOpacity onPress={handleLoadInput} style={styles.button}>
-          <Text style={styles.buttonText}>Buscar</Text>
-        </TouchableOpacity>
+                <Text style={styles.buttonText}>Buscar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -170,11 +209,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     backgroundColor: "#FFFFFF",
-    padding: 40,
+    padding: 20,
     borderRadius: 20,
     minWidth: "90%",
   },
   container2: {
+    position: "relative",
     flex: 1,
     minWidth: "90%",
   },
@@ -230,6 +270,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   button: {
+    marginVertical: 5,
     padding: 10,
     backgroundColor: "#001f7e",
     borderRadius: 10,
@@ -243,6 +284,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#FFFFFF",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
 

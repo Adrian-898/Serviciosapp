@@ -96,9 +96,10 @@ const QRCodeScanner = () => {
   if (!permission.granted) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.message}>
+        <Text style={styles.message} adjustsFontSizeToFit={true}>
           Se ha negado el permiso para usar la cámara, puede ingresar
-          manualmente el dato con el boton, o conceder los permisos.
+          manualmente los datos con el botón de abajo, o conceder los permisos
+          en la configuración de la App.
         </Text>
 
         <View style={{ flex: 1 }}>

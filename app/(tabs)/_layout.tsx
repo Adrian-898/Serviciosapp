@@ -41,7 +41,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="mapa"
+        name="map"
         options={{
           headerShown: false,
           title: "Ubicación",
@@ -69,4 +69,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
