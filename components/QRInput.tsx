@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   View,
-  Platform,
   TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
@@ -30,6 +29,7 @@ const validationSchema = yup.object().shape({
     .label("Parquimetro"),
   puesto: yup
     .number()
+    .typeError("Debe ser un número")
     .required("Se requiere ingresar un puesto")
     .positive("El número de puesto debe ser mayor a 0")
     .integer("El número de puesto debe ser un número entero")
@@ -112,14 +112,7 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
           }}
           validationSchema={validationSchema}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
             <View>
               <Text style={styles.label}>Parquímetro</Text>
               <SelectDropdown
