@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const useUsers = () => {
   const { status, error, data, isFetching } = useQuery({
@@ -27,4 +28,22 @@ const useUsers = () => {
   return { status, error, data, isFetching };
 };
 
-export default useUsers;
+async function getUser() {
+  try {
+    const response = await axios.get("/user", {
+      params: {
+        ID: 12345,
+      },
+    });
+
+    if (response.statusText != "OK") {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { useUsers, getUser };

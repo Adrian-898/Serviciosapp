@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "react-native";
-import useUsers from "@/hooks/api/users";
+import useUsers from "@/hooks/api/repoData";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
