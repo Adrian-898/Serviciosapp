@@ -25,6 +25,7 @@ const QRCodeScanner = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [loading, setLoading] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
+  const [torch, setTorch] = useState<boolean>(false);
 
   // estado de visibilidad del input manual de datos
   const [inputState, setInputState] = useState<boolean>(false);
@@ -58,12 +59,25 @@ const QRCodeScanner = () => {
     );
   };
 
-  // función ejecutada al presionar el boton de ingresar datos manualmente
+  // boton para encender linterna
+  const TorchButton = () => {
+    return (
+      <Icon
+        name="flashlight"
+        color={"white"}
+        size={60}
+        onPress={() => setTorch(!torch)}
+        style={styles.torchButton}
+      />
+    );
+  };
+
+  // Abre el menu del QRInput
   const handleOpenInput = () => {
     setInputState(true);
   };
 
-  // control de los datos ingresados
+  // cierra el menu del QRinput
   const handleCloseInput = () => {
     setInputState(false);
   };
@@ -77,7 +91,6 @@ const QRCodeScanner = () => {
         setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false);
       }
     };
     loadCamera();
@@ -96,13 +109,13 @@ const QRCodeScanner = () => {
   if (!permission.granted) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.message} adjustsFontSizeToFit={true}>
+        <Text style={styles.message} adjustsFontSizeToFit>
           Se ha negado el permiso para usar la cámara, puede ingresar
           manualmente los datos con el botón de abajo, o conceder los permisos
           en la configuración de la App.
         </Text>
 
-        <View style={{ flex: 1 }}>
+        <View style={styles.noPermissionInput}>
           <InputButton />
         </View>
 
@@ -117,6 +130,7 @@ const QRCodeScanner = () => {
       <CameraView
         style={styles.camera}
         autofocus="on"
+        enableTorch={torch}
         onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         barcodeScannerSettings={{
           barcodeTypes: ["qr"],
@@ -127,7 +141,8 @@ const QRCodeScanner = () => {
         <Text style={styles.title}>Escanea un código QR</Text>
       </View>
 
-      <View>
+      <View style={styles.footer}>
+        <TorchButton />
         <InputButton />
       </View>
 
@@ -179,14 +194,33 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
   },
-  inputButton: {
+  footer: {
     position: "absolute",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
+  },
+  inputButton: {
     backgroundColor: "black",
     opacity: 0.7,
     padding: 10,
     borderRadius: 20,
-    right: 20,
-    bottom: 20,
+  },
+  torchButton: {
+    backgroundColor: "black",
+    opacity: 0.7,
+    padding: 10,
+    borderRadius: 20,
+  },
+  noPermissionInput: {
+    flex: 1,
+    position: "relative",
+    alignSelf: "flex-end",
+    justifyContent: "flex-end",
+    padding: 20,
   },
 });
 

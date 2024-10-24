@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useWindowDimensions } from "react-native";
 
 // propiedades del modal
 interface ModalInfoProps {
@@ -10,21 +9,11 @@ interface ModalInfoProps {
 
 // componente modal, retorna el bloque de informacion y el boton de cerrar si la variable visible es true
 const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
-  // obtiene el ancho de la pantalla
-  const WindowWidth = useWindowDimensions().width;
-
   if (!visible) return null;
 
   return (
-    <View
-      style={{
-        backgroundColor: "#ffffff",
-        padding: 10,
-        borderRadius: 10,
-        width: WindowWidth - 50,
-      }}
-    >
-      <Text style={styles.text}>
+    <View style={styles.container}>
+      <Text style={styles.text} adjustsFontSizeToFit>
         Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
         los que puedes acceder desde los enlaces disponibles en esta pantalla.
       </Text>
@@ -36,7 +25,14 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    padding: 10,
+    borderRadius: 10,
+    width: "90%",
+  },
   text: {
+    textAlign: "center",
     fontSize: 18,
     marginBottom: 20,
   },
