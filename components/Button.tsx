@@ -23,21 +23,20 @@ const Button: React.FC<Props> = ({ title, url }) => {
   return (
     // Boton a renderizar
     <TouchableOpacity onPress={handlePress} style={styles.button}>
-      <Text style={styles.texto}>{title}</Text>
+      <Text style={styles.texto} adjustsFontSizeToFit>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    minWidth: 200,
+    minWidth: "50%",
     padding: 10,
     backgroundColor: "#001f7e",
     borderWidth: 0.5,
     borderRadius: 15,
-    shadowColor: "black",
-    shadowOpacity: 5,
-    shadowRadius: 20,
     elevation: 10,
   },
   texto: {

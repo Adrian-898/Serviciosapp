@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   View,
   Button,
-  ActivityIndicator,
+  TouchableOpacity,
   StatusBar,
   Linking,
 } from "react-native";
@@ -14,6 +14,9 @@ import {
   useCameraPermissions,
   BarcodeScanningResult,
 } from "expo-camera";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useColorScheme } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 
@@ -21,9 +24,8 @@ import QRInput from "@/components/QRInput";
 const barHeight = StatusBar.currentHeight;
 
 const QRCodeScanner = () => {
-  // estado del permiso de uso de la camara
+  const colorScheme = useColorScheme();
   const [permission, requestPermission] = useCameraPermissions();
-  const [loading, setLoading] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const [torch, setTorch] = useState<boolean>(false);
 
@@ -86,9 +88,7 @@ const QRCodeScanner = () => {
   useEffect(() => {
     const loadCamera = async () => {
       try {
-        setLoading(true);
         await requestPermission();
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -96,24 +96,16 @@ const QRCodeScanner = () => {
     loadCamera();
   }, []);
 
-  // se muestra un indicador de carga si no se ha respondido a la solicitud de permisos
-  if (loading || !permission) {
-    return (
-      <SafeAreaView style={styles.centered}>
-        <ActivityIndicator size="large" color="#001f7e" />
-      </SafeAreaView>
-    );
-  }
-
   // si se niega el permiso de uso de la camara se muestra el mensaje siguiente
-  if (!permission.granted) {
+  if (!permission || !permission.granted) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.message} adjustsFontSizeToFit>
-          Se ha negado el permiso para usar la cámara, puede ingresar
-          manualmente los datos con el botón de abajo, o conceder los permisos
-          en la configuración de la App.
-        </Text>
+        <ThemedText style={styles.message} adjustsFontSizeToFit>
+          No hubo respuesta a la solicitud de permisos o se ha negado la misma,
+          para usar la cámara, puede conceder los permisos de uso en la
+          configuración de la App en su dispositivo, o puede ingresar
+          manualmente los datos con el botón de abajo.
+        </ThemedText>
 
         <View style={styles.noPermissionInput}>
           <InputButton />
@@ -203,13 +195,13 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 20,
   },
-  inputButton: {
+  torchButton: {
     backgroundColor: "black",
     opacity: 0.7,
     padding: 10,
     borderRadius: 20,
   },
-  torchButton: {
+  inputButton: {
     backgroundColor: "black",
     opacity: 0.7,
     padding: 10,

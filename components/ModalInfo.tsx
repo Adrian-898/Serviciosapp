@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
+import { ThemedText } from "./ThemedText";
+import { ThemedView } from "./ThemedView";
 
 // propiedades del modal
 interface ModalInfoProps {
@@ -12,21 +14,22 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
   if (!visible) return null;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text} adjustsFontSizeToFit>
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.text} adjustsFontSizeToFit>
         Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
         los que puedes acceder desde los enlaces disponibles en esta pantalla.
-      </Text>
+      </ThemedText>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Text style={styles.closeButtonText}>CERRAR</Text>
+        <ThemedText type="subtitle" style={styles.closeButtonText}>
+          CERRAR
+        </ThemedText>
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
     padding: 10,
     borderRadius: 10,
     width: "90%",

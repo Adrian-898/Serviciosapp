@@ -8,3 +8,4 @@ export function TabBarIcon({
 }: IconProps<ComponentProps<typeof Ionicons>["name"]>) {
   return <Ionicons size={32} style={[{ marginBottom: -4 }, style]} {...rest} />;
 }
+

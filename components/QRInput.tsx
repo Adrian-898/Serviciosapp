@@ -12,6 +12,7 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 import useParquimetro from "@/hooks/api/useParquimetro";
 import Icon from "@expo/vector-icons/FontAwesome";
+import { useColorScheme } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -38,6 +39,7 @@ const validationSchema = yup.object().shape({
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
 const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
+  const colorScheme = useColorScheme();
   // const { status, error, data, isFetching } = useParquimetro();
 
   // array de prueba
@@ -201,10 +203,10 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "absolute",
     alignSelf: "center",
-    backgroundColor: "#FFFFFF",
+    minWidth: "90%",
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 20,
-    minWidth: "90%",
   },
   container2: {
     position: "relative",

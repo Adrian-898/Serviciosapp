@@ -1,54 +1,63 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import Icon from "@expo/vector-icons/FontAwesome";
+import Icon from "@expo/vector-icons/Ionicons";
+import { StatusBar } from "react-native";
+import { useColorScheme } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
 const Usuario = () => {
+  const colorScheme = useColorScheme();
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Usuario</Text>
-      <View style={styles.section}>
-        <TouchableOpacity style={styles.option}>
-          <Icon name="user" size={24} color="#4caf50" />
-          <Text style={styles.optionText}>Cuenta</Text>
-          <Icon
-            name="angle-right"
-            size={24}
-            color="#999"
-            style={styles.optionIcon}
-          />
-        </TouchableOpacity>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title" style={styles.header}>
+        Usuario
+      </ThemedText>
+      <TouchableOpacity
+        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+      >
+        <Icon name="person" size={24} color="#0caf50" />
+        <Text style={styles.optionText}>Cuenta</Text>
+        <Icon
+          name="arrow-forward"
+          size={24}
+          color="#999"
+          style={styles.optionIcon}
+        />
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.option}>
-          <Icon name="info-circle" size={24} color="#3f51b5" />
-          <Text style={styles.optionText}>Sobre nosotros</Text>
-          <Icon
-            name="angle-right"
-            size={24}
-            color="#999"
-            style={styles.optionIcon}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+      >
+        <Icon name="information-circle" size={24} color="#001f7e" />
+        <Text style={styles.optionText}>Sobre nosotros</Text>
+        <Icon
+          name="arrow-forward"
+          size={24}
+          color="#999"
+          style={styles.optionIcon}
+        />
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.option}
-          onPress={() => {
-            router.navigate("/");
-          }}
-        >
-          <Icon name="sign-out" size={24} color="#e91e63" />
-          <Text style={styles.optionText}>Cerrar sesión</Text>
-          <Icon
-            name="angle-right"
-            size={24}
-            color="#999"
-            style={styles.optionIcon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+      <TouchableOpacity
+        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+        onPress={() => {
+          router.navigate("/");
+        }}
+      >
+        <Icon name="log-out" size={24} color="#d00b27" />
+        <Text style={styles.optionText}>Cerrar sesión</Text>
+        <Icon
+          name="arrow-forward"
+          size={24}
+          color="#999"
+          style={styles.optionIcon}
+        />
+      </TouchableOpacity>
+    </ThemedView>
   );
 };
 
@@ -57,26 +66,30 @@ export default Usuario;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#f5f5f5",
+    padding: StatusBar.currentHeight,
   },
   header: {
     fontSize: 32,
-    fontWeight: "bold",
     marginVertical: 20,
     textAlign: "center",
-    color: "#333",
   },
-  section: {
-    marginVertical: 10,
-  },
-  option: {
+  optionLight: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
+    marginBottom: 10,
+    elevation: 2,
+  },
+  optionDark: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#CCC",
     marginBottom: 10,
     elevation: 2,
   },
