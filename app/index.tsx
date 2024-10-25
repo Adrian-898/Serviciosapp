@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { StatusBar } from "react-native";
 import { useRouter } from "expo-router";
+import { ThemedText } from "@/components/ThemedText";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 
 const Home = () => {
@@ -29,9 +30,9 @@ const Home = () => {
               style={styles.button}
               onPress={() => router.push("/(tabs)/home")}
             >
-              <Text style={styles.buttonText}>
+              <ThemedText style={styles.buttonText}>
                 Continuar sin iniciar sesión
-              </Text>
+              </ThemedText>
             </TouchableOpacity>
           </View>
 

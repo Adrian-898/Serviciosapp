@@ -8,10 +8,10 @@ import {
   QueryClientProvider,
   focusManager,
 } from "@tanstack/react-query";
-import { useFonts } from "expo-font";
+// import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
 import { useAppState } from "@/hooks/useAppState";
@@ -30,10 +30,11 @@ function onAppStateChange(status: AppStateStatus) {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  /*
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-
+  */
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -50,7 +51,7 @@ export default function RootLayout() {
 
   useAppState(onAppStateChange);
   useOnlineManager();
-
+  /*
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -60,7 +61,9 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+  */
 
+  SplashScreen.hideAsync();
   // Layout de navegacion de la app, el primer Stack.screen contiene la carpeta con las pestañas (tabs)
   return (
     <QueryClientProvider client={queryClient}>
