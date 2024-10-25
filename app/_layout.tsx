@@ -48,14 +48,14 @@ export default function RootLayout() {
       })
   );
 
+  useAppState(onAppStateChange);
+  useOnlineManager();
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
-
-  useAppState(onAppStateChange);
-  useOnlineManager();
 
   if (!loaded) {
     return null;

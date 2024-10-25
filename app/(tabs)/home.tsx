@@ -23,7 +23,7 @@ const Home = () => {
   const handleOpenModal = () => {
     setModalState(true);
   };
-  // al presionar el boton CERRAR cuando esta abierto el boton informacion
+  // al presionar el boton CERRAR cuando esta abierto el modal informacion
   const handleCloseModal = () => {
     setModalState(false);
   };
@@ -144,3 +144,4 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+

@@ -1,31 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   SafeAreaView,
   View,
   Button,
-  TouchableOpacity,
   StatusBar,
   Linking,
 } from "react-native";
-import {
-  CameraView,
-  useCameraPermissions,
-  BarcodeScanningResult,
-} from "expo-camera";
+import { CameraView, BarcodeScanningResult } from "expo-camera";
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { useColorScheme } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
+import useCamera from "@/hooks/useCamera";
 
 // altura de la barra superior del dispositivo
 const barHeight = StatusBar.currentHeight;
 
 const QRCodeScanner = () => {
-  const colorScheme = useColorScheme();
-  const [permission, requestPermission] = useCameraPermissions();
+  // permisos de uso de camara
+  const permission = useCamera();
+
   const [scanned, setScanned] = useState<boolean>(false);
   const [torch, setTorch] = useState<boolean>(false);
 
@@ -83,18 +78,6 @@ const QRCodeScanner = () => {
   const handleCloseInput = () => {
     setInputState(false);
   };
-
-  // se piden permisos de uso de cámara al montar el componente principal QRCodeScanner
-  useEffect(() => {
-    const loadCamera = async () => {
-      try {
-        await requestPermission();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadCamera();
-  }, []);
 
   // si se niega el permiso de uso de la camara se muestra el mensaje siguiente
   if (!permission || !permission.granted) {
