@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { Formik } from "formik";
+import { useColorScheme } from "react-native";
 import * as yup from "yup";
 
 // esquema de validacion de datos
@@ -19,13 +20,16 @@ const validationSchema = yup.object().shape({
     .label("Contraseña"),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password"), undefined], "Las contraseñas deben coincidir")
-    .required("Las contraseñas deben coincidir"),
+    .required("Las contraseñas deben coincidir")
+    .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
 });
 
 const Register = () => {
+  const colorScheme = useColorScheme();
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView
+      style={colorScheme === "light" ? styles.container : styles.containerDark}
+    >
       <ThemedText type="title" style={styles.title}>
         Registro
       </ThemedText>
@@ -42,9 +46,11 @@ const Register = () => {
           errors,
           touched,
         }) => (
-          <ThemedView style={styles.form}>
+          <ThemedView
+            style={colorScheme === "light" ? styles.form : styles.formDark}
+          >
             <TextInput
-              style={styles.input}
+              style={colorScheme === "light" ? styles.input : styles.inputDark}
               placeholder="Correo electrónico"
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -59,7 +65,7 @@ const Register = () => {
             )}
 
             <TextInput
-              style={styles.input}
+              style={colorScheme === "light" ? styles.input : styles.inputDark}
               placeholder="Contraseña"
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
@@ -74,7 +80,7 @@ const Register = () => {
             )}
 
             <TextInput
-              style={styles.input}
+              style={colorScheme === "light" ? styles.input : styles.inputDark}
               placeholder="Confirmar contraseña"
               onChangeText={handleChange("confirmPassword")}
               onBlur={handleBlur("confirmPassword")}
@@ -103,6 +109,11 @@ const Register = () => {
 
 export default Register;
 
+/*
+#333: gris oscuro
+#999 gris claro
+*/
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -111,8 +122,14 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
+  containerDark: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#333",
+  },
   title: {
-    color: "black",
     marginBottom: 24,
   },
   form: {
@@ -120,14 +137,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
   },
+  formDark: {
+    width: "100%",
+    backgroundColor: "#333",
+    borderRadius: 10,
+  },
   input: {
     height: 50,
-    borderColor: "#ccc",
+    borderColor: "#CCC",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
     backgroundColor: "#fff",
+  },
+  inputDark: {
+    height: 50,
+    borderColor: "#black",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    backgroundColor: "#999",
   },
   errorText: {
     color: "red",

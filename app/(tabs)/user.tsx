@@ -12,7 +12,9 @@ const Usuario = () => {
   const router = useRouter();
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView
+      style={colorScheme === "light" ? styles.container : styles.containerDark}
+    >
       <ThemedText type="title" style={styles.header}>
         Usuario
       </ThemedText>
@@ -24,7 +26,7 @@ const Usuario = () => {
         <Icon
           name="arrow-forward"
           size={24}
-          color="#999"
+          color="black"
           style={styles.optionIcon}
         />
       </TouchableOpacity>
@@ -37,7 +39,7 @@ const Usuario = () => {
         <Icon
           name="arrow-forward"
           size={24}
-          color="#999"
+          color="black"
           style={styles.optionIcon}
         />
       </TouchableOpacity>
@@ -53,7 +55,7 @@ const Usuario = () => {
         <Icon
           name="arrow-forward"
           size={24}
-          color="#999"
+          color="black"
           style={styles.optionIcon}
         />
       </TouchableOpacity>
@@ -65,6 +67,11 @@ export default Usuario;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    padding: StatusBar.currentHeight,
+  },
+  containerDark: {
+    backgroundColor: "#333",
     flex: 1,
     padding: StatusBar.currentHeight,
   },
@@ -97,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     marginLeft: 10,
-    color: "#333",
+    color: "black",
   },
   optionIcon: {
     marginLeft: "auto",
