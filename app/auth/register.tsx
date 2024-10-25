@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), undefined], "Las contraseñas deben coincidir")
-    .required("Se requiere confirmar la contraseña"),
+    .required("Las contraseñas deben coincidir"),
 });
 
 const Register = () => {
