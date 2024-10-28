@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
@@ -20,7 +20,7 @@ const useGetCurrentLocation = () => {
   });
 
   // funcion que obtiene la ubicacion actual (actualiza la variable origin)
-  const getCurrentLocation = useCallback(async () => {
+  const getCurrentLocation = async () => {
     try {
       let location = await Location.getCurrentPositionAsync({});
       const current: Location = {
@@ -33,14 +33,13 @@ const useGetCurrentLocation = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  };
 
   return { origin, getCurrentLocation };
 };
 
 const useLocation = () => {
   const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
-  const [locationEnabled, setLocationEnabled] = useState<boolean>(false);
   const { origin, getCurrentLocation } = useGetCurrentLocation();
 
   // Funcion que solicita permisos de ubicacion al usuario
@@ -51,7 +50,6 @@ const useLocation = () => {
         setPermissionGranted(status === "granted");
         if (status === "granted") {
           getCurrentLocation();
-          checkLocationServices();
         }
       } catch (error) {
         console.log(error);
@@ -59,33 +57,12 @@ const useLocation = () => {
     }
   };
 
-  // funcion que chequea que la ubicacion este activada en el dispositivo
-  const checkLocationServices = async () => {
-    try {
-      const servicesEnabled = await Location.hasServicesEnabledAsync();
-      setLocationEnabled(servicesEnabled);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // comportamiento de la funcion de arriba, se ejecuta cada 3 segundos para verificar si esta activa la ubicacion
-  if (permissionGranted && !locationEnabled) {
-    const interval = setInterval(() => {
-      checkLocationServices();
-      if (locationEnabled) {
-        getCurrentLocation();
-        clearInterval(interval);
-      }
-    }, 3000);
-  }
-
   useEffect(() => {
     // se piden permisos de ubicacion al iniciar la app
     getLocationPermission();
   }, []);
 
-  return { permissionGranted, locationEnabled, origin };
+  return { permissionGranted, origin };
 };
 
 export default useLocation;

@@ -1,24 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import useLocation from "@/hooks/useLocation";
 import {
   SafeAreaView,
   useWindowDimensions,
   Text,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StatusBar } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-
-// interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
-interface Location {
-  latitude: number;
-  longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
-}
 
 // interfaz para almacenar informacion de los lugares que se quiere marcar en el mapa
 interface Lugar {
@@ -83,53 +76,41 @@ const Map = () => {
   // renderiza el mapa y los Pins
   return (
     <SafeAreaView style={{ paddingTop: barHeight }}>
-      <MapView
-        style={{ width: windowWidth, height: windowHeight }}
-        userLocationUpdateInterval={5000}
-        showsUserLocation
-        showsMyLocationButton
-        loadingEnabled
-        toolbarEnabled={false}
-        showsPointsOfInterest={false}
-        showsIndoors={false}
-        showsBuildings={false}
-        showsScale={false}
-        showsIndoorLevelPicker={false}
-        showsTraffic={false}
-        mapPadding={{ bottom: 50, left: 0, right: 0, top: 0 }}
-        initialRegion={{
-          latitude: 10.597032,
-          longitude: -66.930431,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04,
-        }}
-        region={location.origin}
+      <Suspense
+        fallback={<ActivityIndicator size={"large"} color={"#001f7e"} />}
       >
-        {
-          // itera el arreglo lugares y renderiza un pin para cada instancia existente
-          lugares.map((coord, index) => (
-            <MarkerComponent key={index} coord={coord} />
-          ))
-        }
-      </MapView>
+        <MapView
+          style={{ width: windowWidth, height: windowHeight }}
+          userLocationUpdateInterval={5000}
+          showsUserLocation
+          showsMyLocationButton
+          loadingEnabled
+          toolbarEnabled={false}
+          showsPointsOfInterest={false}
+          showsIndoors={false}
+          showsBuildings={false}
+          showsScale={false}
+          showsIndoorLevelPicker={false}
+          showsTraffic={false}
+          mapPadding={{ bottom: 50, left: 0, right: 0, top: 0 }}
+          initialRegion={{
+            latitude: 10.597032,
+            longitude: -66.930431,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+          }}
+          region={location.origin}
+        >
+          {
+            // itera el arreglo lugares y renderiza un pin para cada instancia existente
+            lugares.map((coord, index) => (
+              <MarkerComponent key={index} coord={coord} />
+            ))
+          }
+        </MapView>
+      </Suspense>
       {
-        // muestra un mensaje si no se otorgan permisos de ubicacion
-        location.permissionGranted && !location.locationEnabled && (
-          <ThemedView style={styles.alertContainer}>
-            <Alerta />
-            <ThemedText
-              type="defaultSemiBold"
-              style={styles.alertMessage}
-              adjustsFontSizeToFit={true}
-            >
-              El acceso a la ubicación está desactivado, actívalo en la
-              configuración de tu dispositivo.
-            </ThemedText>
-          </ThemedView>
-        )
-      }
-      {
-        // muestra un mensaje si hay permisos pero no esta activado el uso de la ubicacion
+        // muestra un mensaje si no hay permisos de uso de ubicacion
         !location.permissionGranted && (
           <ThemedView style={styles.alertContainer}>
             <Alerta />
