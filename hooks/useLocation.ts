@@ -54,7 +54,7 @@ const useLocation = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    } else return;
   };
 
   useEffect(() => {

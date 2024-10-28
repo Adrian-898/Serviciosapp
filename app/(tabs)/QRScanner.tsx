@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, Suspense } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   Button,
   StatusBar,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { CameraView, BarcodeScanningResult } from "expo-camera";
 import { ThemedText } from "@/components/ThemedText";
@@ -14,7 +15,6 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 import useCamera from "@/hooks/useCamera";
 
-// altura de la barra superior del dispositivo
 const barHeight = StatusBar.currentHeight;
 
 const QRCodeScanner = () => {
@@ -56,7 +56,7 @@ const QRCodeScanner = () => {
     );
   };
 
-  // boton para encender linterna
+  // boton para encender y apagar la linterna
   const TorchButton = () => {
     return (
       <Icon
@@ -102,33 +102,37 @@ const QRCodeScanner = () => {
   // al aceptar permisos de uso de camara se carga la misma con los demas componentes.
   return (
     <SafeAreaView style={styles.container}>
-      <CameraView
-        style={styles.camera}
-        autofocus="on"
-        enableTorch={torch}
-        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-        barcodeScannerSettings={{
-          barcodeTypes: ["qr"],
-        }}
-      />
-
-      <View style={styles.back}>
-        <Text style={styles.title}>Escanea un código QR</Text>
-      </View>
-
-      <View style={styles.footer}>
-        <TorchButton />
-        <InputButton />
-      </View>
-
-      <QRInput visible={inputState} onClose={handleCloseInput} />
-
-      {scanned && (
-        <Button
-          title="Presiona para escanear de nuevo"
-          onPress={() => setScanned(false)}
+      <Suspense
+        fallback={<ActivityIndicator size={"large"} color={"#001f7e"} />}
+      >
+        <CameraView
+          style={styles.camera}
+          autofocus="on"
+          enableTorch={torch}
+          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+          barcodeScannerSettings={{
+            barcodeTypes: ["qr"],
+          }}
         />
-      )}
+
+        <View style={styles.back}>
+          <Text style={styles.title}>Escanea un código QR</Text>
+        </View>
+
+        <View style={styles.footer}>
+          <TorchButton />
+          <InputButton />
+        </View>
+
+        <QRInput visible={inputState} onClose={handleCloseInput} />
+
+        {scanned && (
+          <Button
+            title="Presiona para escanear de nuevo"
+            onPress={() => setScanned(false)}
+          />
+        )}
+      </Suspense>
     </SafeAreaView>
   );
 };

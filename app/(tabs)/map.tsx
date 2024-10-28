@@ -13,6 +13,8 @@ import Icon from "@expo/vector-icons/FontAwesome";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
+const barHeight = StatusBar.currentHeight;
+
 // interfaz para almacenar informacion de los lugares que se quiere marcar en el mapa
 interface Lugar {
   lat: number;
@@ -36,7 +38,6 @@ const lugares: Lugar[] = [
 
 // componente principal
 const Map = () => {
-  const barHeight = StatusBar.currentHeight;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   const location = useLocation();
@@ -75,7 +76,7 @@ const Map = () => {
 
   // renderiza el mapa y los Pins
   return (
-    <SafeAreaView style={{ paddingTop: barHeight }}>
+    <SafeAreaView style={styles.container}>
       <Suspense
         fallback={<ActivityIndicator size={"large"} color={"#001f7e"} />}
       >
@@ -130,6 +131,9 @@ const Map = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: barHeight,
+  },
   alertContainer: {
     flexDirection: "row",
     position: "absolute",
