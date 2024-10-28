@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { useColorScheme } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -21,10 +22,13 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
+  const colorScheme = useColorScheme();
   const router = useRouter();
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView
+      style={colorScheme === "light" ? styles.container : styles.containerDark}
+    >
       <ThemedText type="title" style={styles.title}>
         Inicio de sesión
       </ThemedText>
@@ -44,9 +48,11 @@ const Login = () => {
           errors,
           touched,
         }) => (
-          <ThemedView style={styles.form}>
+          <ThemedView
+            style={colorScheme === "light" ? styles.form : styles.formDark}
+          >
             <TextInput
-              style={styles.input}
+              style={colorScheme === "light" ? styles.input : styles.inputDark}
               placeholder="Correo electrónico"
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -61,7 +67,7 @@ const Login = () => {
             )}
 
             <TextInput
-              style={styles.input}
+              style={colorScheme === "light" ? styles.input : styles.inputDark}
               placeholder="Contraseña"
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
@@ -98,8 +104,14 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
+  containerDark: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#333",
+  },
   title: {
-    color: "black",
     marginBottom: 24,
   },
   form: {
@@ -107,14 +119,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
   },
+  formDark: {
+    width: "100%",
+    backgroundColor: "#333",
+    borderRadius: 10,
+  },
   input: {
     height: 50,
-    borderColor: "#ccc",
+    borderColor: "#CCC",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 20,
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: "#fff",
+  },
+  inputDark: {
+    height: 50,
+    borderColor: "#999",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    marginBottom: 15,
+    backgroundColor: "#f5f5f5",
   },
   errorText: {
     color: "red",
@@ -125,6 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#001f7e",
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "#999",
     borderRadius: 10,
     marginTop: 10,
     borderWidth: 0.5,

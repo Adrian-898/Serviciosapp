@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+    borderRadius: 10,
   },
   dropdownItemText: {
     color: "#444",

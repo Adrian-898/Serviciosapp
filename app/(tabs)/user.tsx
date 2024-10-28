@@ -19,7 +19,7 @@ const Usuario = () => {
         Usuario
       </ThemedText>
       <TouchableOpacity
-        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+        style={colorScheme === "light" ? styles.option : styles.optionDark}
       >
         <Icon name="person" size={24} color="#0caf50" />
         <Text style={styles.optionText}>Cuenta</Text>
@@ -32,7 +32,7 @@ const Usuario = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+        style={colorScheme === "light" ? styles.option : styles.optionDark}
       >
         <Icon name="information-circle" size={24} color="#001f7e" />
         <Text style={styles.optionText}>Sobre nosotros</Text>
@@ -45,7 +45,7 @@ const Usuario = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={colorScheme === "light" ? styles.optionLight : styles.optionDark}
+        style={colorScheme === "light" ? styles.option : styles.optionDark}
         onPress={() => {
           router.navigate("/");
         }}
@@ -80,14 +80,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
   },
-  optionLight: {
+  option: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 10,
     backgroundColor: "white",
-    marginBottom: 10,
+    marginBottom: 15,
     elevation: 2,
   },
   optionDark: {
@@ -96,8 +96,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: "#CCC",
-    marginBottom: 10,
+    backgroundColor: "#f5f5f5",
+    borderColor: "#999",
+    marginBottom: 15,
     elevation: 2,
   },
   optionText: {

@@ -112,6 +112,7 @@ export default Register;
 /*
 #333: gris oscuro
 #999 gris claro
+#CCC gris mas calro
 */
 
 const styles = StyleSheet.create({
@@ -148,17 +149,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 20,
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: "#fff",
   },
   inputDark: {
     height: 50,
-    borderColor: "#black",
+    borderColor: "#999",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 20,
-    marginBottom: 10,
-    backgroundColor: "#999",
+    marginBottom: 15,
+    backgroundColor: "#f5f5f5",
   },
   errorText: {
     color: "red",
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#001f7e",
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "#999",
     borderRadius: 10,
     marginTop: 10,
     borderWidth: 0.5,
