@@ -6,16 +6,16 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
-import { StatusBar } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/MaterialIcons";
 import ModalInfo from "@/components/ModalInfo";
-import Button from "@/components/Button";
+import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
+import { StatusBar } from "react-native";
+
+const barHeight = StatusBar.currentHeight;
 
 const Home = () => {
-  const barHeight = StatusBar.currentHeight;
-
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
 
@@ -29,10 +29,10 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: barHeight }}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground
         source={Fondo}
-        style={{ flex: 1 }}
+        style={styles.fondo}
         resizeMode="cover"
         onError={() => console.log("Error cargando imagen de fondo...")}
       >
@@ -46,65 +46,63 @@ const Home = () => {
           />
         </View>
 
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.modal}>
           <ModalInfo visible={modalState} onClose={handleCloseModal} />
         </View>
-        <ScrollView contentContainerStyle={styles.container}>
-          <View
-            style={{ flexDirection: "row", paddingTop: 20, marginBottom: 20 }}
-          >
+        <ScrollView contentContainerStyle={styles.container2}>
+          <View style={styles.buttonContainer}>
             <Icon
               name="car-emergency"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Emergencias" url="https://www.google.com" />
+            <LinkButton title="Emergencias" url="https://www.google.com" />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={styles.buttonContainer}>
             <Icon
               name="car-brake-parking"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Parquímetro" url="https://www.google.com" />
+            <LinkButton title="Parquímetro" url="https://www.google.com" />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={styles.buttonContainer}>
             <Icon2
               name="electrical-services"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Servicios" url="https://www.google.com" />
+            <LinkButton title="Servicios" url="https://www.google.com" />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={styles.buttonContainer}>
             <Icon2
               name="currency-exchange"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Comercio" url="https://www.google.com" />
+            <LinkButton title="Comercio" url="https://www.google.com" />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={styles.buttonContainer}>
             <Icon
               name="account-alert"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Denuncias" url="https://www.google.com" />
+            <LinkButton title="Denuncias" url="https://www.google.com" />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={styles.buttonContainer}>
             <Icon
               name="alert-rhombus"
               size={40}
               color={"black"}
               style={styles.icon}
             />
-            <Button title="Multas" url="https://www.google.com" />
+            <LinkButton title="Multas" url="https://www.google.com" />
           </View>
         </ScrollView>
       </ImageBackground>
@@ -113,11 +111,26 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: barHeight,
+  },
+  fondo: {
+    flex: 1,
+  },
   header: {
     padding: 20,
   },
-  container: {
+  modal: {
     alignItems: "center",
+    paddingBottom: 20,
+  },
+  container2: {
+    alignItems: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
   },
   icon: {
     backgroundColor: "white",

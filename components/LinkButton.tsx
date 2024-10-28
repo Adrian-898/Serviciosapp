@@ -9,7 +9,7 @@ interface Props {
 
 const Button: React.FC<Props> = ({ title, url }) => {
   // al presionar se verifica que la url se puede abrir, de no poder se envia un error a la consola
-  const handlePress = async () => {
+  const handlePress = async (url: string) => {
     try {
       const canOpen = await Linking.canOpenURL(url);
       if (canOpen) {
@@ -22,7 +22,7 @@ const Button: React.FC<Props> = ({ title, url }) => {
 
   return (
     // Boton a renderizar
-    <TouchableOpacity onPress={handlePress} style={styles.button}>
+    <TouchableOpacity onPress={() => handlePress(url)} style={styles.button}>
       <Text style={styles.texto} adjustsFontSizeToFit>
         {title}
       </Text>
