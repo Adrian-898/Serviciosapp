@@ -8,7 +8,6 @@ import {
   QueryClientProvider,
   focusManager,
 } from "@tanstack/react-query";
-// import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useState } from "react";
@@ -16,6 +15,7 @@ import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
 import { useAppState } from "@/hooks/useAppState";
 import { useOnlineManager } from "@/hooks/useOnlineManager";
+import { StrictMode } from "react";
 //import { DevToolsBubble } from "react-native-react-query-devtools";
 
 // Previene al splash screen de ocultarse antes de que los recursos esten cargados.
@@ -66,15 +66,19 @@ export default function RootLayout() {
   SplashScreen.hideAsync();
   // Layout de navegacion de la app, el primer Stack.screen contiene la carpeta con las pestañas (tabs)
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: true, headerTitle: "" }}>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack screenOptions={{ headerShown: true, headerTitle: "" }}>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>
   );
 }
 

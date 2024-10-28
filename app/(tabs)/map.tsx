@@ -85,7 +85,7 @@ const Map = () => {
     <SafeAreaView style={{ paddingTop: barHeight }}>
       <MapView
         style={{ width: windowWidth, height: windowHeight }}
-        userLocationUpdateInterval={10000}
+        userLocationUpdateInterval={5000}
         showsUserLocation
         showsMyLocationButton
         loadingEnabled

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import * as Location from "expo-location";
-import { Alert } from "react-native";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
 interface Location {
@@ -46,43 +45,45 @@ const useLocation = () => {
 
   // Funcion que solicita permisos de ubicacion al usuario
   const getLocationPermission = async () => {
-    try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      setPermissionGranted(status === "granted");
-      if (status === "granted") {
-        checkLocationServices();
-        getCurrentLocation();
-      } else {
-        Alert.alert(
-          "Atención:",
-          "Se ha negado el permiso para acceder a la ubicación"
-        );
+    if (!permissionGranted) {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        setPermissionGranted(status === "granted");
+        if (status === "granted") {
+          getCurrentLocation();
+          checkLocationServices();
+        }
+      } catch (error) {
+        console.log(error);
       }
+    }
+  };
+
+  // funcion que chequea que la ubicacion este activada en el dispositivo
+  const checkLocationServices = async () => {
+    try {
+      const servicesEnabled = await Location.hasServicesEnabledAsync();
+      setLocationEnabled(servicesEnabled);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const checkLocationServices = async () => {
-    const servicesEnabled = await Location.hasServicesEnabledAsync();
-    setLocationEnabled(servicesEnabled);
-    if (servicesEnabled) {
-      getCurrentLocation();
-    }
-  };
+  // comportamiento de la funcion de arriba, se ejecuta cada 3 segundos para verificar si esta activa la ubicacion
+  if (permissionGranted && !locationEnabled) {
+    const interval = setInterval(() => {
+      checkLocationServices();
+      if (locationEnabled) {
+        getCurrentLocation();
+        clearInterval(interval);
+      }
+    }, 3000);
+  }
 
   useEffect(() => {
     // se piden permisos de ubicacion al iniciar la app
     getLocationPermission();
-
-    // check cada 3 segundos del estado de la ubicacion, si esta activada o no por el usuario (distinto a permisos de uso de ubicacion)
-    if (permissionGranted) {
-      const interval = setInterval(() => {
-        checkLocationServices();
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [permissionGranted]);
+  }, []);
 
   return { permissionGranted, locationEnabled, origin };
 };
