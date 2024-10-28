@@ -114,7 +114,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   header: {
-    padding: 15,
+    padding: 20,
   },
   container: {
     alignItems: "center",
