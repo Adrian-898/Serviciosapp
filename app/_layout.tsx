@@ -10,11 +10,13 @@ import {
 } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
 import { useAppState } from "@/hooks/useAppState";
 import { useOnlineManager } from "@/hooks/useOnlineManager";
+import AuthContext from "@/contexts/AuthContext";
+import { loadUser } from "@/services/AuthService";
 import { StrictMode } from "react";
 //import { DevToolsBubble } from "react-native-react-query-devtools";
 
@@ -29,12 +31,11 @@ function onAppStateChange(status: AppStateStatus) {
 }
 
 export default function RootLayout() {
+  useAppState(onAppStateChange);
+  useOnlineManager();
   const colorScheme = useColorScheme();
-  /*
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
-  */
+  const [user, setUser] = useState<any>();
+  const [status, setStatus] = useState("loading");
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -49,33 +50,42 @@ export default function RootLayout() {
       })
   );
 
-  useAppState(onAppStateChange);
-  useOnlineManager();
-  /*
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const runEffect = async () => {
+      try {
+        const user = await loadUser();
+        setUser(user);
+      } catch (error) {
+        console.log("No se pudo cargar la información del usuario: ", error);
+      }
+      setStatus("idle");
+    };
+    runEffect();
+  }, []);
 
-  if (!loaded) {
-    return null;
+  if (status === "loading") {
+    return;
   }
-  */
 
   SplashScreen.hideAsync();
-  // Layout de navegacion de la app, el primer Stack.screen contiene la carpeta con las pestañas (tabs)
+
+  // Layout de navegacion de la app
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Stack screenOptions={{ headerShown: true, headerTitle: "" }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <AuthContext.Provider value={{ user, setUser }}>
+            <Stack screenOptions={{ headerShown: true, headerTitle: "" }}>
+              {user ? (
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              ) : (
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+              )}
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </AuthContext.Provider>
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>

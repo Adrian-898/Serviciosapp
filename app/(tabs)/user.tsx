@@ -1,15 +1,23 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from "@expo/vector-icons/Ionicons";
 import { StatusBar } from "react-native";
 import { useColorScheme } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { logout } from "@/services/AuthService";
+import AuthContext from "@/contexts/AuthContext";
 
 const Usuario = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
+  const { setUser } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+  };
 
   return (
     <ThemedView
@@ -46,9 +54,7 @@ const Usuario = () => {
 
       <TouchableOpacity
         style={colorScheme === "light" ? styles.option : styles.optionDark}
-        onPress={() => {
-          router.navigate("/");
-        }}
+        onPress={handleLogout}
       >
         <Icon name="log-out" size={24} color="#d00b27" />
         <Text style={styles.optionText}>Cerrar sesión</Text>

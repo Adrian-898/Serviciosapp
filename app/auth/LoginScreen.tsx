@@ -1,10 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  useColorScheme,
+} from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
-import { useColorScheme } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
+import { login, loadUser } from "@/services/AuthService";
+import AuthContext from "@/contexts/AuthContext";
 import * as yup from "yup";
 
 // esquema de validacion de datos
@@ -21,9 +29,44 @@ const validationSchema = yup.object().shape({
     .label("Contraseña"),
 });
 
-const Login = () => {
+interface loginCredentials {
+  email: string;
+  password: string;
+}
+
+const LoginScreen = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
+  const { setUser } = useContext(AuthContext);
+  const [error, setError] = useState<string>("");
+
+  // control del login al presionar "Iniciar sesion"
+  const handleLogin = async (values: loginCredentials) => {
+    setError("");
+    try {
+      // post
+      const postStatus = await login({
+        email: values.email,
+        password: values.password,
+        device_name: `${Platform.OS} ${Platform.Version}`,
+      });
+
+      // control de errores y redireccion a inicio en caso de login exitoso
+      if (postStatus === "OK") {
+        router.replace("/(tabs)/home");
+      } else {
+        setError(postStatus);
+        console.log("statusText: ", postStatus);
+      }
+
+      // get
+      const user = await loadUser();
+      setUser(user);
+      console.log("get: ", user);
+    } catch (error) {
+      console.log("catch: ", error);
+    }
+  };
 
   return (
     <ThemedView
@@ -35,8 +78,7 @@ const Login = () => {
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
-          console.log(values);
-          router.push("/(tabs)/home");
+          handleLogin(values);
         }}
         validationSchema={validationSchema}
       >
@@ -58,6 +100,8 @@ const Login = () => {
               onBlur={handleBlur("email")}
               value={values.email}
               keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
 
             {errors.email && touched.email && (
@@ -72,6 +116,8 @@ const Login = () => {
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
               value={values.password}
+              autoCapitalize="none"
+              autoCorrect={false}
               secureTextEntry
             />
 
@@ -87,6 +133,12 @@ const Login = () => {
             >
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
+
+            {error && (
+              <ThemedText type="defaultSemiBold" style={styles.errorText}>
+                Ha ocurrido un error: {error}
+              </ThemedText>
+            )}
           </ThemedView>
         )}
       </Formik>
@@ -94,7 +146,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
