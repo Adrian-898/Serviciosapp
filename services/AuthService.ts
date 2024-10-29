@@ -7,6 +7,23 @@ interface loginCredentials {
   device_name: string;
 }
 
+interface registerCredentials {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  device_name: string;
+}
+
+// solicitud de registro "post"
+const register = async (credentials: registerCredentials) => {
+  const { data, statusText } = await AxiosInstance.post(
+    "/register",
+    credentials
+  );
+  await setToken(data.token);
+  return statusText;
+};
+
 // solicitud de inicio de sesion "post"
 const login = async (credentials: loginCredentials) => {
   const { data, statusText } = await AxiosInstance.post("/login", credentials);
@@ -27,4 +44,13 @@ const logout = async () => {
   await setToken(null);
 };
 
-export { login, loadUser, logout };
+// envia un link para resetear la contraseña
+const sendPasswordResetLink = async (email: string) => {
+  const { data, statusText } = await AxiosInstance.post("/forgot-password", {
+    email,
+  });
+  console.log(data);
+  return { data, statusText };
+};
+
+export { register, login, loadUser, logout, sendPasswordResetLink };

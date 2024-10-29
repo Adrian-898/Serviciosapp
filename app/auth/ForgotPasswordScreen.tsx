@@ -1,19 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  Platform,
+  useColorScheme,
 } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { Formik } from "formik";
-import { useColorScheme } from "react-native";
-import { useRouter } from "expo-router";
-import AuthContext from "@/contexts/AuthContext";
-import { register } from "@/services/AuthService";
-import { loadUser } from "@/services/AuthService";
+import { sendPasswordResetLink } from "@/services/AuthService";
 import * as yup from "yup";
 
 // esquema de validacion de datos
@@ -23,53 +19,27 @@ const validationSchema = yup.object().shape({
     .required("Se requiere una dirección de correo válida")
     .email("Se requiere una dirección de correo válida")
     .label("Correo electrónico"),
-  password: yup
-    .string()
-    .required("Se requiere una contraseña")
-    .min(6, "La contraseña debe poseer al menos 6 caracteres")
-    .label("Contraseña"),
-  confirmPassword: yup
-    .string()
-    .required("Las contraseñas deben coincidir")
-    .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
 });
 
-interface registerCredentials {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-const Register = () => {
+const ForgotPassword = () => {
   const colorScheme = useColorScheme();
-  const router = useRouter();
-  const { setUser } = useContext(AuthContext);
+  const [resetStatus, setResetStatus] = useState("");
   const [error, setError] = useState<string>("");
 
-  // control del registro al presionar "Registrar"
-  const handleRegister = async (values: registerCredentials) => {
+  // control del login al presionar "Iniciar sesion"
+  const handleForgotPassword = async (value: string) => {
     setError("");
+    setResetStatus("");
     try {
       // post
-      const postStatus = await register({
-        email: values.email,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        device_name: `${Platform.OS} ${Platform.Version}`,
-      });
+      const { data, statusText } = await sendPasswordResetLink(value);
+      setResetStatus(data.status);
 
       // control de errores y redireccion a inicio en caso de login exitoso
-      if (postStatus === "OK") {
-        router.replace("/(tabs)/home");
-      } else {
-        setError(postStatus);
-        console.log("statusText: ", postStatus);
+      if (statusText !== "OK") {
+        setError(statusText);
+        console.log("statusText: ", statusText);
       }
-
-      // get
-      const user = await loadUser();
-      setUser(user);
-      console.log("get: ", user);
     } catch (error) {
       console.log("catch: ", error);
     }
@@ -80,12 +50,12 @@ const Register = () => {
       style={colorScheme === "light" ? styles.container : styles.containerDark}
     >
       <ThemedText type="title" style={styles.title}>
-        Registro
+        Restablecer contraseña
       </ThemedText>
       <Formik
-        initialValues={{ email: "", password: "", confirmPassword: "" }}
+        initialValues={{ email: "" }}
         onSubmit={(values) => {
-          handleRegister(values);
+          handleForgotPassword(values.email);
         }}
         validationSchema={validationSchema}
       >
@@ -107,6 +77,8 @@ const Register = () => {
               onBlur={handleBlur("email")}
               value={values.email}
               keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
 
             {errors.email && touched.email && (
@@ -115,35 +87,12 @@ const Register = () => {
               </ThemedText>
             )}
 
-            <TextInput
-              style={colorScheme === "light" ? styles.input : styles.inputDark}
-              placeholder="Contraseña"
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
-              value={values.password}
-              secureTextEntry
-            />
-
-            {errors.password && touched.password && (
-              <ThemedText type="defaultSemiBold" style={styles.errorText}>
-                {errors.password}
-              </ThemedText>
-            )}
-
-            <TextInput
-              style={colorScheme === "light" ? styles.input : styles.inputDark}
-              placeholder="Confirmar contraseña"
-              onChangeText={handleChange("confirmPassword")}
-              onBlur={handleBlur("confirmPassword")}
-              value={values.confirmPassword}
-              secureTextEntry
-            />
-
-            {errors.confirmPassword && touched.confirmPassword && (
-              <ThemedText type="defaultSemiBold" style={styles.errorText}>
-                {errors.confirmPassword}
-              </ThemedText>
-            )}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleSubmit()}
+            >
+              <Text style={styles.buttonText}>Enviar</Text>
+            </TouchableOpacity>
 
             {error && (
               <ThemedText type="defaultSemiBold" style={styles.errorText}>
@@ -151,12 +100,11 @@ const Register = () => {
               </ThemedText>
             )}
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleSubmit()}
-            >
-              <Text style={styles.buttonText}>Registrarse</Text>
-            </TouchableOpacity>
+            {resetStatus && (
+              <ThemedText type="defaultSemiBold" style={styles.statusText}>
+                Se ha enviado un correo de recuperación: {resetStatus}
+              </ThemedText>
+            )}
           </ThemedView>
         )}
       </Formik>
@@ -164,7 +112,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
@@ -216,6 +164,10 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
   },
+  statusText: {
+    color: "green",
+    marginBottom: 10,
+  },
   button: {
     height: 50,
     backgroundColor: "#001f7e",
@@ -232,9 +184,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-/*
-#333: gris oscuro
-#999 gris claro
-#CCC gris mas calro
-*/

@@ -127,6 +127,12 @@ const LoginScreen = () => {
               </ThemedText>
             )}
 
+            {error && (
+              <ThemedText type="defaultSemiBold" style={styles.errorText}>
+                Ha ocurrido un error: {error}
+              </ThemedText>
+            )}
+
             <TouchableOpacity
               style={styles.button}
               onPress={() => handleSubmit()}
@@ -134,11 +140,11 @@ const LoginScreen = () => {
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
 
-            {error && (
-              <ThemedText type="defaultSemiBold" style={styles.errorText}>
-                Ha ocurrido un error: {error}
-              </ThemedText>
-            )}
+            <TouchableOpacity
+              onPress={() => router.push("/auth/ForgotPasswordScreen")}
+            >
+              <ThemedText type="link">Olvidaste tu contraseña?</ThemedText>
+            </TouchableOpacity>
           </ThemedView>
         )}
       </Formik>

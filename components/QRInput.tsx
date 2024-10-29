@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import useParquimetro from "@/hooks/api/useParquimetro";
+// import useParquimetro from "@/hooks/api/useParquimetro";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { useColorScheme } from "react-native";
 import { Formik } from "formik";
