@@ -7,9 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "tamagui": {
-      "config": "./tamagui.config.ts"
-    },
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain"
@@ -35,6 +32,11 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1dc3a6b1-cd20-4c56-878f-18eed5a1c865"
+      }
     }
   }
 }
