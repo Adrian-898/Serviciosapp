@@ -39,14 +39,14 @@ const Home = () => {
           <View style={styles.loginRegister}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.push("/auth/login")}
+              onPress={() => router.push("/auth/LoginScreen")}
             >
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.push("/auth/register")}
+              onPress={() => router.push("/auth/RegisterScreen")}
             >
               <Text style={styles.buttonText}>Registrarse</Text>
             </TouchableOpacity>

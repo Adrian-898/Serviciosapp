@@ -11,15 +11,17 @@ import Icon2 from "@expo/vector-icons/MaterialIcons";
 import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
-import AuthContext from "@/contexts/AuthContext";
-import { ThemedText } from "@/components/ThemedText";
+// import AuthContext from "@/contexts/AuthContext";
+// import { ThemedText } from "@/components/ThemedText";
 import { StatusBar } from "react-native";
 
 const barHeight = StatusBar.currentHeight;
 
 const Home = () => {
+  /*
   // informacion de usuario logeado
   const { user } = useContext(AuthContext);
+  */
 
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
@@ -42,9 +44,11 @@ const Home = () => {
         onError={() => console.log("Error cargando imagen de fondo...")}
       >
         <View style={styles.header}>
+          {/*
           <ThemedText type="defaultSemiBold" style={styles.welcome}>
             Bienvenido {user.name}.
           </ThemedText>
+          */}
 
           <Icon
             name="information-outline"
@@ -54,7 +58,6 @@ const Home = () => {
             style={styles.info}
           />
         </View>
-
         <View style={styles.modal}>
           <ModalInfo visible={modalState} onClose={handleCloseModal} />
         </View>

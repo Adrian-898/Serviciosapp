@@ -12,6 +12,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarHideOnKeyboard: true,
+        headerShown: false,
       }}
     >
       <Tabs.Screen
@@ -30,7 +31,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="QRScanner"
         options={{
-          headerShown: false,
           title: "QR",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
@@ -43,7 +43,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="map"
         options={{
-          headerShown: false,
           title: "Ubicación",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
@@ -56,7 +55,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="user"
         options={{
-          headerShown: false,
           title: "Usuario",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon

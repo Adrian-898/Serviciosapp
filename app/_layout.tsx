@@ -17,7 +17,6 @@ import { useAppState } from "@/hooks/useAppState";
 import { useOnlineManager } from "@/hooks/useOnlineManager";
 import AuthContext from "@/contexts/AuthContext";
 import { loadUser } from "@/services/AuthService";
-import { StrictMode } from "react";
 //import { DevToolsBubble } from "react-native-react-query-devtools";
 
 // Previene al splash screen de ocultarse antes de que los recursos esten cargados.
@@ -71,24 +70,20 @@ export default function RootLayout() {
 
   // Layout de navegacion de la app
   return (
-    <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <AuthContext.Provider value={{ user, setUser }}>
-            <Stack screenOptions={{ headerShown: true, headerTitle: "" }}>
-              {user ? (
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              ) : (
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-              )}
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </AuthContext.Provider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <AuthContext.Provider value={{ user, setUser }}>
+          <Stack screenOptions={{ headerShown: false }}>
+            {user ? (
+              <Stack.Screen name="(tabs)" />
+            ) : (
+              <Stack.Screen name="index" />
+            )}
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </AuthContext.Provider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -143,7 +143,9 @@ const LoginScreen = () => {
             <TouchableOpacity
               onPress={() => router.push("/auth/ForgotPasswordScreen")}
             >
-              <ThemedText type="link">Olvidaste tu contraseña?</ThemedText>
+              <ThemedText type="link" style={styles.link}>
+                Olvidaste tu contraseña?
+              </ThemedText>
             </TouchableOpacity>
           </ThemedView>
         )}
@@ -218,5 +220,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  link: {
+    margin: 5,
+    alignSelf: "center",
   },
 });

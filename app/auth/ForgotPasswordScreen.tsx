@@ -72,7 +72,7 @@ const ForgotPassword = () => {
           >
             <TextInput
               style={colorScheme === "light" ? styles.input : styles.inputDark}
-              placeholder="Correo electrónico"
+              placeholder="Ingresa tu correo electrónico"
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               value={values.email}
@@ -91,7 +91,7 @@ const ForgotPassword = () => {
               style={styles.button}
               onPress={() => handleSubmit()}
             >
-              <Text style={styles.buttonText}>Enviar</Text>
+              <Text style={styles.buttonText}>Enviar código</Text>
             </TouchableOpacity>
 
             {error && (
