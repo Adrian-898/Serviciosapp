@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
-interface Location {
+interface location {
   latitude: number;
   longitude: number;
   latitudeDelta: number;
@@ -12,7 +12,7 @@ interface Location {
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {
   // Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
-  const [origin, setOrigin] = useState<Location>({
+  const [origin, setOrigin] = useState<location>({
     latitude: 10.597032,
     longitude: -66.930431,
     latitudeDelta: 0.04,
@@ -22,10 +22,10 @@ const useGetCurrentLocation = () => {
   // funcion que obtiene la ubicacion actual (actualiza la variable origin)
   const getCurrentLocation = async () => {
     try {
-      let location = await Location.getCurrentPositionAsync({});
-      const current: Location = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+      let result = await Location.getCurrentPositionAsync({});
+      const current: location = {
+        latitude: result.coords.latitude,
+        longitude: result.coords.longitude,
         latitudeDelta: 0.04,
         longitudeDelta: 0.04,
       };
