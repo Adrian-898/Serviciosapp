@@ -5,9 +5,9 @@ import { StatusBar } from "react-native";
 import { useColorScheme } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
-import { useRouter } from "expo-router";
-import { logout } from "@/services/AuthService";
-import AuthContext from "@/contexts/AuthContext";
+// import { useRouter } from "expo-router";
+// import { logout } from "@/services/AuthService";
+// import AuthContext from "@/contexts/AuthContext";
 
 const Usuario = () => {
   const colorScheme = useColorScheme();
