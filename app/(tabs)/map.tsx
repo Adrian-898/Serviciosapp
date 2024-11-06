@@ -109,23 +109,23 @@ const Map = () => {
             ))
           }
         </MapView>
+        {
+          // muestra un mensaje si no hay permisos de uso de ubicacion
+          !location.permissionGranted && (
+            <ThemedView style={styles.alertContainer}>
+              <Alerta />
+              <ThemedText
+                type="defaultSemiBold"
+                style={styles.alertMessage}
+                adjustsFontSizeToFit={true}
+              >
+                Los permisos de ubicación fueron negados, ve a la configuración
+                de la App para otorgar los permisos
+              </ThemedText>
+            </ThemedView>
+          )
+        }
       </Suspense>
-      {
-        // muestra un mensaje si no hay permisos de uso de ubicacion
-        !location.permissionGranted && (
-          <ThemedView style={styles.alertContainer}>
-            <Alerta />
-            <ThemedText
-              type="defaultSemiBold"
-              style={styles.alertMessage}
-              adjustsFontSizeToFit={true}
-            >
-              Los permisos de ubicación fueron negados, ve a la configuración de
-              la App para otorgar los permisos
-            </ThemedText>
-          </ThemedView>
-        )
-      }
     </SafeAreaView>
   );
 };
