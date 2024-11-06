@@ -25,13 +25,13 @@ interface Lugar {
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [
   {
-    lat: 10.487299,
-    lng: -66.823366,
+    lat: 10.600645,
+    lng: -66.930551,
     name: "Lugar 1",
   },
   {
-    lat: 10.482382,
-    lng: -66.818409,
+    lat: 10.60062,
+    lng: -66.922652,
     name: "Lugar 2",
   },
 ];

@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, TouchableOpacity, Linking, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 
 // propiedades del boton: titulo y url a la que enlaza
 interface Props {
@@ -8,15 +9,11 @@ interface Props {
 }
 
 const Button: React.FC<Props> = ({ title, url }) => {
-  // al presionar se verifica que la url se puede abrir, de no poder se envia un error a la consola
+  // abre la url del boton seleccionado
   const handlePress = async (url: string) => {
-    try {
-      const canOpen = await Linking.canOpenURL(url);
-      if (canOpen) {
-        await Linking.openURL(url);
-      }
-    } catch (error) {
-      console.log(error);
+    let result = await WebBrowser.openBrowserAsync(url);
+    if (result.type !== "opened") {
+      Alert.alert("Error:", "Algo salió mal, intente de nuevo");
     }
   };
 

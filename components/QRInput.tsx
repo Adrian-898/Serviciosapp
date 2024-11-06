@@ -3,18 +3,17 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Linking,
   KeyboardAvoidingView,
   SafeAreaView,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-// import useParquimetro from "@/hooks/api/useParquimetro";
 import Icon from "@expo/vector-icons/FontAwesome";
-import { useColorScheme } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import * as WebBrowser from "expo-web-browser";
 
 // parametros del componente principal
 interface QRInputProps {
@@ -39,9 +38,6 @@ const validationSchema = yup.object().shape({
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
 const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
-  const colorScheme = useColorScheme();
-  // const { status, error, data, isFetching } = useParquimetro();
-
   // array de prueba
   const park = [
     "",
@@ -58,15 +54,11 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
     parquimetro: string,
     puesto: number | undefined
   ) => {
-    const URL = `https://${parquimetro}/${puesto}`;
+    const url = `https://${parquimetro}/${puesto}`;
 
-    try {
-      const canOpen = await Linking.canOpenURL(URL);
-      if (canOpen) {
-        await Linking.openURL(URL);
-      }
-    } catch (error) {
-      console.log(error);
+    let result = await WebBrowser.openBrowserAsync(url);
+    if (result.type !== "opened") {
+      Alert.alert("Error:", "Algo salió mal, intente de nuevo");
     }
   };
 
