@@ -3,7 +3,8 @@
     "preview": {
       "android": {
         "buildType": "apk"
-      }
+      },
+      "env": { "GOOGLE_API_KEY": "AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw" }
     },
     "production": {}
   }
