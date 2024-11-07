@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+import Constants from "expo-constants";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StatusBar } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
@@ -38,8 +39,12 @@ const lugares: Lugar[] = [
 
 // componente principal
 const Map = () => {
+  const apiKey = Constants.expoConfig?.android?.config?.googleMaps?.apiKey;
+
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  // hook usado para permisos de ubicacion y geolocalizacion del ususario
   const location = useLocation();
 
   // componente Pin en el mapa
