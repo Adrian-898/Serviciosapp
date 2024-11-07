@@ -16,8 +16,8 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.text} adjustsFontSizeToFit>
-        Bienvenido a tu App La Guaira 2.0, aquí encontrarás distintos servicios
-        a los que puedes acceder desde los enlaces disponibles en esta pantalla.
+        Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
+        los que puedes acceder desde los enlaces disponibles en esta pantalla.
       </ThemedText>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <ThemedText type="subtitle" style={styles.closeButtonText}>
