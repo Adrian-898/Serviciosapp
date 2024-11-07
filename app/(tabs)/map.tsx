@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useLocation from "@/hooks/useLocation";
+import useLocationPermission from "@/hooks/useLocationPermission";
 import {
   SafeAreaView,
   useWindowDimensions,
@@ -45,7 +45,7 @@ const Map = () => {
   const windowHeight = useWindowDimensions().height;
 
   // hook usado para permisos de ubicacion y geolocalizacion del ususario
-  const location = useLocation();
+  const location = useLocationPermission();
 
   // componente Pin en el mapa
   const MarkerComponent = ({ coord }: { coord: Lugar }) => (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as Location from "expo-location";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
@@ -38,31 +38,4 @@ const useGetCurrentLocation = () => {
   return { origin, getCurrentLocation };
 };
 
-const useLocation = () => {
-  const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
-  const { origin, getCurrentLocation } = useGetCurrentLocation();
-
-  // Funcion que solicita permisos de ubicacion al usuario
-  const getLocationPermission = async () => {
-    if (!permissionGranted) {
-      try {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        setPermissionGranted(status === "granted");
-        if (status === "granted") {
-          getCurrentLocation();
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } else return;
-  };
-
-  useEffect(() => {
-    // se piden permisos de ubicacion al iniciar la app
-    getLocationPermission();
-  }, []);
-
-  return { permissionGranted, origin };
-};
-
-export default useLocation;
+export default useGetCurrentLocation;
