@@ -161,9 +161,7 @@ const Map = () => {
           // Traza la ruta usando la API Directions de google maps:
           drawRoute && (
             <MapViewDirections
-              apikey={
-                Constants.expoConfig?.android?.config?.googleMaps?.apiKey!
-              }
+              apikey="AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
               origin={location.origin}
               destination={destination?.coords}
               mode="WALKING"
