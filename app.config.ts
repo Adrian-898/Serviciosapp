@@ -1,5 +1,7 @@
 import "dotenv/config";
 
+const key: string = process.env.GOOGLE_API_KEY!;
+
 export default {
   expo: {
     name: "app-la-guaira",
@@ -19,7 +21,7 @@ export default {
     android: {
       config: {
         googleMaps: {
-          apiKey: process.env.GOOGLE_API_KEY,
+          apiKey: key,
         },
       },
       permissions: ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
