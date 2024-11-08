@@ -45,6 +45,7 @@ const Map = () => {
 
   // destino establecido al que ir, una vez se selecciona un marcador
   const [destination, setDestination] = useState<Lugar>();
+  const [newDestination, setNewDestination] = useState<Lugar>();
 
   // estado visual (mostrado o no segun se toque un marcador del mapa) del boton para trazar ruta del usuario a un lugar determinado
   const [drawRouteButton, setDrawRouteButton] = useState(false);
@@ -63,6 +64,7 @@ const Map = () => {
   // al presionar el boton para trazar rutas
   const DrawRouteButtonPress = () => {
     setDrawRouteButton(false);
+    setDestination(newDestination);
     setDrawRoute(true);
   };
 
@@ -100,11 +102,10 @@ const Map = () => {
 
   // al presionar un marcador
   const MarkerPress = (lugar: Lugar) => {
-    if (destination! && destination.name === lugar.name) {
+    setNewDestination(lugar);
+    if (destination?.name === lugar.name) {
       return;
-    } else {
-      setDrawRoute(false);
-      setDestination(lugar);
+    } else if (destination?.name !== lugar.name) {
       setDrawRouteButton(true);
     }
   };
