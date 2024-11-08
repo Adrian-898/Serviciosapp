@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   SafeAreaView,
   useWindowDimensions,
@@ -70,26 +70,32 @@ const Map = () => {
   const [drawRoute, setDrawRoute] = useState(false);
 
   // componente Pin en el mapa
-  const MarkerComponent = ({ lugar }: { lugar: Lugar }) => (
-    <Marker
-      coordinate={{
-        latitude: lugar.coords.latitude,
-        longitude: lugar.coords.longitude,
-      }}
-      pinColor="red"
-    >
-      <Callout onPress={() => MarkerPress(lugar)}>
-        <Text
-          style={{
-            alignSelf: "center",
-            color: "black",
-            fontStyle: "normal",
-          }}
-        >
-          {lugar.name}
-        </Text>
-      </Callout>
-    </Marker>
+  const MarkerComponent = useCallback(
+    ({ lugar }: { lugar: Lugar }) => (
+      <Marker
+        coordinate={{
+          latitude: lugar.coords.latitude,
+          longitude: lugar.coords.longitude,
+        }}
+        pinColor="red"
+        tracksViewChanges={false}
+        onSelect={() => MarkerPress(lugar)}
+        onDeselect={() => setDrawRouteButton(false)}
+      >
+        <Callout>
+          <Text
+            style={{
+              alignSelf: "center",
+              color: "black",
+              fontStyle: "normal",
+            }}
+          >
+            {lugar.name}
+          </Text>
+        </Callout>
+      </Marker>
+    ),
+    [lugares]
   );
 
   // al presionar un marcador
