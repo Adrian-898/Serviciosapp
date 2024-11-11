@@ -1,10 +1,9 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   SafeAreaView,
   useWindowDimensions,
   Text,
   StyleSheet,
-  StatusBar,
   TouchableOpacity,
 } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
@@ -15,18 +14,16 @@ import MapViewDirections from "react-native-maps-directions";
 import useLocationPermission from "@/hooks/useLocationPermission";
 import Constants from "expo-constants";
 
-const barHeight = StatusBar.currentHeight;
-
 // interfaz para almacenar informacion de los lugares que se quiere marcar en el mapa
 interface Lugar {
   coords: { latitude: number; longitude: number };
-  name: string | undefined;
+  name: string;
 }
 
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [
   {
-    coords: { latitude: 10.600645, longitude: -66.930551 },
+    coords: { latitude: 10.598246, longitude: -66.930307 },
     name: "Lugar 1",
   },
   {
@@ -44,8 +41,8 @@ const Map = () => {
   const location = useLocationPermission();
 
   // destino establecido al que ir, una vez se selecciona un marcador
-  const [destination, setDestination] = useState<Lugar>();
-  const [newDestination, setNewDestination] = useState<Lugar>();
+  const [destination, setDestination] = useState<Lugar | undefined>();
+  const [newDestination, setNewDestination] = useState<Lugar | undefined>();
 
   // estado visual (mostrado o no segun se toque un marcador del mapa) del boton para trazar ruta del usuario a un lugar determinado
   const [drawRouteButton, setDrawRouteButton] = useState(false);
@@ -55,7 +52,7 @@ const Map = () => {
     return (
       <TouchableOpacity style={styles.button} onPress={DrawRouteButtonPress}>
         <Text style={styles.buttonText}>
-          Mostrar el camino a {destination?.name}
+          Mostrar el camino a {newDestination?.name}
         </Text>
       </TouchableOpacity>
     );
@@ -64,8 +61,10 @@ const Map = () => {
   // al presionar el boton para trazar rutas
   const DrawRouteButtonPress = () => {
     setDrawRouteButton(false);
-    setDestination(newDestination);
-    setDrawRoute(true);
+    if (destination !== newDestination) {
+      setDestination(newDestination);
+      setDrawRoute(true);
+    }
   };
 
   // estado de trazado de ruta del usuario a un lugar determinado (activo o no)
@@ -102,11 +101,11 @@ const Map = () => {
 
   // al presionar un marcador
   const MarkerPress = (lugar: Lugar) => {
-    setNewDestination(lugar);
-    if (destination?.name === lugar.name) {
-      return;
-    } else if (destination?.name !== lugar.name) {
+    if (destination?.name !== lugar?.name || destination.name === undefined) {
+      setNewDestination(lugar);
       setDrawRouteButton(true);
+    } else {
+      setDrawRouteButton(false);
     }
   };
 
@@ -169,7 +168,6 @@ const Map = () => {
               language="es-419"
               region="VE"
               strokeColor="#001f7e"
-              onStart={() => setDrawRouteButton(false)}
             />
           )
         }
@@ -188,7 +186,7 @@ const Map = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: barHeight,
+    paddingTop: Constants.statusBarHeight,
   },
   alertContainer: {
     flexDirection: "row",
