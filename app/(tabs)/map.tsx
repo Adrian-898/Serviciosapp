@@ -34,6 +34,7 @@ const lugares: Lugar[] = [
 
 // componente principal
 const Map = () => {
+  // dimensiones del dispositivo
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
