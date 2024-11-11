@@ -7,24 +7,23 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { StatusBar } from "react-native";
+import Constants from "expo-constants";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 
 const Home = () => {
-  const barHeight = StatusBar.currentHeight;
   const router = useRouter();
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: barHeight }}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground
         source={Fondo}
         style={{ flex: 1 }}
         resizeMode="cover"
         onError={() => console.log("Error cargando imagen de fondo...")}
       >
-        <View style={styles.container}>
+        <View style={styles.buttonContainer}>
           <View style={styles.continue}>
             <TouchableOpacity
               style={styles.button}
@@ -58,7 +57,11 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: "column" },
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  },
+  buttonContainer: { flex: 1, flexDirection: "column" },
   button: {
     padding: 10,
     marginHorizontal: 20,

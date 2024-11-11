@@ -6,6 +6,7 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
+import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/MaterialIcons";
 import ModalInfo from "@/components/ModalInfo";
@@ -13,9 +14,6 @@ import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 // import AuthContext from "@/contexts/AuthContext";
 // import { ThemedText } from "@/components/ThemedText";
-import { StatusBar } from "react-native";
-
-const barHeight = StatusBar.currentHeight;
 
 const Home = () => {
   /*
@@ -125,7 +123,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: barHeight,
+    paddingTop: Constants.statusBarHeight,
   },
   fondo: {
     flex: 1,

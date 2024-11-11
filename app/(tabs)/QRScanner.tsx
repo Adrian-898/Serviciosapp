@@ -5,17 +5,15 @@ import {
   SafeAreaView,
   View,
   Button,
-  StatusBar,
   Linking,
   ActivityIndicator,
 } from "react-native";
 import { CameraView, BarcodeScanningResult } from "expo-camera";
 import { ThemedText } from "@/components/ThemedText";
+import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 import useCamera from "@/hooks/useCamera";
-
-const barHeight = StatusBar.currentHeight;
 
 const QRCodeScanner = () => {
   // permisos de uso de camara
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   back: {
-    marginTop: barHeight,
+    marginTop: Constants.statusBarHeight,
     position: "absolute",
     backgroundColor: "black",
     alignSelf: "center",
