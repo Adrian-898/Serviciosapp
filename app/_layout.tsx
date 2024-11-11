@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   DarkTheme,
   DefaultTheme,
@@ -10,11 +11,10 @@ import {
 } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useState, useEffect } from "react";
 import { Platform, AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
-import { useAppState } from "@/hooks/useAppState";
-import { useOnlineManager } from "@/hooks/useOnlineManager";
+import useAppState from "@/hooks/useAppState";
+import useOnlineManager from "@/hooks/useOnlineManager";
 import AuthContext from "@/contexts/AuthContext";
 import { loadUser } from "@/services/AuthService";
 //import { DevToolsBubble } from "react-native-react-query-devtools";

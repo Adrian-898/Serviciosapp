@@ -1,8 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 
-let token = null;
+let token: string | null = null;
 
-const setToken = async (newToken) => {
+const setToken = async (newToken: string | null) => {
   token = newToken;
 
   if (token !== null) {

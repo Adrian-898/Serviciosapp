@@ -1,18 +1,18 @@
 import AxiosInstance from "@/utils/axios";
 import { setToken } from "./TokenService";
 
-interface loginCredentials {
+type loginCredentials = {
   email: string;
   password: string;
   device_name: string;
-}
+};
 
-interface registerCredentials {
+type registerCredentials = {
   email: string;
   password: string;
   confirmPassword: string;
   device_name: string;
-}
+};
 
 // solicitud de registro "post"
 const register = async (credentials: registerCredentials) => {

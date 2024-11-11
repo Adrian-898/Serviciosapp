@@ -3,17 +3,21 @@ import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 
 // propiedades del boton: titulo y url a la que enlaza
-interface Props {
+type LinkButtonProps = {
   title: string;
   url: string;
-}
+};
 
-const Button: React.FC<Props> = ({ title, url }) => {
+const Button: React.FC<LinkButtonProps> = ({ title, url }) => {
   // abre la url del boton seleccionado
   const handlePress = async (url: string) => {
-    let result = await WebBrowser.openBrowserAsync(url);
-    if (result.type !== "opened") {
-      Alert.alert("Error:", "Algo salió mal, intente de nuevo");
+    try {
+      let result = await WebBrowser.openBrowserAsync(url);
+      if (result.type !== "opened") {
+        Alert.alert("Error:", "Algo salió mal, intente de nuevo");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

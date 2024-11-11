@@ -2,12 +2,12 @@ import { useState } from "react";
 import * as Location from "expo-location";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
-interface location {
+type location = {
   latitude: number;
   longitude: number;
   latitudeDelta: number;
   longitudeDelta: number;
-}
+};
 
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {

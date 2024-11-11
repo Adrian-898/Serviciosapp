@@ -5,8 +5,8 @@ import {
   SafeAreaView,
   View,
   Button,
-  Linking,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { CameraView, BarcodeScanningResult } from "expo-camera";
 import { ThemedText } from "@/components/ThemedText";
@@ -14,6 +14,7 @@ import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 import useCamera from "@/hooks/useCamera";
+import * as WebBrowser from "expo-web-browser";
 
 const QRCodeScanner = () => {
   // permisos de uso de camara
@@ -29,12 +30,12 @@ const QRCodeScanner = () => {
   const handleBarCodeScanned = async (Scan: BarcodeScanningResult) => {
     setScanned(true);
     const { data } = Scan;
-    const URL = "https://" + data;
+    const url = "https://" + data;
 
     try {
-      const canOpen = await Linking.canOpenURL(URL);
-      if (canOpen) {
-        await Linking.openURL(URL);
+      const result = await WebBrowser.openBrowserAsync(url);
+      if (result.type !== "opened") {
+        Alert.alert("Error:", "Algo salió mal, intente de nuevo");
       }
     } catch (error) {
       console.log(error);

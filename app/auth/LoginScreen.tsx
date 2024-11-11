@@ -29,10 +29,10 @@ const validationSchema = yup.object().shape({
     .label("Contraseña"),
 });
 
-interface loginCredentials {
+type loginCredentials = {
   email: string;
   password: string;
-}
+};
 
 const LoginScreen = () => {
   const colorScheme = useColorScheme();

@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
@@ -8,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  Platform,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "@expo/vector-icons/FontAwesome";
@@ -16,10 +16,10 @@ import * as yup from "yup";
 import * as WebBrowser from "expo-web-browser";
 
 // parametros del componente principal
-interface QRInputProps {
+type QRInputProps = {
   visible: boolean;
   onClose: () => void;
-}
+};
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -56,9 +56,13 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
   ) => {
     const url = `https://${parquimetro}/${puesto}`;
 
-    let result = await WebBrowser.openBrowserAsync(url);
-    if (result.type !== "opened") {
-      Alert.alert("Error:", "Algo salió mal, intente de nuevo");
+    try {
+      let result = await WebBrowser.openBrowserAsync(url);
+      if (result.type !== "opened") {
+        Alert.alert("Error:", "Algo salió mal, intente de nuevo");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -87,7 +91,10 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
   if (!visible) return null;
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={"height"}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Icon
         name="close"
         color={"#d00b27"}

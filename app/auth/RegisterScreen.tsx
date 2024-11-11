@@ -34,11 +34,11 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
 });
 
-interface registerCredentials {
+type registerCredentials = {
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
 const Register = () => {
   const colorScheme = useColorScheme();

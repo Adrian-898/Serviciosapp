@@ -14,11 +14,11 @@ import MapViewDirections from "react-native-maps-directions";
 import useLocationPermission from "@/hooks/useLocationPermission";
 import Constants from "expo-constants";
 
-// interfaz para almacenar informacion de los lugares que se quiere marcar en el mapa
-interface Lugar {
+// objeto para almacenar informacion de los lugares que se quiere marcar en el mapa
+type Lugar = {
   coords: { latitude: number; longitude: number };
   name: string;
-}
+};
 
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [

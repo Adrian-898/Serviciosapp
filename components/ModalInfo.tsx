@@ -4,10 +4,10 @@ import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 
 // propiedades del modal
-interface ModalInfoProps {
+type ModalInfoProps = {
   visible: boolean;
   onClose: () => void;
-}
+};
 
 // componente modal, retorna el bloque de informacion y el boton de cerrar si la variable visible es true
 const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
