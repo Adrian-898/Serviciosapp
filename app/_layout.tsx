@@ -17,6 +17,7 @@ import useAppState from "@/hooks/useAppState";
 import useOnlineManager from "@/hooks/useOnlineManager";
 import AuthContext from "@/contexts/AuthContext";
 import { loadUser } from "@/services/AuthService";
+import getErrorMessage from "@/utils/getErrorMessage";
 //import { DevToolsBubble } from "react-native-react-query-devtools";
 
 // Previene al splash screen de ocultarse antes de que los recursos esten cargados.
@@ -29,7 +30,7 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
-export default function RootLayout() {
+const RootLayout = () => {
   useAppState(onAppStateChange);
   useOnlineManager();
   const colorScheme = useColorScheme();
@@ -55,7 +56,8 @@ export default function RootLayout() {
         const user = await loadUser();
         setUser(user);
       } catch (error) {
-        console.log("No se pudo cargar la información del usuario: ", error);
+        return { message: getErrorMessage(error) };
+        // console.log("No se pudo cargar la información del usuario: ", error);
       }
       setStatus("idle");
     };
@@ -85,5 +87,7 @@ export default function RootLayout() {
       </ThemeProvider>
     </QueryClientProvider>
   );
-}
+};
+
+export default RootLayout;
 
