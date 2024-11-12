@@ -21,7 +21,7 @@ const Usuario = () => {
       await logout();
       setUser(null);
     } catch (error) {
-      console.log(error + " Mensaje: " + getErrorMessage(error));
+      console.warn(error + " Mensaje: " + getErrorMessage(error));
     }
     */
   };

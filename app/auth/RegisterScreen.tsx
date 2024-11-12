@@ -72,7 +72,7 @@ const Register = () => {
       setUser(user);
       console.log("get: ", user);
     } catch (error) {
-      console.log(error + " Mensaje: " + getErrorMessage(error));
+      console.warn(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

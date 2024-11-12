@@ -32,7 +32,8 @@ const useGetCurrentLocation = () => {
       };
       setOrigin(current);
     } catch (error) {
-      console.log(error + " Mensaje: " + getErrorMessage(error));
+      console.warn(error + " Mensaje: " + getErrorMessage(error));
+      throw error;
     }
   };
 

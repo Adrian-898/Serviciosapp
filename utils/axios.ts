@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getToken } from "@/services/TokenService";
+import getErrorMessage from "./getErrorMessage";
 
 const AxiosInstance = axios.create({
   baseURL: "https://api/",
@@ -9,7 +10,12 @@ const AxiosInstance = axios.create({
 });
 
 axios.interceptors.request.use(async (req) => {
-  const token = await getToken();
+  let token: string | null = null;
+  try {
+    token = await getToken();
+  } catch (error) {
+    console.warn(error + " Mensaje: " + getErrorMessage(error));
+  }
 
   if (token !== null) {
     req.headers["Authorization"] = `Bearer ${token}`;

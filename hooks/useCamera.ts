@@ -10,7 +10,7 @@ const useCamera = () => {
       try {
         await requestPermission();
       } catch (error) {
-        console.log(error + " Mensaje: " + getErrorMessage(error));
+        console.warn(error + " Mensaje: " + getErrorMessage(error));
       }
     };
     loadCamera();

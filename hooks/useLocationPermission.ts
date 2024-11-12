@@ -19,7 +19,7 @@ const useLocation = () => {
           getCurrentLocation();
         }
       } catch (error) {
-        console.log(error + " Mensaje: " + getErrorMessage(error));
+        console.warn(error + " Mensaje: " + getErrorMessage(error));
         throw error;
       }
     } else return;

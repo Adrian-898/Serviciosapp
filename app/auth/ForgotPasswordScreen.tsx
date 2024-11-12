@@ -42,7 +42,7 @@ const ForgotPassword = () => {
         console.log("statusText: ", statusText);
       }
     } catch (error) {
-      console.log(error + " Mensaje: " + getErrorMessage(error));
+      console.warn(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

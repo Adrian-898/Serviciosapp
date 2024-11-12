@@ -57,7 +57,7 @@ const RootLayout = () => {
         const user = await loadUser();
         setUser(user);
       } catch (error) {
-        console.log(error + " Mensaje: " + getErrorMessage(error));
+        console.warn(error + " Mensaje: " + getErrorMessage(error));
       }
     };
     runEffect();

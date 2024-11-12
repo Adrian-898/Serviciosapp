@@ -39,7 +39,7 @@ const QRCodeScanner = () => {
         Alert.alert("Error:", "Algo salió mal, intente de nuevo");
       }
     } catch (error) {
-      console.log(error + " Mensaje: " + getErrorMessage(error));
+      console.warn(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 
