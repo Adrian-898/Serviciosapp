@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as Location from "expo-location";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
 type location = {
@@ -31,7 +32,7 @@ const useGetCurrentLocation = () => {
       };
       setOrigin(current);
     } catch (error) {
-      console.log(error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

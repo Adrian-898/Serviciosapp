@@ -15,6 +15,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
 import useCamera from "@/hooks/useCamera";
 import * as WebBrowser from "expo-web-browser";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 const QRCodeScanner = () => {
   // permisos de uso de camara
@@ -38,7 +39,7 @@ const QRCodeScanner = () => {
         Alert.alert("Error:", "Algo salió mal, intente de nuevo");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

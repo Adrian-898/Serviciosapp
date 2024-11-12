@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import useGetCurrentLocation from "./useGetCurrentLocation";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 const useLocation = () => {
   // este hook obtiene la ubicacion actual del usuario (1 sola vez)
@@ -18,7 +19,8 @@ const useLocation = () => {
           getCurrentLocation();
         }
       } catch (error) {
-        console.log(error);
+        console.log(error + " Mensaje: " + getErrorMessage(error));
+        throw error;
       }
     } else return;
   };

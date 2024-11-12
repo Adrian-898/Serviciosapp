@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import { login, loadUser } from "@/services/AuthService";
 import AuthContext from "@/contexts/AuthContext";
 import * as yup from "yup";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -64,7 +65,7 @@ const LoginScreen = () => {
       setUser(user);
       console.log("get: ", user);
     } catch (error) {
-      console.log("catch: ", error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

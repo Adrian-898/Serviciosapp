@@ -11,6 +11,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Formik } from "formik";
 import { sendPasswordResetLink } from "@/services/AuthService";
 import * as yup from "yup";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -41,7 +42,7 @@ const ForgotPassword = () => {
         console.log("statusText: ", statusText);
       }
     } catch (error) {
-      console.log("catch: ", error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

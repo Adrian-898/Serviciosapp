@@ -5,6 +5,7 @@ import { StatusBar } from "react-native";
 import { useColorScheme } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+// import getErrorMessage from "@/utils/getErrorMessage";
 // import { useRouter } from "expo-router";
 // import { logout } from "@/services/AuthService";
 // import AuthContext from "@/contexts/AuthContext";
@@ -16,8 +17,12 @@ const Usuario = () => {
 
   const handleLogout = async () => {
     /*
-    await logout();
-    setUser(null);
+    try {
+      await logout();
+      setUser(null);
+    } catch (error) {
+      console.log(error + " Mensaje: " + getErrorMessage(error));
+    }
     */
   };
 

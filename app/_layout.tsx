@@ -50,18 +50,18 @@ const RootLayout = () => {
       })
   );
 
+  // carga el usuario al iniciar la app
   useEffect(() => {
     const runEffect = async () => {
       try {
         const user = await loadUser();
         setUser(user);
       } catch (error) {
-        return { message: getErrorMessage(error) };
-        // console.log("No se pudo cargar la información del usuario: ", error);
+        console.log(error + " Mensaje: " + getErrorMessage(error));
       }
-      setStatus("idle");
     };
     runEffect();
+    setStatus("idle");
   }, []);
 
   if (status === "loading") {

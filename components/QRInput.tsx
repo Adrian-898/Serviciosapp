@@ -14,6 +14,7 @@ import Icon from "@expo/vector-icons/FontAwesome";
 import { Formik } from "formik";
 import * as yup from "yup";
 import * as WebBrowser from "expo-web-browser";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // parametros del componente principal
 type QRInputProps = {
@@ -62,7 +63,7 @@ const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
         Alert.alert("Error:", "Algo salió mal, intente de nuevo");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 

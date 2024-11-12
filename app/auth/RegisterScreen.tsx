@@ -15,6 +15,7 @@ import AuthContext from "@/contexts/AuthContext";
 import { register } from "@/services/AuthService";
 import { loadUser } from "@/services/AuthService";
 import * as yup from "yup";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -71,7 +72,7 @@ const Register = () => {
       setUser(user);
       console.log("get: ", user);
     } catch (error) {
-      console.log("catch: ", error);
+      console.log(error + " Mensaje: " + getErrorMessage(error));
     }
   };
 
