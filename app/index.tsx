@@ -18,7 +18,7 @@ const Home = () => {
     <SafeAreaView style={styles.container}>
       <ImageBackground
         source={Fondo}
-        style={{ flex: 1 }}
+        style={styles.fondo}
         resizeMode="cover"
         onError={() => console.log("Error cargando imagen de fondo...")}
       >
@@ -56,6 +56,9 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  fondo: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,

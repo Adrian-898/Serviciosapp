@@ -73,8 +73,10 @@ const RootLayout = () => {
   // Layout de navegacion de la app
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
           <Stack screenOptions={{ headerShown: false }}>
             {user ? (
               <Stack.Screen name="(tabs)" />
@@ -83,8 +85,8 @@ const RootLayout = () => {
             )}
             <Stack.Screen name="+not-found" />
           </Stack>
-        </AuthContext.Provider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AuthContext.Provider>
     </QueryClientProvider>
   );
 };
