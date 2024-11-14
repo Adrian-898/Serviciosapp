@@ -70,48 +70,23 @@ const Home = () => {
             <LinkButton title="Emergencias" url="https://www.google.com" />
           </View>
           <View style={styles.buttonContainer}>
-            <Icon
-              name="car-brake-parking"
-              size={40}
-              color={"black"}
-              style={styles.icon}
-            />
+            <Icon name="car-brake-parking" size={40} style={styles.icon} />
             <LinkButton title="Parquímetro" url="https://www.google.com" />
           </View>
           <View style={styles.buttonContainer}>
-            <Icon2
-              name="electrical-services"
-              size={40}
-              color={"black"}
-              style={styles.icon}
-            />
+            <Icon2 name="electrical-services" size={40} style={styles.icon} />
             <LinkButton title="Servicios" url="https://www.google.com" />
           </View>
           <View style={styles.buttonContainer}>
-            <Icon2
-              name="currency-exchange"
-              size={40}
-              color={"black"}
-              style={styles.icon}
-            />
+            <Icon2 name="currency-exchange" size={40} style={styles.icon} />
             <LinkButton title="Comercio" url="https://www.google.com" />
           </View>
           <View style={styles.buttonContainer}>
-            <Icon
-              name="account-alert"
-              size={40}
-              color={"black"}
-              style={styles.icon}
-            />
+            <Icon name="account-alert" size={40} style={styles.icon} />
             <LinkButton title="Denuncias" url="https://www.google.com" />
           </View>
           <View style={styles.buttonContainer}>
-            <Icon
-              name="alert-rhombus"
-              size={40}
-              color={"black"}
-              style={styles.icon}
-            />
+            <Icon name="alert-rhombus" size={40} style={styles.icon} />
             <LinkButton title="Multas" url="https://www.google.com" />
           </View>
         </ScrollView>
@@ -144,6 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   icon: {
+    color: "black",
     backgroundColor: "white",
     borderWidth: 0.5,
     borderRadius: 10,

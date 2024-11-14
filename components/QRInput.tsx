@@ -38,7 +38,7 @@ const validationSchema = yup.object().shape({
 });
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
-const QRInput: React.FC<QRInputProps> = ({ visible, onClose }) => {
+const QRInput = ({ visible, onClose }: QRInputProps) => {
   // array de prueba
   const park = [
     "",

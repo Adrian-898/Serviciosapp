@@ -10,7 +10,7 @@ type ModalInfoProps = {
 };
 
 // componente modal, retorna el bloque de informacion y el boton de cerrar si la variable visible es true
-const ModalInfo: React.FC<ModalInfoProps> = ({ visible, onClose }) => {
+const ModalInfo = ({ visible, onClose }: ModalInfoProps) => {
   if (!visible) return null;
 
   return (
