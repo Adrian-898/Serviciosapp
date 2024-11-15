@@ -34,6 +34,8 @@ const Button = ({ title, url }: LinkButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
+    alignItems: "center",
+    justifyContent: "center",
     minWidth: "50%",
     padding: 10,
     backgroundColor: "#001f7e",
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   texto: {
-    paddingLeft: 15,
     textAlign: "left",
     fontSize: 20,
     fontWeight: "bold",

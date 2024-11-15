@@ -16,12 +16,19 @@ import QRInput from "@/components/QRInput";
 import useCamera from "@/hooks/useCamera";
 import * as WebBrowser from "expo-web-browser";
 import getErrorMessage from "@/utils/getErrorMessage";
+import { useIsFocused } from "@react-navigation/native";
 
 const QRCodeScanner = () => {
   // permisos de uso de camara
   const permission = useCamera();
 
+  // estado de la pantalla activa o no, se usa para el renderizado condicional de la camara (Solo si esta el usuario en la pantalla de QRScanner)
+  const isFocused = useIsFocused();
+
+  // estado de escaneo de QR, se usa para mostrar el botón de escaneo de nuevo
   const [scanned, setScanned] = useState<boolean>(false);
+
+  // estado de la linterna, se usa para mostrar el botón de encender/apagar la linterna
   const [torch, setTorch] = useState<boolean>(false);
 
   // estado de visibilidad del input manual de datos
@@ -105,15 +112,17 @@ const QRCodeScanner = () => {
       <Suspense
         fallback={<ActivityIndicator size={"large"} color={"#001f7e"} />}
       >
-        <CameraView
-          style={styles.camera}
-          autofocus="on"
-          enableTorch={torch}
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr"],
-          }}
-        />
+        {isFocused && (
+          <CameraView
+            style={styles.camera}
+            autofocus="on"
+            enableTorch={torch}
+            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr"],
+            }}
+          />
+        )}
 
         <View style={styles.back}>
           <Text style={styles.title}>Escanea un código QR</Text>
