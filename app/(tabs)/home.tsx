@@ -5,17 +5,21 @@ import {
   StyleSheet,
   ImageBackground,
   SafeAreaView,
+  Modal,
+  TouchableOpacity,
+  useColorScheme,
 } from "react-native";
 import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/MaterialIcons";
-import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 // import AuthContext from "@/contexts/AuthContext";
-// import { ThemedText } from "@/components/ThemedText";
 
 const Home = () => {
+  const colorScheme = useColorScheme();
   /*
   // informacion de usuario logeado
   const { user } = useContext(AuthContext);
@@ -24,13 +28,33 @@ const Home = () => {
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
 
-  // al presionar el boton de informacion:
-  const handleOpenModal = () => {
-    setModalState(true);
-  };
-  // al presionar el boton CERRAR cuando esta abierto el modal informacion
-  const handleCloseModal = () => {
-    setModalState(false);
+  // Contenido del modal info
+  const ModalInfo = () => {
+    return (
+      <View style={styles.modal}>
+        <ThemedView
+          style={
+            colorScheme === "light"
+              ? styles.modalContainer
+              : styles.modalContainerDark
+          }
+        >
+          <ThemedText style={styles.modalText} adjustsFontSizeToFit>
+            Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios
+            a los que puedes acceder desde los enlaces disponibles en esta
+            pantalla.
+          </ThemedText>
+          <TouchableOpacity
+            style={styles.modalCloseButton}
+            onPress={() => setModalState(false)}
+          >
+            <ThemedText type="subtitle" style={styles.modalCloseButtonText}>
+              OK
+            </ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+      </View>
+    );
   };
 
   return (
@@ -41,6 +65,15 @@ const Home = () => {
         resizeMode="cover"
         onError={() => console.log("Error cargando imagen de fondo...")}
       >
+        <Modal
+          visible={modalState}
+          onRequestClose={() => setModalState(false)}
+          animationType="slide"
+          transparent={true}
+        >
+          <ModalInfo />
+        </Modal>
+
         <View style={styles.header}>
           {/*
           <ThemedText type="defaultSemiBold" style={styles.welcome}>
@@ -52,13 +85,11 @@ const Home = () => {
             name="information-outline"
             color="black"
             size={50}
-            onPress={handleOpenModal}
+            onPress={() => setModalState(true)}
             style={styles.info}
           />
         </View>
-        <View style={styles.modal}>
-          <ModalInfo visible={modalState} onClose={handleCloseModal} />
-        </View>
+
         <ScrollView contentContainerStyle={styles.container2}>
           <View style={styles.buttonContainer}>
             <Icon
@@ -104,12 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    margin: 20,
     padding: 20,
     alignContent: "space-evenly",
-  },
-  modal: {
-    alignItems: "center",
-    paddingBottom: 20,
   },
   container2: {
     alignItems: "center",
@@ -126,10 +154,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginHorizontal: 10,
     verticalAlign: "middle",
-    shadowColor: "black",
+    textAlign: "center",
     shadowOpacity: 5,
     shadowRadius: 20,
-    elevation: 10,
+    elevation: 5,
   },
   welcome: {
     alignSelf: "flex-start",
@@ -138,14 +166,62 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   info: {
+    alignSelf: "flex-end",
+    verticalAlign: "middle",
+    textAlign: "center",
+    padding: 2,
     backgroundColor: "white",
     borderRadius: 10,
     borderWidth: 0.5,
-    alignSelf: "flex-end",
-    shadowColor: "black",
     shadowOpacity: 5,
     shadowRadius: 20,
-    elevation: 10,
+    elevation: 5,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    width: "80%",
+    padding: 20,
+    borderRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalContainerDark: {
+    backgroundColor: "#222",
+    width: "80%",
+    padding: 20,
+    borderRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    textAlign: "center",
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalCloseButton: {
+    backgroundColor: "#ddd",
+    padding: 10,
+    borderRadius: 10,
+    elevation: 4,
+  },
+  modalCloseButtonText: {
+    fontSize: 18,
+    color: "#001f7e",
+    alignSelf: "center",
   },
 });
 

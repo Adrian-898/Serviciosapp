@@ -9,7 +9,7 @@ type LinkButtonProps = {
   url: string;
 };
 
-const Button = ({ title, url }: LinkButtonProps) => {
+const LinkButton = ({ title, url }: LinkButtonProps) => {
   // abre la url del boton seleccionado
   const handlePress = async (url: string) => {
     try {
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button;
+export default LinkButton;

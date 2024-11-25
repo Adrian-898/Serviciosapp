@@ -8,7 +8,10 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  useColorScheme,
 } from "react-native";
+import { ThemedText } from "./ThemedText";
+import { ThemedView } from "./ThemedView";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { Formik } from "formik";
@@ -39,6 +42,8 @@ const validationSchema = yup.object().shape({
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
 const QRInput = ({ visible, onClose }: QRInputProps) => {
+  const colorScheme = useColorScheme();
+
   // array de prueba
   const park = [
     "",
@@ -93,7 +98,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={colorScheme === "light" ? styles.container : styles.containerDark}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <Icon
@@ -116,10 +121,12 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
             <View>
-              <Text style={styles.label}>Parquímetro</Text>
+              <ThemedText type="subtitle" style={styles.label}>
+                Parquímetro
+              </ThemedText>
               <SelectDropdown
                 data={park}
-                statusBarTranslucent={true}
+                statusBarTranslucent
                 defaultValueByIndex={0}
                 onBlur={() => handleBlur("parquimetro")}
                 onSelect={(selectedItem, index) => {
@@ -135,7 +142,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
                       <Icon
                         name={isOpen ? "chevron-left" : "chevron-down"}
                         size={25}
-                        color="#444"
+                        color="#333"
                       />
                     </View>
                   );
@@ -169,7 +176,9 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
                 <Text style={styles.errorText}>{errors.parquimetro}</Text>
               )}
 
-              <Text style={styles.label}>Puesto</Text>
+              <ThemedText type="subtitle" style={styles.label}>
+                Puesto
+              </ThemedText>
               <TextInput
                 style={styles.input}
                 placeholder="Ingresar puesto"
@@ -188,7 +197,9 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
                 style={styles.button}
                 onPress={() => handleSubmit()}
               >
-                <Text style={styles.buttonText}>Buscar</Text>
+                <ThemedText type="subtitle" style={styles.buttonText}>
+                  Buscar
+                </ThemedText>
               </TouchableOpacity>
             </View>
           )}
@@ -201,12 +212,23 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
     position: "absolute",
     alignSelf: "center",
     minWidth: "90%",
-    backgroundColor: "white",
     padding: 20,
     borderRadius: 20,
+    elevation: 5,
+  },
+  containerDark: {
+    flex: 1,
+    backgroundColor: "#222",
+    position: "absolute",
+    alignSelf: "center",
+    minWidth: "90%",
+    padding: 20,
+    borderRadius: 20,
+    elevation: 5,
   },
   container2: {
     position: "relative",
@@ -215,8 +237,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5,
-    fontSize: 20,
-    fontWeight: "bold",
   },
   input: {
     backgroundColor: "#EAEAEA",
@@ -273,13 +293,11 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOpacity: 5,
     shadowRadius: 20,
-    elevation: 10,
+    elevation: 5,
   },
   buttonText: {
+    color: "#fff",
     textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#FFFFFF",
   },
   errorText: {
     color: "red",

@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
     .label("Correo electrónico"),
 });
 
-const ForgotPassword = () => {
+const ForgotPasswordScreen = () => {
   const colorScheme = useColorScheme();
   const [resetStatus, setResetStatus] = useState("");
   const [error, setError] = useState<string>("");
@@ -113,7 +113,7 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#333",
+    backgroundColor: "#222",
   },
   title: {
     marginBottom: 24,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   formDark: {
     width: "100%",
-    backgroundColor: "#333",
+    backgroundColor: "#222",
     borderRadius: 10,
   },
   input: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     borderColor: "#999",
     borderRadius: 10,
     marginTop: 10,
-    borderWidth: 0.5,
+    elevation: 5,
   },
   buttonText: {
     color: "#fff",

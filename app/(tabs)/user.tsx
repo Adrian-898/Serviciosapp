@@ -10,7 +10,7 @@ import { ThemedText } from "@/components/ThemedText";
 // import { logout } from "@/services/AuthService";
 // import AuthContext from "@/contexts/AuthContext";
 
-const Usuario = () => {
+const User = () => {
   const colorScheme = useColorScheme();
   // const router = useRouter();
   // const { setUser } = useContext(AuthContext);
@@ -76,7 +76,7 @@ const Usuario = () => {
   );
 };
 
-export default Usuario;
+export default User;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     padding: StatusBar.currentHeight,
   },
   containerDark: {
-    backgroundColor: "#333",
+    backgroundColor: "#222",
     flex: 1,
     padding: StatusBar.currentHeight,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
     marginBottom: 15,
-    elevation: 2,
+    elevation: 5,
   },
   optionDark: {
     flexDirection: "row",
@@ -109,10 +109,10 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#ccc",
     borderColor: "black",
     marginBottom: 15,
-    elevation: 2,
+    elevation: 5,
   },
   optionText: {
     flex: 1,

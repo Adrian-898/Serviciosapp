@@ -3,7 +3,7 @@ import * as Location from "expo-location";
 import useGetCurrentLocation from "./useGetCurrentLocation";
 import getErrorMessage from "@/utils/getErrorMessage";
 
-const useLocation = () => {
+const useLocationPermission = () => {
   // este hook obtiene la ubicacion actual del usuario (1 sola vez)
   const { origin, getCurrentLocation } = useGetCurrentLocation();
   // estado del permiso de uso de ubicacion
@@ -33,4 +33,4 @@ const useLocation = () => {
   return { permissionGranted, origin };
 };
 
-export default useLocation;
+export default useLocationPermission;

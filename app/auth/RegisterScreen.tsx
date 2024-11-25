@@ -41,7 +41,7 @@ type registerCredentials = {
   confirmPassword: string;
 };
 
-const Register = () => {
+const RegisterScreen = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const { setUser } = useContext(AuthContext);
@@ -165,7 +165,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#333",
+    backgroundColor: "#222",
   },
   title: {
     marginBottom: 24,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   formDark: {
     width: "100%",
-    backgroundColor: "#333",
+    backgroundColor: "#222",
     borderRadius: 10,
   },
   input: {
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     borderColor: "#999",
     borderRadius: 10,
     marginTop: 10,
-    borderWidth: 0.5,
+    elevation: 5,
   },
   buttonText: {
     color: "#fff",
@@ -233,9 +233,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-/*
-#333: gris oscuro
-#999 gris claro
-#CCC gris mas calro
-*/

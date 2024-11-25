@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 
-const Home = () => {
+const Index = () => {
   const router = useRouter();
 
   return (
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Index;

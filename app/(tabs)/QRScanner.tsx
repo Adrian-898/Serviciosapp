@@ -7,9 +7,9 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  useColorScheme,
 } from "react-native";
 import { CameraView, BarcodeScanningResult } from "expo-camera";
-import { ThemedText } from "@/components/ThemedText";
 import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";
@@ -17,8 +17,12 @@ import useCamera from "@/hooks/useCamera";
 import * as WebBrowser from "expo-web-browser";
 import getErrorMessage from "@/utils/getErrorMessage";
 import { useIsFocused } from "@react-navigation/native";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
-const QRCodeScanner = () => {
+const QRScanner = () => {
+  const colorScheme = useColorScheme();
+
   // permisos de uso de camara
   const permission = useCamera();
 
@@ -57,7 +61,7 @@ const QRCodeScanner = () => {
         name="form-textbox"
         color={"white"}
         size={60}
-        onPress={handleOpenInput}
+        onPress={() => setInputState(true)}
         style={styles.inputButton}
       />
     );
@@ -76,20 +80,14 @@ const QRCodeScanner = () => {
     );
   };
 
-  // Abre el menu del QRInput
-  const handleOpenInput = () => {
-    setInputState(true);
-  };
-
-  // cierra el menu del QRinput
-  const handleCloseInput = () => {
-    setInputState(false);
-  };
-
   // si se niega el permiso de uso de la camara se muestra el mensaje siguiente
   if (!permission || !permission.granted) {
     return (
-      <SafeAreaView style={styles.container}>
+      <ThemedView
+        style={
+          colorScheme === "light" ? styles.container : styles.containerDark
+        }
+      >
         <ThemedText style={styles.message} adjustsFontSizeToFit>
           No hubo respuesta a la solicitud de permisos o se ha negado la misma,
           para usar la cámara, puede conceder los permisos de uso en la
@@ -101,8 +99,8 @@ const QRCodeScanner = () => {
           <InputButton />
         </View>
 
-        <QRInput visible={inputState} onClose={handleCloseInput} />
-      </SafeAreaView>
+        <QRInput visible={inputState} onClose={() => setInputState(false)} />
+      </ThemedView>
     );
   }
 
@@ -133,7 +131,7 @@ const QRCodeScanner = () => {
           <InputButton />
         </View>
 
-        <QRInput visible={inputState} onClose={handleCloseInput} />
+        <QRInput visible={inputState} onClose={() => setInputState(false)} />
 
         {scanned && (
           <Button
@@ -150,6 +148,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+  },
+  containerDark: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#222",
   },
   centered: {
     flex: 1,
@@ -212,4 +215,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QRCodeScanner;
+export default QRScanner;

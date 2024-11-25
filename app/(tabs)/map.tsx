@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  useColorScheme,
 } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { ThemedText } from "@/components/ThemedText";
@@ -34,6 +35,8 @@ const lugares: Lugar[] = [
 
 // componente principal
 const Map = () => {
+  const colorScheme = useColorScheme();
+
   // dimensiones del dispositivo
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -113,7 +116,13 @@ const Map = () => {
   // Mensaje de alerta cuando no hay permisos de uso de ubicacion
   const Alerta = () => {
     return (
-      <ThemedView style={styles.alertContainer}>
+      <ThemedView
+        style={
+          colorScheme === "light"
+            ? styles.alertContainer
+            : styles.alertContainerDark
+        }
+      >
         <Icon
           name="exclamation"
           color={"red"}
@@ -159,7 +168,7 @@ const Map = () => {
           ))
         }
         {
-          // Traza la ruta usando la API Directions de google maps:
+          // Traza la ruta usando la API Directions de google maps (se debe cambiar el manejo de la apikey por seguridad):
           drawRoute && (
             <MapViewDirections
               apikey="AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
@@ -190,6 +199,18 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   alertContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    alignItems: "center",
+    alignSelf: "center",
+    maxWidth: "98%",
+    maxHeight: "30%",
+    borderRadius: 10,
+    bottom: 50,
+    paddingRight: 10,
+  },
+  alertContainerDark: {
+    backgroundColor: "#222",
     flexDirection: "row",
     position: "absolute",
     alignItems: "center",
