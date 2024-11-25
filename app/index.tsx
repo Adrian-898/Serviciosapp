@@ -26,7 +26,7 @@ const Index = () => {
           <View style={styles.continue}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => router.push("/(tabs)/home")}
+              onPress={() => router.push("/(tabs)/Home")}
             >
               <ThemedText style={styles.buttonText}>
                 Continuar sin iniciar sesión
