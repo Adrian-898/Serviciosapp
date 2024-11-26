@@ -8,9 +8,8 @@ const getErrorMessage = (error: unknown): string => {
   } else if (typeof error === "string") {
     message = error;
   } else {
-    message = "Algo salió mal...";
+    message = "Ocurrió un error...";
   }
-
   return message;
 };
 
