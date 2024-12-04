@@ -51,6 +51,9 @@ const Map = () => {
   // estado visual (mostrado o no segun se toque un marcador del mapa) del boton para trazar ruta del usuario a un lugar determinado
   const [drawRouteButton, setDrawRouteButton] = useState(false);
 
+  // estado de trazado de ruta del usuario a un lugar determinado (activo o no)
+  const [drawRoute, setDrawRoute] = useState(false);
+
   // boton para trazar rutas
   const DrawRouteButton = () => {
     return (
@@ -70,9 +73,6 @@ const Map = () => {
       setDrawRoute(true);
     }
   };
-
-  // estado de trazado de ruta del usuario a un lugar determinado (activo o no)
-  const [drawRoute, setDrawRoute] = useState(false);
 
   // componente Pin en el mapa
   const MarkerComponent = useCallback(
