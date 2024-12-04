@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: "#ccc",
+    backgroundColor: "#ddd",
     borderColor: "black",
     marginBottom: 15,
     elevation: 5,

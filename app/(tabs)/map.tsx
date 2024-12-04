@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, Suspense } from "react";
 import {
   SafeAreaView,
   useWindowDimensions,
@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
+  View,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { ThemedText } from "@/components/ThemedText";
@@ -14,6 +16,7 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import useLocationPermission from "@/hooks/useLocationPermission";
 import Constants from "expo-constants";
+import getErrorMessage from "@/utils/getErrorMessage";
 
 // objeto para almacenar informacion de los lugares que se quiere marcar en el mapa
 type Lugar = {
@@ -178,6 +181,10 @@ const Map = () => {
               language="es-419"
               region="VE"
               strokeColor="#001f7e"
+              optimizeWaypoints={false}
+              onError={(error) => {
+                console.error("Ha ocurrido un error: ", getErrorMessage(error));
+              }}
             />
           )
         }

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   header: {
     margin: 20,
-    padding: 20,
+    padding: 10,
     alignContent: "space-evenly",
   },
   container2: {
