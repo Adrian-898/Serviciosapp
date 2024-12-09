@@ -15,6 +15,7 @@ import { login, loadUser } from "@/services/AuthService";
 import AuthContext from "@/contexts/AuthContext";
 import * as yup from "yup";
 import getErrorMessage from "@/utils/getErrorMessage";
+import type { LoginCredentials } from "@/utils/types";
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -30,11 +31,6 @@ const validationSchema = yup.object().shape({
     .label("Contraseña"),
 });
 
-type loginCredentials = {
-  email: string;
-  password: string;
-};
-
 const LoginScreen = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
@@ -42,7 +38,7 @@ const LoginScreen = () => {
   const [error, setError] = useState<string>("");
 
   // control del login al presionar "Iniciar sesion"
-  const handleLogin = async (values: loginCredentials) => {
+  const handleLogin = async (values: LoginCredentials) => {
     setError("");
     try {
       // post
@@ -54,7 +50,7 @@ const LoginScreen = () => {
 
       // control de errores y redireccion a inicio en caso de login exitoso
       if (postStatus === "OK") {
-        router.replace("/(tabs)/home");
+        router.replace("/(tabs)/Home");
       } else {
         setError(postStatus);
         console.log("statusText: ", postStatus);

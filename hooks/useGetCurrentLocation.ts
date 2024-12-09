@@ -1,24 +1,17 @@
 import { useState } from "react";
 import * as Location from "expo-location";
 import getErrorMessage from "@/utils/getErrorMessage";
-
-// interfaz para almacenar y utilizar informacion obtenida de las funciones de expo-location
-type location = {
-  latitude: number;
-  longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
-};
+import type { Region } from "@/utils/types";
 
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {
-  const [origin, setOrigin] = useState<location>();
+  const [origin, setOrigin] = useState<Region>();
 
   // funcion que obtiene la ubicacion actual (actualiza la variable origin)
   const getCurrentLocation = async () => {
     try {
       let result = await Location.getCurrentPositionAsync({});
-      const current: location = {
+      const current: Region = {
         latitude: result.coords.latitude,
         longitude: result.coords.longitude,
         latitudeDelta: 0.04,

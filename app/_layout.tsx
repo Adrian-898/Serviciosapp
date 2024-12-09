@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { Platform, AppStateStatus } from "react-native";
+import { Platform, type AppStateStatus } from "react-native";
 import { useColorScheme } from "react-native";
 import useAppState from "@/hooks/useAppState";
 import useOnlineManager from "@/hooks/useOnlineManager";

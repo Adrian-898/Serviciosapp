@@ -17,13 +17,7 @@ import MapViewDirections from "react-native-maps-directions";
 import useLocationPermission from "@/hooks/useLocationPermission";
 import Constants from "expo-constants";
 import getErrorMessage from "@/utils/getErrorMessage";
-
-// objeto para almacenar informacion de los lugares que se quiere marcar en el mapa
-type Lugar = {
-  id: number;
-  coords: { latitude: number; longitude: number };
-  name: string;
-};
+import type { Lugar, Region } from "@/utils/types";
 
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [
@@ -40,7 +34,7 @@ const lugares: Lugar[] = [
 ];
 
 // Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
-const initialRegion = {
+const initialRegion: Region = {
   latitude: 10.597032,
   longitude: -66.930431,
   latitudeDelta: 0.04,

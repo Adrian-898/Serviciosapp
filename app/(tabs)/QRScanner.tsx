@@ -9,7 +9,7 @@ import {
   Alert,
   useColorScheme,
 } from "react-native";
-import { CameraView, BarcodeScanningResult } from "expo-camera";
+import { CameraView, type BarcodeScanningResult } from "expo-camera";
 import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import QRInput from "@/components/QRInput";

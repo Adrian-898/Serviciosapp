@@ -16,6 +16,7 @@ import { register } from "@/services/AuthService";
 import { loadUser } from "@/services/AuthService";
 import * as yup from "yup";
 import getErrorMessage from "@/utils/getErrorMessage";
+import type { RegisterCredentials } from "@/utils/types";
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
@@ -35,12 +36,6 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
 });
 
-type registerCredentials = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
 const RegisterScreen = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
@@ -48,7 +43,7 @@ const RegisterScreen = () => {
   const [error, setError] = useState<string>("");
 
   // control del registro al presionar "Registrar"
-  const handleRegister = async (values: registerCredentials) => {
+  const handleRegister = async (values: RegisterCredentials) => {
     setError("");
     try {
       // post
@@ -61,7 +56,7 @@ const RegisterScreen = () => {
 
       // control de errores y redireccion a inicio en caso de login exitoso
       if (postStatus === "OK") {
-        router.replace("/(tabs)/home");
+        router.replace("/(tabs)/Home");
       } else {
         setError(postStatus);
         console.log("statusText: ", postStatus);

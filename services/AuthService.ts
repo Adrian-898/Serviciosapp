@@ -1,21 +1,9 @@
 import AxiosInstance from "@/utils/axios";
 import { setToken } from "./TokenService";
-
-type loginCredentials = {
-  email: string;
-  password: string;
-  device_name: string;
-};
-
-type registerCredentials = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  device_name: string;
-};
+import type { RequestLogin, RequestRegister } from "@/utils/types";
 
 // solicitud de registro "post"
-const register = async (credentials: registerCredentials) => {
+const register = async (credentials: RequestRegister) => {
   try {
     const { data, statusText } = await AxiosInstance.post(
       "/register",
@@ -29,7 +17,7 @@ const register = async (credentials: registerCredentials) => {
 };
 
 // solicitud de inicio de sesion "post"
-const login = async (credentials: loginCredentials) => {
+const login = async (credentials: RequestLogin) => {
   try {
     const { data, statusText } = await AxiosInstance.post(
       "/login",
