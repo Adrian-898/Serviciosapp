@@ -19,10 +19,10 @@ const useLocationPermission = () => {
           getCurrentLocation();
         }
       } catch (error) {
-        console.warn(error + " Mensaje: " + getErrorMessage(error));
+        console.error(error + " Mensaje: " + getErrorMessage(error));
         throw error;
       }
-    } else return;
+    }
   };
 
   useEffect(() => {

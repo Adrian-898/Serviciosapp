@@ -20,6 +20,7 @@ import getErrorMessage from "@/utils/getErrorMessage";
 
 // objeto para almacenar informacion de los lugares que se quiere marcar en el mapa
 type Lugar = {
+  id: number;
   coords: { latitude: number; longitude: number };
   name: string;
 };
@@ -27,14 +28,24 @@ type Lugar = {
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [
   {
+    id: 0,
     coords: { latitude: 10.598246, longitude: -66.930307 },
     name: "Lugar 1",
   },
   {
+    id: 1,
     coords: { latitude: 10.60062, longitude: -66.922652 },
     name: "Lugar 2",
   },
 ];
+
+// Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
+const initialRegion = {
+  latitude: 10.597032,
+  longitude: -66.930431,
+  latitudeDelta: 0.04,
+  longitudeDelta: 0.04,
+};
 
 // componente principal
 const Map = () => {
@@ -74,6 +85,8 @@ const Map = () => {
     if (destination !== newDestination) {
       setDestination(newDestination);
       setDrawRoute(true);
+    } else {
+      console.log("Ya existe esta ruta en el mapa...");
     }
   };
 
@@ -108,11 +121,9 @@ const Map = () => {
 
   // al presionar un marcador
   const MarkerPress = (lugar: Lugar) => {
-    if (destination?.name !== lugar?.name || destination.name === undefined) {
+    if (!destination || destination.id !== lugar.id) {
       setNewDestination(lugar);
       setDrawRouteButton(true);
-    } else {
-      setDrawRouteButton(false);
     }
   };
 
@@ -162,6 +173,7 @@ const Map = () => {
         showsIndoorLevelPicker={false}
         showsTraffic={false}
         mapPadding={{ bottom: 50, left: 0, right: 0, top: 0 }}
+        initialRegion={initialRegion}
         region={location.origin}
       >
         {
@@ -172,11 +184,11 @@ const Map = () => {
         }
         {
           // Traza la ruta usando la API Directions de google maps (se debe cambiar el manejo de la apikey por seguridad):
-          drawRoute && (
+          drawRoute && destination && (
             <MapViewDirections
               apikey="AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
               origin={location.origin}
-              destination={destination?.coords}
+              destination={destination.coords}
               mode="WALKING"
               language="es-419"
               region="VE"

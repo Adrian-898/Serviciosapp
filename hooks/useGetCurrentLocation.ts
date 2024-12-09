@@ -12,13 +12,7 @@ type location = {
 
 // Funcion que retorna la ubicacion por defecto y es llamada para actualizar esa ubicacion en caso de tener permisos del usuario
 const useGetCurrentLocation = () => {
-  // Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
-  const [origin, setOrigin] = useState<location>({
-    latitude: 10.597032,
-    longitude: -66.930431,
-    latitudeDelta: 0.04,
-    longitudeDelta: 0.04,
-  });
+  const [origin, setOrigin] = useState<location>();
 
   // funcion que obtiene la ubicacion actual (actualiza la variable origin)
   const getCurrentLocation = async () => {
