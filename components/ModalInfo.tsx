@@ -26,7 +26,10 @@ const ModalInfo = (props: modalInfoProps) => {
       >
         <ThemedText style={styles.modalText} adjustsFontSizeToFit>
           Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
-          los que puedes acceder desde los enlaces disponibles en esta pantalla.
+          los que puedes acceder desde los enlaces disponibles en la pantalla de
+          inicio, en la barra de navegación inferior podrás acceder a distintas
+          secciones con información y funcionalidades de interés para ti como un
+          lector QR y un mapa con tu ubicación actual.
         </ThemedText>
         <TouchableOpacity
           style={styles.modalCloseButton}
@@ -50,7 +53,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContainer: {
-    width: "80%",
+    backfaceVisibility: "visible",
+    width: "90%",
     padding: 20,
     borderRadius: 10,
     shadowOffset: {
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
   },
   modalContainerDark: {
     backgroundColor: "#222",
-    width: "80%",
+    width: "90%",
     padding: 20,
     borderRadius: 10,
     shadowOffset: {
