@@ -107,6 +107,8 @@ const styles = StyleSheet.create({
     alignContent: "space-evenly",
   },
   container2: {
+    flex: 1,
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
   buttonContainer: {

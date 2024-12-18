@@ -24,7 +24,7 @@ const ModalInfo = (props: modalInfoProps) => {
             : styles.modalContainerDark
         }
       >
-        <ThemedText style={styles.modalText} adjustsFontSizeToFit>
+        <ThemedText style={styles.modalText}>
           Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a
           los que puedes acceder desde los enlaces disponibles en la pantalla de
           inicio, en la barra de navegación inferior podrás acceder a distintas
