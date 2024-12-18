@@ -41,10 +41,10 @@ const RootLayout = () => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            gcTime: 1000 * 60 * 60, // 1 hora de duracion de cache
+            gcTime: 1000 * 60 * 60 * 2, // 2 horas de duracion de cache
             retry: 2, // queries fallidos se reintentan 2 veces
-            staleTime: 1000 * 30, // evita refetch inmediato
-            networkMode: "online", // modo de operacion de queries, "online" requiere conexion
+            staleTime: 1000 * 30, // se evita el refetch inmediato al establecer 30 segundos como tiempo de espera para considerar los datos vencidos o obsoletos (stale)
+            networkMode: "online", // modo de operacion de queries, "online" significa que la App requiere conexion a internet para funcionar
           },
         },
       })
@@ -57,7 +57,7 @@ const RootLayout = () => {
         const user = await loadUser();
         setUser(user);
       } catch (error) {
-        console.warn(error + " Mensaje: " + getErrorMessage(error));
+        console.error(error + " Mensaje: " + getErrorMessage(error));
       }
     };
     runEffect();

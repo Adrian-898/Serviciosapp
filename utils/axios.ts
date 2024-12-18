@@ -14,7 +14,7 @@ axios.interceptors.request.use(async (req) => {
   try {
     token = await getToken();
   } catch (error) {
-    console.warn(error + " Mensaje: " + getErrorMessage(error));
+    console.error(error + " Mensaje: " + getErrorMessage(error));
   }
 
   if (token !== null) {
