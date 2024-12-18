@@ -6,20 +6,16 @@ import {
   ImageBackground,
   SafeAreaView,
   Modal,
-  TouchableOpacity,
-  useColorScheme,
 } from "react-native";
 import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/MaterialIcons";
+import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 // import AuthContext from "@/contexts/AuthContext";
 
 const Home = () => {
-  const colorScheme = useColorScheme();
   /*
   // informacion de usuario logeado
   const { user } = useContext(AuthContext);
@@ -27,35 +23,6 @@ const Home = () => {
 
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
-
-  // Contenido del modal info
-  const ModalInfo = () => {
-    return (
-      <View style={styles.modal}>
-        <ThemedView
-          style={
-            colorScheme === "light"
-              ? styles.modalContainer
-              : styles.modalContainerDark
-          }
-        >
-          <ThemedText style={styles.modalText} adjustsFontSizeToFit>
-            Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios
-            a los que puedes acceder desde los enlaces disponibles en esta
-            pantalla.
-          </ThemedText>
-          <TouchableOpacity
-            style={styles.modalCloseButton}
-            onPress={() => setModalState(false)}
-          >
-            <ThemedText type="subtitle" style={styles.modalCloseButtonText}>
-              OK
-            </ThemedText>
-          </TouchableOpacity>
-        </ThemedView>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,7 +38,7 @@ const Home = () => {
           animationType="slide"
           transparent={true}
         >
-          <ModalInfo />
+          <ModalInfo onClose={() => setModalState(false)} />
         </Modal>
 
         <View style={styles.header}>
@@ -176,52 +143,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 5,
     shadowRadius: 20,
     elevation: 5,
-  },
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    width: "80%",
-    padding: 20,
-    borderRadius: 10,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalContainerDark: {
-    backgroundColor: "#222",
-    width: "80%",
-    padding: 20,
-    borderRadius: 10,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    textAlign: "center",
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  modalCloseButton: {
-    backgroundColor: "#ddd",
-    padding: 10,
-    borderRadius: 10,
-    elevation: 4,
-  },
-  modalCloseButtonText: {
-    fontSize: 18,
-    color: "#001f7e",
-    alignSelf: "center",
   },
 });
 
