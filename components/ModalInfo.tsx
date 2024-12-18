@@ -44,7 +44,7 @@ const ModalInfo = (props: modalInfoProps) => {
   );
 };
 
-export default ModalInfo;
+/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
   modal: {
@@ -95,3 +95,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+
+export default ModalInfo;

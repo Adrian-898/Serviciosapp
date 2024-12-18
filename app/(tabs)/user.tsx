@@ -76,7 +76,7 @@ const User = () => {
   );
 };
 
-export default User;
+/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
   container: {
@@ -124,3 +124,5 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
 });
+
+export default User;

@@ -151,7 +151,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
   container: {
@@ -223,3 +223,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+
+export default LoginScreen;
