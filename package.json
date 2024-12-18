@@ -61,7 +61,8 @@
   "overrides": {
     "cookie": "1.0.2",
     "dicer": "0.3.1",
-    "send": "1.1.0"
+    "send": "1.1.0",
+    "nanoid": "5.0.9"
   },
   "private": true
 }
