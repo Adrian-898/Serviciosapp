@@ -13,13 +13,12 @@ import Icon2 from "@expo/vector-icons/MaterialIcons";
 import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
-// import AuthContext from "@/contexts/AuthContext";
+import AuthContext from "@/contexts/AuthContext";
+import { ThemedText } from "@/components/ThemedText";
 
 const Home = () => {
-  /*
   // informacion de usuario logeado
   const { user } = useContext(AuthContext);
-  */
 
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
@@ -42,11 +41,13 @@ const Home = () => {
         </Modal>
 
         <View style={styles.header}>
-          {/*
-          <ThemedText type="defaultSemiBold" style={styles.welcome}>
+          <ThemedText
+            type="defaultSemiBold"
+            style={styles.welcome}
+            adjustsFontSizeToFit
+          >
             Bienvenido {user.name}.
           </ThemedText>
-          */}
 
           <Icon
             name="information-outline"
@@ -102,9 +103,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    margin: 20,
-    padding: 10,
-    alignContent: "space-evenly",
+    margin: 10,
+    padding: 5,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   container2: {
     flex: 1,
@@ -129,9 +131,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   welcome: {
-    alignSelf: "flex-start",
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "black",
+    textAlign: "center",
+    textAlignVertical: "center",
     color: "black",
-    verticalAlign: "middle",
+    margin: 5,
     padding: 5,
   },
   info: {
@@ -149,4 +156,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-

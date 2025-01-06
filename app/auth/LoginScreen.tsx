@@ -219,7 +219,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   link: {
-    margin: 5,
+    marginTop: 10,
+    fontSize: 18,
     alignSelf: "center",
   },
 });
