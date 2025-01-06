@@ -34,7 +34,7 @@ const RootLayout = () => {
   useAppState(onAppStateChange);
   useOnlineManager();
   const colorScheme = useColorScheme();
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<any>(null);
   const [status, setStatus] = useState("loading");
   const [queryClient] = useState(
     () =>
@@ -55,16 +55,21 @@ const RootLayout = () => {
     const runEffect = async () => {
       try {
         const user = await loadUser();
-        setUser(user);
+        if (user !== null) {
+          setUser(user);
+          setStatus("resolved");
+        }
       } catch (error) {
+        setStatus("error");
         console.error(error + " Mensaje: " + getErrorMessage(error));
       }
     };
     runEffect();
-    setStatus("idle");
   }, []);
 
-  if (status === "loading") {
+  console.log("Status: ", status);
+
+  if (status !== "resolved") {
     return;
   }
 
