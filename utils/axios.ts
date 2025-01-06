@@ -3,7 +3,7 @@ import { getToken } from "@/services/TokenService";
 import getErrorMessage from "./getErrorMessage";
 
 const AxiosInstance = axios.create({
-  baseURL: "https://api/",
+  baseURL: "https://jsonplaceholder.typicode.com",
   headers: {
     Accept: "application/json",
   },

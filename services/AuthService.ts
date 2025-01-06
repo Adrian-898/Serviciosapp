@@ -33,9 +33,9 @@ const login = async (credentials: RequestLogin) => {
 // carga los datos del usuario al iniciar sesion "get"
 const loadUser = async () => {
   try {
-    const { data: user } = await AxiosInstance.get("/user");
-    console.log("get: ", user);
-    return user;
+    const { data } = await AxiosInstance.get("/users/10");
+    console.log("loadUserFN: ", data);
+    return data;
   } catch (error) {
     throw error;
   }
