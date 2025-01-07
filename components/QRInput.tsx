@@ -10,6 +10,7 @@ import {
   Platform,
   useColorScheme,
 } from "react-native";
+import { Constants } from "expo-constants";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import SelectDropdown from "react-native-select-dropdown";
@@ -109,7 +110,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
         style={styles.closeButton}
       />
 
-      {/*Formulario Parquimetro y Puesto*/}
+      {/*Formulario Parquimetro y Puesto con Formik y Yup*/}
       <SafeAreaView style={styles.container2}>
         <Formik
           initialValues={{ parquimetro: "", puesto: undefined }}
@@ -163,7 +164,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
                 dropdownStyle={styles.dropdown}
                 search={true}
                 searchPlaceHolder="Busca tu parquímetro"
-                searchPlaceHolderColor="black"
+                searchPlaceHolderColor="#888"
                 searchInputStyle={styles.search}
                 searchInputTxtColor="#151E26"
                 searchInputTxtStyle={styles.searchText}
@@ -182,7 +183,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
               <TextInput
                 style={styles.input}
                 placeholder="Ingresar puesto"
-                placeholderTextColor={"black"}
+                placeholderTextColor={"#888"}
                 onChangeText={handleChange("puesto")}
                 onBlur={handleBlur("puesto")}
                 value={values.puesto}
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   dropdownButtonText: {
-    color: "black",
+    color: "#888",
     fontSize: 18,
     flex: 1,
   },
