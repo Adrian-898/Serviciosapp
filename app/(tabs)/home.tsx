@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import {
+  Text,
   ScrollView,
   View,
   StyleSheet,
   ImageBackground,
   SafeAreaView,
   Modal,
+  TouchableOpacity,
 } from "react-native";
+import { useRouter } from "expo-router";
 import Constants from "expo-constants";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/MaterialIcons";
@@ -14,11 +17,12 @@ import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
 import AuthContext from "@/contexts/AuthContext";
-import { ThemedText } from "@/components/ThemedText";
 
 const Home = () => {
   // informacion de usuario logeado
   const { user } = useContext(AuthContext);
+
+  const router = useRouter();
 
   // estado del modal, visible o no visible
   const [modalState, setModalState] = useState<boolean>(false);
@@ -78,7 +82,14 @@ const Home = () => {
           </View>
           <View style={styles.buttonContainer}>
             <Icon name="alert-rhombus" size={40} style={styles.icon} />
-            <LinkButton title="Multas" url="https://www.google.com" />
+            <TouchableOpacity
+              onPress={() => router.push("/Multas")}
+              style={styles.button}
+            >
+              <Text style={styles.texto} adjustsFontSizeToFit>
+                Multas
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </ImageBackground>
@@ -142,6 +153,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 5,
     shadowRadius: 20,
     elevation: 5,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "50%",
+    padding: 10,
+    backgroundColor: "#001f7e",
+    borderWidth: 0.5,
+    borderRadius: 15,
+    elevation: 10,
+  },
+  texto: {
+    textAlign: "left",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 });
 
