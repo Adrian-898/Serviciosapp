@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Suspense } from "react";
+import React, { useState, useCallback } from "react";
 import {
   SafeAreaView,
   useWindowDimensions,
@@ -6,8 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
-  View,
-  ActivityIndicator,
 } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { ThemedText } from "@/components/ThemedText";
