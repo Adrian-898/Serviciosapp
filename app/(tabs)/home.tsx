@@ -41,14 +41,6 @@ const Home = () => {
         </Modal>
 
         <View style={styles.header}>
-          <ThemedText
-            type="defaultSemiBold"
-            style={styles.welcome}
-            adjustsFontSizeToFit
-          >
-            Bienvenido {user.name}.
-          </ThemedText>
-
           <Icon
             name="information-outline"
             color="black"
@@ -105,17 +97,16 @@ const styles = StyleSheet.create({
   header: {
     margin: 10,
     padding: 5,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     flexDirection: "row",
   },
   container2: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     alignItems: "center",
   },
   buttonContainer: {
     flexDirection: "row",
-    marginBottom: 20,
   },
   icon: {
     color: "black",
@@ -142,7 +133,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   info: {
-    alignSelf: "flex-end",
     verticalAlign: "middle",
     textAlign: "center",
     padding: 2,
