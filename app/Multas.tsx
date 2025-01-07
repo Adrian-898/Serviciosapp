@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
+  useColorScheme,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useRouter } from "expo-router";
 
 const Multas = () => {
+  const colorScheme = useColorScheme();
+  // cedula ingresada por el usuario
   const [cedula, setCedula] = useState<string>("");
+
+  // navegacion con expo-router
   const router = useRouter();
 
   // Handle form submission
@@ -26,27 +28,27 @@ const Multas = () => {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.header}>
-        <ThemedText style={styles.title}>Consultar Multas</ThemedText>
+        <ThemedText type="title">Consultar Multas</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.inputContainer}>
-        <ThemedText style={styles.label}>
+      <ThemedView>
+        <ThemedText type="subtitle" style={styles.label}>
           Ingresa tu cédula de identidad (sin letras ni separadores de cifras)
         </ThemedText>
         <TextInput
           style={styles.input}
           placeholder="Ejemplo: 25345678"
+          placeholderTextColor={colorScheme === "dark" ? "#555" : "#333"}
           keyboardType="numeric"
           value={cedula}
           onChangeText={(text) => setCedula(text)}
         />
       </ThemedView>
-      <ThemedView style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => handleForm()}>
-          <ThemedText type="subtitle" style={styles.buttonText}>
-            Buscar
-          </ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
+
+      <TouchableOpacity style={styles.button} onPress={() => handleForm()}>
+        <ThemedText type="subtitle" style={styles.buttonText}>
+          Buscar
+        </ThemedText>
+      </TouchableOpacity>
     </ThemedView>
   );
 };
@@ -54,37 +56,28 @@ const Multas = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
     justifyContent: "center",
+    alignItems: "center",
   },
   header: {
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  inputContainer: {
-    marginBottom: 16,
+    marginBottom: 10,
   },
   label: {
-    fontSize: 18,
-    marginBottom: 8,
+    marginBottom: 15,
   },
   input: {
+    marginBottom: 15,
+    backgroundColor: "white",
+    borderColor: "#555",
     height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
+    borderWidth: 0.5,
+    borderRadius: 10,
     paddingHorizontal: 10,
     fontSize: 18,
-  },
-  buttonContainer: {
-    alignItems: "center",
+    elevation: 5,
   },
   button: {
-    marginVertical: 5,
     padding: 10,
     backgroundColor: "#001f7e",
     borderRadius: 10,
