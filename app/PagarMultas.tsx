@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 import getErrorMessage from "../utils/getErrorMessage";
 import axios from "axios";
 
@@ -55,12 +57,14 @@ const PagarMultas = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text> Multas de: {data?.name} </Text>
-      <Text>
+    <ThemedView
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    >
+      <ThemedText> Multas de: {data?.name} </ThemedText>
+      <ThemedText>
         Cédula: {params.cedula}, Teléfono: {data?.phone}
-      </Text>
-    </View>
+      </ThemedText>
+    </ThemedView>
   );
 };
 

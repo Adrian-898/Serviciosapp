@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import {
+  View,
+  Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
 } from "react-native";
+import { Formik } from "formik";
+import * as yup from "yup";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useRouter } from "expo-router";
 
+// esquema de validacion de datos
+const validationSchema = yup.object().shape({
+  cedula: yup
+    .number()
+    .typeError("Debe contener sólo números")
+    .required("Debe ingresar un número de cédula válido")
+    .positive("El número de cédula debe ser mayor a 0")
+    .integer("El número de cédula debe ser un número entero")
+    .label("Cedula"),
+});
+
 const Multas = () => {
   const colorScheme = useColorScheme();
-  // cedula ingresada por el usuario
-  const [cedula, setCedula] = useState<string>("");
 
   // navegacion con expo-router
   const router = useRouter();
-
-  // Handle form submission
-  const handleForm = () => {
-    router.push({
-      pathname: "/PagarMultas",
-      params: { cedula },
-    });
-  };
 
   return (
     <ThemedView style={styles.container}>
@@ -31,24 +36,64 @@ const Multas = () => {
         <ThemedText type="title">Consultar Multas</ThemedText>
       </ThemedView>
       <ThemedView>
+        {/*Form para ingreso de cedula usando Formik y Yup*/}
+        <Formik
+          initialValues={{ cedula: "" }}
+          onSubmit={(value) => {
+            console.log(value);
+            router.push({
+              pathname: "/PagarMultas",
+              params: { cedula: value.cedula },
+            });
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+            <View>
+              <ThemedText type="subtitle" style={styles.label}>
+                Ingresa tu número de cédula
+              </ThemedText>
+
+              <TextInput
+                style={styles.input}
+                placeholder="Ejemplo: 25345678"
+                placeholderTextColor={"#888"}
+                keyboardType="number-pad"
+                value={values.cedula}
+                onChangeText={handleChange("cedula")}
+                onBlur={handleBlur("cedula")}
+              />
+
+              {errors.cedula && (
+                <Text style={styles.errorText}>{errors.cedula}</Text>
+              )}
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleSubmit()}
+              >
+                <ThemedText type="subtitle" style={styles.buttonText}>
+                  Buscar
+                </ThemedText>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+
+        {/*
         <ThemedText type="subtitle" style={styles.label}>
           Ingresa tu cédula de identidad (sin letras ni separadores de cifras)
         </ThemedText>
         <TextInput
           style={styles.input}
           placeholder="Ejemplo: 25345678"
-          placeholderTextColor={colorScheme === "dark" ? "#555" : "#333"}
+          placeholderTextColor={"#888"}
           keyboardType="numeric"
           value={cedula}
           onChangeText={(text) => setCedula(text)}
         />
+        */}
       </ThemedView>
-
-      <TouchableOpacity style={styles.button} onPress={() => handleForm()}>
-        <ThemedText type="subtitle" style={styles.buttonText}>
-          Buscar
-        </ThemedText>
-      </TouchableOpacity>
     </ThemedView>
   );
 };
@@ -61,13 +106,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    marginBottom: 10,
+    marginBottom: 20,
   },
   label: {
-    marginBottom: 15,
+    marginBottom: 20,
   },
   input: {
-    marginBottom: 15,
+    marginBottom: 10,
     backgroundColor: "white",
     borderColor: "#555",
     height: 50,
@@ -78,6 +123,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
+    marginTop: 10,
+    alignSelf: "center",
     padding: 10,
     backgroundColor: "#001f7e",
     borderRadius: 10,
@@ -85,10 +132,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 5,
     shadowRadius: 20,
     elevation: 5,
+    width: "50%",
   },
   buttonText: {
     color: "#fff",
     textAlign: "center",
+  },
+  errorText: {
+    color: "red",
   },
 });
 
