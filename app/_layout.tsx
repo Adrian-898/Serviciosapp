@@ -9,6 +9,7 @@ import {
   QueryClientProvider,
   focusManager,
 } from "@tanstack/react-query";
+import { PaperProvider } from "react-native-paper";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Platform, type AppStateStatus } from "react-native";
@@ -82,14 +83,16 @@ const RootLayout = () => {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Stack screenOptions={{ headerShown: false }}>
-            {user ? (
-              <Stack.Screen name="(tabs)" />
-            ) : (
-              <Stack.Screen name="index" />
-            )}
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <PaperProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+              {user ? (
+                <Stack.Screen name="(tabs)" />
+              ) : (
+                <Stack.Screen name="index" />
+              )}
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </PaperProvider>
         </ThemeProvider>
       </AuthContext.Provider>
     </QueryClientProvider>

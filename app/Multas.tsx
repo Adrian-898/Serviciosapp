@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
     .typeError("Debe contener sólo números")
     .required("Debe ingresar un número de cédula válido")
     .positive("El número de cédula debe ser mayor a 0")
-    .integer("El número de cédula debe ser un número entero")
+    .integer("Debe contener sólo números")
     .label("Cedula"),
 });
 
