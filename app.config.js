@@ -15,6 +15,7 @@ export default {
     },
     ios: {
       supportsTablet: true,
+      requireFullScreen: true,
     },
     android: {
       config: {
@@ -46,6 +47,12 @@ export default {
         "expo-camera",
         {
           recordAudioAndroid: false,
+        },
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          initialOrientation: "DEFAULT",
         },
       ],
     ],
