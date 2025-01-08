@@ -4,9 +4,17 @@
       "android": {
         "buildType": "apk"
       },
+      "distribution": "internal",
       "env": {
         "GOOGLE_API_KEY": "AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
       }
+    },
+    "development": {
+      "android": {
+        "buildType": "apk"
+      },
+      "developmentClient": true,
+      "distribution": "internal"
     },
     "production": {}
   }
