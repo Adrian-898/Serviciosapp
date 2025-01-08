@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { StyleSheet, ScrollView } from "react-native";
+import Constants from "expo-constants";
 import { useLocalSearchParams } from "expo-router";
+import * as ScreenOrientation from "expo-screen-orientation";
 import { DataTable } from "react-native-paper";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
@@ -34,7 +37,7 @@ type User = {
 const PagarMultas = () => {
   // Configuracion del componente DataTable
   const [page, setPage] = useState<number>(0);
-  const [numberOfItemsPerPageList] = useState([2, 3, 4]);
+  const [numberOfItemsPerPageList] = useState([1, 2, 5, 10]);
   const [itemsPerPage, onItemsPerPageChange] = useState(
     numberOfItemsPerPageList[0]
   );
@@ -44,6 +47,16 @@ const PagarMultas = () => {
 
   // guarda los datos consultados a la API
   const [data, setData] = useState<User[] | null>(null);
+
+  useEffect(() => {
+    // activa el modo Landscape al entrar en la pantalla para ver la tabla con los datos
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
+    // Al desmontar el componente regresa al modo Portrait
+    return () => {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    };
+  }, []);
 
   useEffect(() => {
     // GET a la API para obtener los datos...
@@ -71,39 +84,63 @@ const PagarMultas = () => {
   const to = Math.min((page + 1) * itemsPerPage, data.length);
 
   return (
-    <ThemedView
-      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-    >
-      <ThemedText> Multas de: {params.cedula} </ThemedText>
+    <ThemedView style={styles.container}>
       <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Nombre</DataTable.Title>
-          <DataTable.Title>Email</DataTable.Title>
-          <DataTable.Title>Teléfono</DataTable.Title>
-        </DataTable.Header>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <ThemedView style={styles.header}>
+            <ThemedText type="defaultSemiBold">
+              Multas de: {params.cedula}
+            </ThemedText>
+          </ThemedView>
 
-        {data.slice(from, to).map((item) => (
-          <DataTable.Row key={item.id}>
-            <DataTable.Cell>{item.name}</DataTable.Cell>
-            <DataTable.Cell numeric>{item.email}</DataTable.Cell>
-            <DataTable.Cell numeric>{item.phone}</DataTable.Cell>
-          </DataTable.Row>
-        ))}
+          <DataTable.Header>
+            <DataTable.Title>Nombre</DataTable.Title>
+            <DataTable.Title>Email</DataTable.Title>
+            <DataTable.Title>Teléfono</DataTable.Title>
+          </DataTable.Header>
 
-        <DataTable.Pagination
-          page={page}
-          numberOfPages={Math.ceil(data.length / itemsPerPage)}
-          onPageChange={(page) => setPage(page)}
-          label={`${from + 1}-${to} de ${data.length}`}
-          numberOfItemsPerPageList={numberOfItemsPerPageList}
-          numberOfItemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
-          showFastPaginationControls
-          selectPageDropdownLabel={"Filas por página"}
-        />
+          {data.slice(from, to).map((item) => (
+            <DataTable.Row key={item.id}>
+              <DataTable.Cell>{item.name}</DataTable.Cell>
+              <DataTable.Cell>{item.email}</DataTable.Cell>
+              <DataTable.Cell>{item.phone}</DataTable.Cell>
+            </DataTable.Row>
+          ))}
+
+          <DataTable.Pagination
+            page={page}
+            numberOfPages={Math.ceil(data.length / itemsPerPage)}
+            onPageChange={(page) => setPage(page)}
+            label={`${from + 1}-${to} de ${data.length}`}
+            numberOfItemsPerPageList={numberOfItemsPerPageList}
+            numberOfItemsPerPage={itemsPerPage}
+            onItemsPerPageChange={onItemsPerPageChange}
+            showFastPaginationControls
+            selectPageDropdownLabel={"Filas por página"}
+            selectPageDropdownRippleColor={"#001f7e"}
+            paginationControlRippleColor={"#001f7e"}
+            dropdownItemRippleColor={"#001f7e"}
+            collapsable={false}
+            style={styles.pagination}
+          />
+        </ScrollView>
       </DataTable>
     </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
+    paddingHorizontal: 20,
+    alignItems: "center",
+  },
+  header: {
+    alignSelf: "center",
+    padding: 5,
+  },
+  pagination: { alignSelf: "center" },
+});
 
 export default PagarMultas;
