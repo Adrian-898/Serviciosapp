@@ -55,6 +55,12 @@ export default {
           initialOrientation: "DEFAULT",
         },
       ],
+      [
+        "expo-dev-launcher",
+        {
+          launchMode: "most-recent",
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
