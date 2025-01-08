@@ -137,7 +137,13 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
                 renderButton={(selectedItem, isOpen) => {
                   return (
                     <View style={styles.dropdownButton}>
-                      <Text style={styles.dropdownButtonText}>
+                      <Text
+                        style={
+                          selectedItem
+                            ? styles.dropdownButtonTextSelected
+                            : styles.dropdownButtonText
+                        }
+                      >
                         {selectedItem || "Seleccionar parquímetro"}
                       </Text>
                       <Icon
@@ -264,6 +270,11 @@ const styles = StyleSheet.create({
   },
   dropdownButtonText: {
     color: "#888",
+    fontSize: 18,
+    flex: 1,
+  },
+  dropdownButtonTextSelected: {
+    color: "#333",
     fontSize: 18,
     flex: 1,
   },
