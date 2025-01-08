@@ -10,9 +10,7 @@ import {
   Platform,
   useColorScheme,
 } from "react-native";
-import { Constants } from "expo-constants";
 import { ThemedText } from "./ThemedText";
-import { ThemedView } from "./ThemedView";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { Formik } from "formik";
@@ -280,13 +278,12 @@ const styles = StyleSheet.create({
   },
   dropdownItem: {
     padding: 10,
-    backgroundColor: "#fff",
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     borderRadius: 10,
   },
   dropdownItemText: {
-    color: "#444",
+    color: "#333",
     fontSize: 18,
   },
   search: {
