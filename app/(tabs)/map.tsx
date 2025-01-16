@@ -17,6 +17,14 @@ import Constants from 'expo-constants';
 import getErrorMessage from '@/utils/getErrorMessage';
 import type { Lugar, Region } from '@/utils/types';
 
+// Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
+const initialRegion: Region = {
+	latitude: 10.597032,
+	longitude: -66.930431,
+	latitudeDelta: 0.04,
+	longitudeDelta: 0.04,
+};
+
 // De aqui se obtienen las coordenadas y el nombre de los lugares para crear los Pins en el mapa
 const lugares: Lugar[] = [
 	{
@@ -30,14 +38,6 @@ const lugares: Lugar[] = [
 		name: 'Lugar 2',
 	},
 ];
-
-// Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
-const initialRegion: Region = {
-	latitude: 10.597032,
-	longitude: -66.930431,
-	latitudeDelta: 0.04,
-	longitudeDelta: 0.04,
-};
 
 // componente principal
 const Map = () => {
@@ -85,6 +85,14 @@ const Map = () => {
 		}
 	};
 
+	// al presionar un marcador
+	const MarkerPress = (lugar: Lugar) => {
+		if (!destination || destination.id !== lugar.id) {
+			setNewDestination(lugar);
+			setDrawRouteButton(true);
+		}
+	};
+
 	// componente Pin en el mapa
 	const MarkerComponent = useCallback(
 		({ lugar }: { lugar: Lugar }) => (
@@ -113,14 +121,6 @@ const Map = () => {
 		),
 		[lugares],
 	);
-
-	// al presionar un marcador
-	const MarkerPress = (lugar: Lugar) => {
-		if (!destination || destination.id !== lugar.id) {
-			setNewDestination(lugar);
-			setDrawRouteButton(true);
-		}
-	};
 
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
 	const Alerta = () => {
