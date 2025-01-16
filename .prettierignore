@@ -1,8 +1,8 @@
-.expo
+.expo/
 .env
 .gitignore
 .eslintignore
-assets
+assets/
 package-lock.json
 unused
 README.md

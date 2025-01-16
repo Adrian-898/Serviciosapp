@@ -1,9 +1,9 @@
-.expo
+.expo/
 .env
 .gitignore
 .prettierrc
 .prettierignore
-assets
+assets/
 package-lock.json
 unused
 README.md
