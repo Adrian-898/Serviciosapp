@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+// import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { StatusBar } from "react-native";
@@ -75,8 +75,6 @@ const User = () => {
     </ThemedView>
   );
 };
-
-/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
   container: {

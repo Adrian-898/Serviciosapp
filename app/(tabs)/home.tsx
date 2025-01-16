@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
 import {
   Text,
   ScrollView,
@@ -16,12 +16,8 @@ import Icon2 from "@expo/vector-icons/MaterialIcons";
 import ModalInfo from "@/components/ModalInfo";
 import LinkButton from "@/components/LinkButton";
 import Fondo from "@/assets/images/cinta-costera.jpg";
-import AuthContext from "@/contexts/AuthContext";
 
 const Home = () => {
-  // informacion de usuario logeado
-  const { user } = useContext(AuthContext);
-
   const router = useRouter();
 
   // estado del modal, visible o no visible

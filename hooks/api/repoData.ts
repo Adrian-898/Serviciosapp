@@ -36,7 +36,7 @@ async function getUser() {
       },
     });
 
-    if (response.statusText != "OK") {
+    if (response.statusText !== "OK") {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 

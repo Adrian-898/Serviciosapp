@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import getErrorMessage from "@/utils/getErrorMessage";

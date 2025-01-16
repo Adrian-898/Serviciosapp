@@ -1,0 +1,9 @@
+.expo
+.env
+.gitignore
+.prettierrc
+.prettierignore
+assets
+package-lock.json
+unused
+README.md

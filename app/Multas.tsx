@@ -1,11 +1,9 @@
-import React from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  useColorScheme,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -25,8 +23,6 @@ const validationSchema = yup.object().shape({
 });
 
 const Multas = () => {
-  const colorScheme = useColorScheme();
-
   // navegacion con expo-router
   const router = useRouter();
 
