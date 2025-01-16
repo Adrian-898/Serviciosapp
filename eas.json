@@ -1,10 +1,15 @@
 {
+	"cli": {
+		"version": ">=13.4.2",
+		"appVersionSource": "remote"
+	},
 	"build": {
 		"preview": {
 			"android": {
 				"buildType": "apk"
 			},
 			"distribution": "internal",
+			"autoIncrement": true,
 			"env": {
 				"GOOGLE_API_KEY": "AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
 			}
