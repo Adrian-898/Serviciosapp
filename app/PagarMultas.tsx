@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { useLocalSearchParams } from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -98,20 +99,47 @@ const PagarMultas = () => {
 					</ThemedView>
 
 					<DataTable.Header>
-						<DataTable.Title>Nombre</DataTable.Title>
-						<DataTable.Title>Email</DataTable.Title>
-						<DataTable.Title>Teléfono</DataTable.Title>
+						<DataTable.Title style={styles.title}>
+							Descripción
+						</DataTable.Title>
+						<DataTable.Title style={styles.title}>
+							Fecha
+						</DataTable.Title>
+						<DataTable.Title style={styles.title}>
+							Estatus
+						</DataTable.Title>
+						<DataTable.Title style={styles.title}>
+							Pagar
+						</DataTable.Title>
 					</DataTable.Header>
 
 					{data.slice(from, to).map((item) => (
 						<DataTable.Row key={item.id}>
-							<DataTable.Cell>{item.name}</DataTable.Cell>
-							<DataTable.Cell>{item.email}</DataTable.Cell>
-							<DataTable.Cell>{item.phone}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>
+								{item.name}
+							</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>
+								{item.phone}
+							</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>
+								{item.id}
+							</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>
+								<IconButton
+									mode='contained'
+									size={30}
+									icon='receipt'
+									rippleColor='#001f7e'
+									onPress={() => console.log('Pagar')}
+								/>
+							</DataTable.Cell>
 						</DataTable.Row>
 					))}
 
 					<DataTable.Pagination
+						theme={{
+							roundness: 5,
+						}}
 						page={page}
 						numberOfPages={Math.ceil(data.length / itemsPerPage)}
 						onPageChange={(page) => setPage(page)}
@@ -143,6 +171,12 @@ const styles = StyleSheet.create({
 	header: {
 		alignSelf: 'center',
 		padding: 5,
+	},
+	title: {
+		justifyContent: 'center',
+	},
+	cell: {
+		justifyContent: 'center',
 	},
 	pagination: { alignSelf: 'center' },
 });
