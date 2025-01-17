@@ -43,6 +43,9 @@ const lugares: Lugar[] = [
 const Map = () => {
 	const colorScheme = useColorScheme();
 
+	// Clave de API de google maps, se usa para trazar rutas en el mapa
+	const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY!;
+
 	// dimensiones del dispositivo
 	const windowWidth = useWindowDimensions().width;
 	const windowHeight = useWindowDimensions().height;
@@ -181,7 +184,7 @@ const Map = () => {
 					// Traza la ruta usando la API Directions de google maps (se debe cambiar el manejo de la apikey por seguridad):
 					drawRoute && destination && (
 						<MapViewDirections
-							apikey='AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw'
+							apikey={apiKey}
 							origin={location.origin}
 							destination={destination.coords}
 							mode='WALKING'

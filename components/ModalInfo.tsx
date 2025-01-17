@@ -1,9 +1,4 @@
-import {
-	StyleSheet,
-	View,
-	TouchableOpacity,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 

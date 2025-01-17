@@ -9,17 +9,18 @@
 				"buildType": "apk"
 			},
 			"autoIncrement": true,
-			"env": {
-				"GOOGLE_API_KEY": "AIzaSyB-HqJBWka1qdhm5ZX7p5G1WFfOdoeBrSw"
-			}
+			"environment": "preview"
 		},
 		"development": {
 			"android": {
 				"buildType": "apk"
 			},
 			"developmentClient": true,
-			"distribution": "internal"
+			"distribution": "internal",
+			"environment": "development"
 		},
-		"production": {}
+		"production": {
+			"environment": "production"
+		}
 	}
 }
