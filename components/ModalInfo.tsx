@@ -16,46 +16,36 @@ const ModalInfo = (props: modalInfoProps) => {
 
 	// Contenido del modal mostrando la informacion en el Home de la app
 	return (
-		<View style={styles.modal}>
-			<ThemedView
-				style={
-					colorScheme === 'light'
-						? styles.modalContainer
-						: styles.modalContainerDark
-				}
+		<ThemedView
+			style={
+				colorScheme === 'light'
+					? styles.modalContainer
+					: styles.modalContainerDark
+			}
+		>
+			<ThemedText style={styles.modalText}>
+				Bienvenido a tu App La Guaira, aquí encontrarás distintos
+				servicios a los que puedes acceder desde los enlaces disponibles
+				en la pantalla de inicio, en la barra de navegación inferior
+				podrás acceder a distintas secciones con información y
+				funcionalidades de interés para ti como un lector QR y un mapa
+				con tu ubicación actual.
+			</ThemedText>
+			<TouchableOpacity
+				style={styles.modalCloseButton}
+				onPress={() => props.onClose()}
 			>
-				<ThemedText style={styles.modalText}>
-					Bienvenido a tu App La Guaira, aquí encontrarás distintos
-					servicios a los que puedes acceder desde los enlaces
-					disponibles en la pantalla de inicio, en la barra de
-					navegación inferior podrás acceder a distintas secciones con
-					información y funcionalidades de interés para ti como un
-					lector QR y un mapa con tu ubicación actual.
+				<ThemedText type='subtitle' style={styles.modalCloseButtonText}>
+					OK
 				</ThemedText>
-				<TouchableOpacity
-					style={styles.modalCloseButton}
-					onPress={() => props.onClose()}
-				>
-					<ThemedText
-						type='subtitle'
-						style={styles.modalCloseButtonText}
-					>
-						OK
-					</ThemedText>
-				</TouchableOpacity>
-			</ThemedView>
-		</View>
+			</TouchableOpacity>
+		</ThemedView>
 	);
 };
 
 /** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
-	modal: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
 	modalContainer: {
 		backfaceVisibility: 'visible',
 		width: '90%',

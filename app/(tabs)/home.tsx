@@ -6,9 +6,9 @@ import {
 	StyleSheet,
 	ImageBackground,
 	SafeAreaView,
-	Modal,
 	TouchableOpacity,
 } from 'react-native';
+import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
@@ -18,6 +18,7 @@ import LinkButton from '@/components/LinkButton';
 import Fondo from '@/assets/images/cinta-costera.jpg';
 
 const Home = () => {
+	// Navegacion con expo-router
 	const router = useRouter();
 
 	// estado del modal, visible o no visible
@@ -31,14 +32,15 @@ const Home = () => {
 				resizeMode='cover'
 				onError={() => console.log('Error cargando imagen de fondo...')}
 			>
-				<Modal
-					visible={modalState}
-					onRequestClose={() => setModalState(false)}
-					animationType='slide'
-					transparent={true}
-				>
-					<ModalInfo onClose={() => setModalState(false)} />
-				</Modal>
+				<Portal>
+					<Modal
+						visible={modalState}
+						onDismiss={() => setModalState(false)}
+						contentContainerStyle={styles.modal}
+					>
+						<ModalInfo onClose={() => setModalState(false)} />
+					</Modal>
+				</Portal>
 
 				<View style={styles.header}>
 					<Icon
@@ -200,6 +202,11 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 		color: '#FFFFFF',
+	},
+	modal: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
 
