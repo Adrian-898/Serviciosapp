@@ -37,7 +37,7 @@ const loadUser = async () => {
 		console.log('loadUserFN: ', data);
 		return data;
 	} catch (error) {
-		console.warn('Ha ocurrido un error al cargar el usuario');
+		console.warn('Ha ocurrido un error al cargar el usuario', error);
 		return null;
 	}
 };

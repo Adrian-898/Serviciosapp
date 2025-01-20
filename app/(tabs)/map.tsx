@@ -53,6 +53,9 @@ const Map = () => {
 	// hook usado para permisos de ubicacion y geolocalizacion del ususario
 	const location = useLocationPermission();
 
+	// Ubicaciones existentes, se renderiza un pin en cada una
+	const [points, setPoints] = useState(lugares);
+
 	// destino establecido al que ir, una vez se selecciona un marcador
 	const [destination, setDestination] = useState<Lugar | undefined>();
 	const [newDestination, setNewDestination] = useState<Lugar | undefined>();
@@ -122,7 +125,7 @@ const Map = () => {
 				</Callout>
 			</Marker>
 		),
-		[lugares],
+		[points],
 	);
 
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
@@ -176,7 +179,7 @@ const Map = () => {
 			>
 				{
 					// itera el arreglo lugares y renderiza un pin para cada instancia existente
-					lugares.map((lugar, index) => (
+					points.map((lugar, index) => (
 						<MarkerComponent key={index} lugar={lugar} />
 					))
 				}
