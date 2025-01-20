@@ -44,6 +44,12 @@ const RegisterScreen = () => {
 
 	// control del registro al presionar "Registrar"
 	const handleRegister = async (values: RegisterCredentials) => {
+		// elimina el error al llamar a setUser (no se puede invocar un objeto posiblemente null)
+		if (!setUser) {
+			console.error('Login ERROR: setUser = NULL');
+			return;
+		}
+
 		setError('');
 		try {
 			// post

@@ -18,7 +18,7 @@ export type LoginCredentials = {
 	email: string;
 	password: string;
 };
-
+// Credenciales de inicio de sesion
 export type RequestLogin = LoginCredentials & {
 	device_name: string | unknown;
 };
@@ -29,7 +29,13 @@ export type RegisterCredentials = {
 	password: string;
 	confirmPassword: string;
 };
-
+// Credenciales de Registro de usuario
 export type RequestRegister = RegisterCredentials & {
 	device_name: string | unknown;
+};
+
+// Datos de el contexto AuthContext (provee la informacion del usuario logeado)
+export type authContextProps = {
+	user: {} | null;
+	setUser: React.Dispatch<React.SetStateAction<{} | null>> | null;
 };

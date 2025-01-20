@@ -39,6 +39,11 @@ const LoginScreen = () => {
 
 	// control del login al presionar "Iniciar sesion"
 	const handleLogin = async (values: LoginCredentials) => {
+		if (!setUser) {
+			console.error('Login ERROR: setUser = NULL');
+			return;
+		}
+
 		setError('');
 		try {
 			// post

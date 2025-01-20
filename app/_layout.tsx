@@ -26,7 +26,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 SplashScreen.preventAutoHideAsync();
 
 function onAppStateChange(status: AppStateStatus) {
-	// React Query ya soporta el refetch al reconectarse por defecto en web
+	// React Query ya soporta el refetch al reconectarse en web
 	if (Platform.OS !== 'web') {
 		focusManager.setFocused(status === 'active');
 	}
@@ -36,7 +36,7 @@ const RootLayout = () => {
 	useAppState(onAppStateChange);
 	useOnlineManager();
 	const colorScheme = useColorScheme();
-	const [user, setUser] = useState<any>(null);
+	const [user, setUser] = useState<{} | null>(null);
 	const [status, setStatus] = useState('loading');
 	const [queryClient] = useState(
 		() =>
@@ -57,10 +57,8 @@ const RootLayout = () => {
 		const runEffect = async () => {
 			try {
 				const user = await loadUser();
-				if (user !== null) {
-					setUser(user);
-					setStatus('resolved');
-				}
+				setUser(user);
+				setStatus('resolved');
 			} catch (error) {
 				setStatus('error');
 				console.error(error + ' Mensaje: ' + getErrorMessage(error));
@@ -71,7 +69,8 @@ const RootLayout = () => {
 
 	console.log('Status: ', status);
 
-	if (status !== 'resolved') {
+	// se cancela el renderizado hasta completar el request (useEffect)
+	if (status === 'loading') {
 		return;
 	}
 
