@@ -86,20 +86,6 @@ const Multas = () => {
 						</View>
 					)}
 				</Formik>
-
-				{/*
-        <ThemedText type="subtitle" style={styles.label}>
-          Ingresa tu cédula de identidad (sin letras ni separadores de cifras)
-        </ThemedText>
-        <TextInput
-          style={styles.input}
-          placeholder="Ejemplo: 25345678"
-          placeholderTextColor={"#888"}
-          keyboardType="numeric"
-          value={cedula}
-          onChangeText={(text) => setCedula(text)}
-        />
-        */}
 			</ThemedView>
 		</ThemedView>
 	);
