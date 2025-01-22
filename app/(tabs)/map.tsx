@@ -105,7 +105,10 @@ const Map = () => {
 			(nextAppState) => {
 				console.log('AppState changed to: ', nextAppState);
 
-				if (nextAppState === 'background') {
+				if (
+					nextAppState === 'background' ||
+					nextAppState === 'active'
+				) {
 					checkServices();
 				}
 			},
@@ -179,7 +182,7 @@ const Map = () => {
 	);
 
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
-	const Alerta = () => {
+	const AlertaPermisos = () => {
 		return (
 			<ThemedView
 				style={
@@ -197,10 +200,39 @@ const Map = () => {
 				<ThemedText
 					type='defaultSemiBold'
 					style={styles.alertMessage}
-					adjustsFontSizeToFit={true}
+					adjustsFontSizeToFit
 				>
 					Los permisos de ubicación fueron negados, ve a la
 					configuración de la App para otorgar los permisos
+				</ThemedText>
+			</ThemedView>
+		);
+	};
+
+	// Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
+	const AlertaUbicacionActivada = () => {
+		return (
+			<ThemedView
+				style={
+					colorScheme === 'light'
+						? styles.alertContainer
+						: styles.alertContainerDark
+				}
+			>
+				<Icon
+					name='exclamation'
+					color={'red'}
+					size={80}
+					style={styles.alertIcon}
+				/>
+				<ThemedText
+					type='defaultSemiBold'
+					style={styles.alertMessage}
+					adjustsFontSizeToFit
+				>
+					La ubicación en tu dispositivo está desactivada, actívala y
+					carga de nuevo el mapa si deseas conseguir tu ubicación y/o
+					trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
@@ -264,8 +296,11 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
-				!location.permissionGranted && <Alerta />
+				!location.permissionGranted && <AlertaPermisos />
 			}
+			{!servicesEnabled && location.permissionGranted && (
+				<AlertaUbicacionActivada />
+			)}
 		</SafeAreaView>
 	);
 };
