@@ -232,7 +232,7 @@ const Map = () => {
 					adjustsFontSizeToFit
 				>
 					La ubicación en tu dispositivo está desactivada, actívala y
-					carga de nuevo el mapa si deseas conseguir tu ubicación y/o
+					recarga la App si deseas conocer tu ubicación actual y/o
 					trazar una ruta...
 				</ThemedText>
 			</ThemedView>
