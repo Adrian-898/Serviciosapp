@@ -7,7 +7,7 @@ const useLocationPermission = () => {
 	// este hook obtiene la ubicacion actual del usuario (1 sola vez)
 	const { origin, getCurrentLocation } = useGetCurrentLocation();
 	// estado del permiso de uso de ubicacion
-	const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
+	const [permissionGranted, setPermissionGranted] = useState(false);
 
 	// Funcion que solicita permisos de ubicacion al usuario
 	const getLocationPermission = async () => {
@@ -15,13 +15,17 @@ const useLocationPermission = () => {
 			try {
 				let { status } =
 					await Location.requestForegroundPermissionsAsync();
+
 				setPermissionGranted(status === 'granted');
 				if (status === 'granted') {
 					getCurrentLocation();
 				}
 			} catch (error) {
-				console.error(error + ' Mensaje: ' + getErrorMessage(error));
-				throw error;
+				console.warn(
+					'Error en useLocationPermission, ' +
+						' mensaje: ' +
+						getErrorMessage(error),
+				);
 			}
 		}
 	};

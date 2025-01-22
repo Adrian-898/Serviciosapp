@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
 	SafeAreaView,
 	useWindowDimensions,
@@ -13,7 +13,9 @@ import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocationPermission from '@/hooks/useLocationPermission';
+import * as Location from 'expo-location';
 import Constants from 'expo-constants';
+import { useNavigation } from 'expo-router';
 import getErrorMessage from '@/utils/getErrorMessage';
 import type { Lugar, Region } from '@/utils/types';
 
@@ -50,8 +52,16 @@ const Map = () => {
 	const windowWidth = useWindowDimensions().width;
 	const windowHeight = useWindowDimensions().height;
 
+	// constante de navegacion de expo-router
+	const navigation = useNavigation();
+
 	// hook usado para permisos de ubicacion y geolocalizacion del ususario
 	const location = useLocationPermission();
+
+	// indica si esta activa la ubicacion en el dispositivo
+	const [servicesEnabled, setServicesEnabled] = useState<boolean | null>(
+		null,
+	);
 
 	// Ubicaciones existentes, se renderiza un pin en cada una
 	const [points, setPoints] = useState(lugares);
@@ -65,6 +75,27 @@ const Map = () => {
 
 	// estado de trazado de ruta del usuario a un lugar determinado (activo o no)
 	const [drawRoute, setDrawRoute] = useState(false);
+
+	// funcion para checkear si esta activa la ubicacion
+	const checkServices = async () => {
+		let enabled = await Location.hasServicesEnabledAsync();
+
+		if (enabled) {
+			setServicesEnabled(true);
+		} else {
+			setServicesEnabled(false);
+		}
+	};
+
+	// detecta cuando la pantalla actual pasa a 'blur'
+	useEffect(() => {
+		let unsubscribe = navigation.addListener('blur', () => {
+			console.log('map screen blurred');
+
+			checkServices();
+		});
+		return unsubscribe;
+	}, [navigation]);
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
@@ -166,6 +197,7 @@ const Map = () => {
 				showsUserLocation
 				showsMyLocationButton
 				loadingEnabled
+				onMapLoaded={() => checkServices()}
 				toolbarEnabled={false}
 				showsPointsOfInterest={false}
 				showsIndoors={false}
@@ -207,7 +239,9 @@ const Map = () => {
 			</MapView>
 			{
 				// muestra el boton de trazar ruta:
-				drawRouteButton && <DrawRouteButton />
+				drawRouteButton &&
+					location.permissionGranted &&
+					servicesEnabled && <DrawRouteButton />
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
