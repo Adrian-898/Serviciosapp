@@ -202,8 +202,9 @@ const Map = () => {
 					style={styles.alertMessage}
 					adjustsFontSizeToFit
 				>
-					Los permisos de ubicación fueron negados, ve a la
-					configuración de la App para otorgar los permisos
+					Parece que los permisos de ubicación fueron negados, otorga
+					los permisos y reinicia la App si deseas ver tu ubicación o
+					trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
