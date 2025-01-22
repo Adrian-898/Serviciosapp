@@ -98,7 +98,7 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
-	// detecta cuando se navega fuera de la App (la App pasa a segundo plano)
+	// detecta cuando se navega fuera de la App (la App pasa a segundo plano) y cuando vuelve a primer plano
 	useEffect(() => {
 		const appStateListener = AppState.addEventListener(
 			'change',
