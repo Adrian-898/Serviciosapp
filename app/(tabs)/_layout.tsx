@@ -15,7 +15,7 @@ export default function TabLayout() {
 			}}
 		>
 			<Tabs.Screen
-				name='Home'
+				name='home'
 				options={{
 					headerShown: false,
 					title: 'Inicio',
@@ -28,7 +28,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='QRScanner'
+				name='qrScanner'
 				options={{
 					title: 'QR',
 					tabBarIcon: ({ color, focused }) => (
@@ -40,7 +40,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='Map'
+				name='map'
 				options={{
 					title: 'Ubicación',
 					tabBarIcon: ({ color, focused }) => (
@@ -52,7 +52,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='User'
+				name='user'
 				options={{
 					title: 'Usuario',
 					tabBarIcon: ({ color, focused }) => (

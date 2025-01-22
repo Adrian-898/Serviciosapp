@@ -116,7 +116,7 @@ const Home = () => {
 							style={styles.icon}
 						/>
 						<TouchableOpacity
-							onPress={() => router.push('/Multas')}
+							onPress={() => router.push('/multas')}
 							style={styles.button}
 						>
 							<Text style={styles.texto} adjustsFontSizeToFit>

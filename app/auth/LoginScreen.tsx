@@ -55,7 +55,7 @@ const LoginScreen = () => {
 
 			// control de errores y redireccion a inicio en caso de login exitoso
 			if (postStatus === 'OK') {
-				router.replace('/(tabs)/Home');
+				router.replace('/(tabs)/home');
 			} else {
 				setError(postStatus);
 				console.log('statusText: ', postStatus);
@@ -184,8 +184,6 @@ const LoginScreen = () => {
 		</ThemedView>
 	);
 };
-
-/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
 	container: {

@@ -135,8 +135,6 @@ const ForgotPasswordScreen = () => {
 	);
 };
 
-/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
