@@ -26,7 +26,7 @@ const Index = () => {
 					<View style={styles.continue}>
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => router.push('/(tabs)/Home')}
+							onPress={() => router.push('/(tabs)/home')}
 						>
 							<ThemedText style={styles.buttonText}>
 								Continuar sin iniciar sesión
@@ -37,7 +37,7 @@ const Index = () => {
 					<View style={styles.loginRegister}>
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => router.push('/auth/LoginScreen')}
+							onPress={() => router.push('/auth/loginScreen')}
 						>
 							<Text style={styles.buttonText}>
 								Iniciar sesión
@@ -46,7 +46,7 @@ const Index = () => {
 
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => router.push('/auth/RegisterScreen')}
+							onPress={() => router.push('/auth/registerScreen')}
 						>
 							<Text style={styles.buttonText}>Registrarse</Text>
 						</TouchableOpacity>

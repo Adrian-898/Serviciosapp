@@ -171,7 +171,7 @@ const LoginScreen = () => {
 
 						<TouchableOpacity
 							onPress={() =>
-								router.push('/auth/ForgotPasswordScreen')
+								router.push('/auth/forgotPasswordScreen')
 							}
 						>
 							<ThemedText type='link' style={styles.link}>
