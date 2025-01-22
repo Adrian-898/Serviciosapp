@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	useColorScheme,
+	AppState,
 } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { ThemedText } from '@/components/ThemedText';
@@ -87,7 +88,7 @@ const Map = () => {
 		}
 	};
 
-	// detecta cuando la pantalla actual pasa a 'blur'
+	// detecta cuando se navega fuera de la pantalla actual (map pasa a 'blur')
 	useEffect(() => {
 		let unsubscribe = navigation.addListener('blur', () => {
 			console.log('map screen blurred');
@@ -96,6 +97,24 @@ const Map = () => {
 		});
 		return unsubscribe;
 	}, [navigation]);
+
+	// detecta cuando se navega fuera de la App (la App pasa a segundo plano)
+	useEffect(() => {
+		const appStateListener = AppState.addEventListener(
+			'change',
+			(nextAppState) => {
+				console.log('AppState changed to: ', nextAppState);
+
+				if (nextAppState === 'background') {
+					checkServices();
+				}
+			},
+		);
+
+		return () => {
+			appStateListener.remove();
+		};
+	}, [AppState]);
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
