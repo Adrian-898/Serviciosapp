@@ -117,7 +117,7 @@ const Map = () => {
 		return () => {
 			appStateListener.remove();
 		};
-	}, [AppState]);
+	}, []);
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
