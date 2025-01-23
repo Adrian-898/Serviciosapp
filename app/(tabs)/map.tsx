@@ -1,14 +1,22 @@
-import { useState, useCallback } from 'react';
-import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import {
+	SafeAreaView,
+	useWindowDimensions,
+	Text,
+	StyleSheet,
+	TouchableOpacity,
+	useColorScheme,
+	AppState,
+} from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocationPermission from '@/hooks/useLocationPermission';
-// import * as Location from 'expo-location';
+import * as Location from 'expo-location';
 import Constants from 'expo-constants';
-// import { useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import getErrorMessage from '@/utils/getErrorMessage';
 import type { Lugar, Region } from '@/utils/types';
 
@@ -46,7 +54,7 @@ const Map = () => {
 	const windowHeight = useWindowDimensions().height;
 
 	// constante de navegacion de expo-router
-	// const navigation = useNavigation();
+	const navigation = useNavigation();
 
 	// hook usado para permisos de ubicacion y geolocalizacion del ususario
 	const location = useLocationPermission();
@@ -67,7 +75,6 @@ const Map = () => {
 	// estado de trazado de ruta del usuario a un lugar determinado (activo o no)
 	const [drawRoute, setDrawRoute] = useState(false);
 
-	/*
 	// funcion para checkear si esta activa la ubicacion
 	const checkServices = async () => {
 		try {
@@ -96,28 +103,20 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
-	
 	// detecta cuando se navega fuera de la App (la App pasa a segundo plano) y cuando vuelve a primer plano
 	useEffect(() => {
-		const appStateListener = AppState.addEventListener(
-			'change',
-			(nextAppState) => {
-				console.log('AppState changed to: ', nextAppState);
+		const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+			console.log('AppState changed to: ', nextAppState);
 
-				if (
-					nextAppState === 'background' ||
-					nextAppState === 'active'
-				) {
-					checkServices();
-				}
-			},
-		);
+			if (nextAppState === 'background' || nextAppState === 'active') {
+				checkServices();
+			}
+		});
 
 		return () => {
 			appStateListener.remove();
 		};
 	}, []);
-	*/
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
