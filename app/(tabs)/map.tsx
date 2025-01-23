@@ -47,7 +47,7 @@ const Map = () => {
 	const colorScheme = useColorScheme();
 
 	// Clave de API de google maps, se usa para trazar rutas en el mapa
-	const apiKey = process.env.GOOGLE_API_KEY!;
+	const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY!;
 
 	// dimensiones del dispositivo
 	const windowWidth = useWindowDimensions().width;
