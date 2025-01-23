@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { Formik } from 'formik';
@@ -47,13 +41,7 @@ const ForgotPasswordScreen = () => {
 	};
 
 	return (
-		<ThemedView
-			style={
-				colorScheme === 'light'
-					? styles.container
-					: styles.containerDark
-			}
-		>
+		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
 			<ThemedText type='title' style={styles.title}>
 				Restablecer contraseña
 			</ThemedText>
@@ -64,27 +52,10 @@ const ForgotPasswordScreen = () => {
 				}}
 				validationSchema={validationSchema}
 			>
-				{({
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					values,
-					errors,
-					touched,
-				}) => (
-					<ThemedView
-						style={
-							colorScheme === 'light'
-								? styles.form
-								: styles.formDark
-						}
-					>
+				{({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+					<ThemedView style={colorScheme === 'light' ? styles.form : styles.formDark}>
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Ingresa tu correo electrónico'
 							onChangeText={handleChange('email')}
 							onBlur={handleBlur('email')}
@@ -95,37 +66,24 @@ const ForgotPasswordScreen = () => {
 						/>
 
 						{errors.email && touched.email && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.email}
 							</ThemedText>
 						)}
 
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => handleSubmit()}
-						>
+						<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 							<Text style={styles.buttonText}>Enviar código</Text>
 						</TouchableOpacity>
 
 						{error && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								Ha ocurrido un error: {error}
 							</ThemedText>
 						)}
 
 						{resetStatus && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.statusText}
-							>
-								Se ha enviado un correo de recuperación:{' '}
-								{resetStatus}
+							<ThemedText type='defaultSemiBold' style={styles.statusText}>
+								Se ha enviado un correo de recuperación: {resetStatus}
 							</ThemedText>
 						)}
 					</ThemedView>

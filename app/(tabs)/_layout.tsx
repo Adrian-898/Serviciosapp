@@ -20,10 +20,7 @@ export default function TabLayout() {
 					headerShown: false,
 					title: 'Inicio',
 					tabBarIcon: ({ color, focused }) => (
-						<TabBarIcon
-							name={focused ? 'home' : 'home-outline'}
-							color={color}
-						/>
+						<TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
 					),
 				}}
 			/>
@@ -32,10 +29,7 @@ export default function TabLayout() {
 				options={{
 					title: 'QR',
 					tabBarIcon: ({ color, focused }) => (
-						<TabBarIcon
-							name={focused ? 'camera' : 'camera-outline'}
-							color={color}
-						/>
+						<TabBarIcon name={focused ? 'camera' : 'camera-outline'} color={color} />
 					),
 				}}
 			/>
@@ -44,10 +38,7 @@ export default function TabLayout() {
 				options={{
 					title: 'Ubicación',
 					tabBarIcon: ({ color, focused }) => (
-						<TabBarIcon
-							name={focused ? 'location' : 'location-outline'}
-							color={color}
-						/>
+						<TabBarIcon name={focused ? 'location' : 'location-outline'} color={color} />
 					),
 				}}
 			/>
@@ -56,10 +47,7 @@ export default function TabLayout() {
 				options={{
 					title: 'Usuario',
 					tabBarIcon: ({ color, focused }) => (
-						<TabBarIcon
-							name={focused ? 'person' : 'person-outline'}
-							color={color}
-						/>
+						<TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
 					),
 				}}
 			/>

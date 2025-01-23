@@ -39,9 +39,7 @@ const PagarMultas = () => {
 	// Configuracion del componente DataTable
 	const [page, setPage] = useState<number>(0);
 	const [numberOfItemsPerPageList] = useState([1, 2, 5, 10]);
-	const [itemsPerPage, onItemsPerPageChange] = useState(
-		numberOfItemsPerPageList[0],
-	);
+	const [itemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
 
 	// hook para acceder al estado enviado desde el componente padre (Multas.tsx)
 	const params = useLocalSearchParams();
@@ -51,15 +49,11 @@ const PagarMultas = () => {
 
 	useEffect(() => {
 		// activa el modo Landscape al entrar en la pantalla para ver la tabla con los datos
-		ScreenOrientation.lockAsync(
-			ScreenOrientation.OrientationLock.LANDSCAPE,
-		);
+		ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
 		// Al desmontar el componente regresa al modo Portrait
 		return () => {
-			ScreenOrientation.lockAsync(
-				ScreenOrientation.OrientationLock.PORTRAIT,
-			);
+			ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 		};
 	}, []);
 
@@ -68,9 +62,7 @@ const PagarMultas = () => {
 		const listUsers = async () => {
 			try {
 				// consulta de prueba
-				const response = await axios.get(
-					'https://jsonplaceholder.typicode.com/users',
-				);
+				const response = await axios.get('https://jsonplaceholder.typicode.com/users');
 				setData(response.data);
 			} catch (error) {
 				console.error('Ha ocurrido un error: ', getErrorMessage(error));
@@ -93,37 +85,21 @@ const PagarMultas = () => {
 			<DataTable>
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<ThemedView style={styles.header}>
-						<ThemedText type='defaultSemiBold'>
-							Multas de: {params.cedula}
-						</ThemedText>
+						<ThemedText type='defaultSemiBold'>Multas de: {params.cedula}</ThemedText>
 					</ThemedView>
 
 					<DataTable.Header>
-						<DataTable.Title style={styles.title}>
-							Descripción
-						</DataTable.Title>
-						<DataTable.Title style={styles.title}>
-							Fecha
-						</DataTable.Title>
-						<DataTable.Title style={styles.title}>
-							Estatus
-						</DataTable.Title>
-						<DataTable.Title style={styles.title}>
-							Pagar
-						</DataTable.Title>
+						<DataTable.Title style={styles.title}>Descripción</DataTable.Title>
+						<DataTable.Title style={styles.title}>Fecha</DataTable.Title>
+						<DataTable.Title style={styles.title}>Estatus</DataTable.Title>
+						<DataTable.Title style={styles.title}>Pagar</DataTable.Title>
 					</DataTable.Header>
 
 					{data.slice(from, to).map((item) => (
 						<DataTable.Row key={item.id}>
-							<DataTable.Cell style={styles.cell}>
-								{item.name}
-							</DataTable.Cell>
-							<DataTable.Cell style={styles.cell}>
-								{item.phone}
-							</DataTable.Cell>
-							<DataTable.Cell style={styles.cell}>
-								{item.id}
-							</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>{item.name}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>{item.phone}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>{item.id}</DataTable.Cell>
 							<DataTable.Cell style={styles.cell}>
 								<IconButton
 									mode='contained'

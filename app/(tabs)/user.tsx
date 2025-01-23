@@ -27,60 +27,29 @@ const User = () => {
 	};
 
 	return (
-		<ThemedView
-			style={
-				colorScheme === 'light'
-					? styles.container
-					: styles.containerDark
-			}
-		>
+		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
 			<ThemedText type='title' style={styles.header}>
 				Usuario
 			</ThemedText>
-			<TouchableOpacity
-				style={
-					colorScheme === 'light' ? styles.option : styles.optionDark
-				}
-			>
+			<TouchableOpacity style={colorScheme === 'light' ? styles.option : styles.optionDark}>
 				<Icon name='person' size={24} color='#0caf50' />
 				<Text style={styles.optionText}>Cuenta</Text>
-				<Icon
-					name='arrow-forward'
-					size={24}
-					color='black'
-					style={styles.optionIcon}
-				/>
+				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
-			<TouchableOpacity
-				style={
-					colorScheme === 'light' ? styles.option : styles.optionDark
-				}
-			>
+			<TouchableOpacity style={colorScheme === 'light' ? styles.option : styles.optionDark}>
 				<Icon name='information-circle' size={24} color='#001f7e' />
 				<Text style={styles.optionText}>Sobre nosotros</Text>
-				<Icon
-					name='arrow-forward'
-					size={24}
-					color='black'
-					style={styles.optionIcon}
-				/>
+				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
 			<TouchableOpacity
-				style={
-					colorScheme === 'light' ? styles.option : styles.optionDark
-				}
+				style={colorScheme === 'light' ? styles.option : styles.optionDark}
 				onPress={handleLogout}
 			>
 				<Icon name='log-out' size={24} color='#d00b27' />
 				<Text style={styles.optionText}>Cerrar sesión</Text>
-				<Icon
-					name='arrow-forward'
-					size={24}
-					color='black'
-					style={styles.optionIcon}
-				/>
+				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 		</ThemedView>
 	);

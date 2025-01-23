@@ -5,10 +5,7 @@ import type { RequestLogin, RequestRegister } from '@/utils/types';
 // solicitud de registro "post"
 const register = async (credentials: RequestRegister) => {
 	try {
-		const { data, statusText } = await AxiosInstance.post(
-			'/register',
-			credentials,
-		);
+		const { data, statusText } = await AxiosInstance.post('/register', credentials);
 		await setToken(data.token);
 		return statusText;
 	} catch (error) {
@@ -19,10 +16,7 @@ const register = async (credentials: RequestRegister) => {
 // solicitud de inicio de sesion "post"
 const login = async (credentials: RequestLogin) => {
 	try {
-		const { data, statusText } = await AxiosInstance.post(
-			'/login',
-			credentials,
-		);
+		const { data, statusText } = await AxiosInstance.post('/login', credentials);
 		await setToken(data.token);
 		return statusText;
 	} catch (error) {
@@ -55,12 +49,9 @@ const logout = async () => {
 // envia un link para resetear la contraseña
 const sendPasswordResetLink = async (email: string) => {
 	try {
-		const { data, statusText } = await AxiosInstance.post(
-			'/forgot-password',
-			{
-				email,
-			},
-		);
+		const { data, statusText } = await AxiosInstance.post('/forgot-password', {
+			email,
+		});
 		console.log(data);
 		return { data, statusText };
 	} catch (error) {

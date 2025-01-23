@@ -13,19 +13,14 @@ const useLocationPermission = () => {
 	const getLocationPermission = async () => {
 		if (!permissionGranted) {
 			try {
-				let { status } =
-					await Location.requestForegroundPermissionsAsync();
+				let { status } = await Location.requestForegroundPermissionsAsync();
 
 				setPermissionGranted(status === 'granted');
 				if (status === 'granted') {
 					getCurrentLocation();
 				}
 			} catch (error) {
-				console.warn(
-					'Error en useLocationPermission, ' +
-						' mensaje: ' +
-						getErrorMessage(error),
-				);
+				console.warn('Error en useLocationPermission, ' + ' mensaje: ' + getErrorMessage(error));
 			}
 		}
 	};

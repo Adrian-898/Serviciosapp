@@ -6,18 +6,14 @@ const useUsers = () => {
 		queryKey: ['repoData'],
 		queryFn: async () => {
 			try {
-				const response = await fetch(
-					'https://api.github.com/repos/TanStack/query',
-				);
+				const response = await fetch('https://api.github.com/repos/TanStack/query');
 
 				// desestructurar propiedades del response
 				const { ok, status: responseStatus, statusText } = response;
 
 				// chequear que no haya errores
 				if (!ok) {
-					throw new Error(
-						`Error en el fetch: ${responseStatus} ${statusText}`,
-					);
+					throw new Error(`Error en el fetch: ${responseStatus} ${statusText}`);
 				}
 				return await response.json();
 			} catch (error) {

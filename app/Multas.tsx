@@ -1,10 +1,4 @@
-import {
-	View,
-	Text,
-	TextInput,
-	StyleSheet,
-	TouchableOpacity,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { ThemedText } from '@/components/ThemedText';
@@ -44,13 +38,7 @@ const Multas = () => {
 					}}
 					validationSchema={validationSchema}
 				>
-					{({
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						values,
-						errors,
-					}) => (
+					{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 						<View>
 							<ThemedText type='subtitle' style={styles.label}>
 								Ingresa tu número de cédula
@@ -66,20 +54,10 @@ const Multas = () => {
 								onBlur={handleBlur('cedula')}
 							/>
 
-							{errors.cedula && (
-								<Text style={styles.errorText}>
-									{errors.cedula}
-								</Text>
-							)}
+							{errors.cedula && <Text style={styles.errorText}>{errors.cedula}</Text>}
 
-							<TouchableOpacity
-								style={styles.button}
-								onPress={() => handleSubmit()}
-							>
-								<ThemedText
-									type='subtitle'
-									style={styles.buttonText}
-								>
+							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+								<ThemedText type='subtitle' style={styles.buttonText}>
 									Buscar
 								</ThemedText>
 							</TouchableOpacity>

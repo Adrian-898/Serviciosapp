@@ -23,10 +23,7 @@ const LinkButton = ({ title, url }: LinkButtonProps) => {
 
 	return (
 		// Boton a renderizar
-		<TouchableOpacity
-			onPress={() => handlePress(url)}
-			style={styles.button}
-		>
+		<TouchableOpacity onPress={() => handlePress(url)} style={styles.button}>
 			<Text style={styles.texto} adjustsFontSizeToFit>
 				{title}
 			</Text>

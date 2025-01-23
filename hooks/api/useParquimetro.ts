@@ -12,9 +12,7 @@ const useParquimetro = () => {
 
 				// chequear que no haya errores
 				if (!ok) {
-					throw new Error(
-						`Error en el fetch: ${responseStatus} ${statusText}`,
-					);
+					throw new Error(`Error en el fetch: ${responseStatus} ${statusText}`);
 				}
 				return await response.json();
 			} catch (error) {

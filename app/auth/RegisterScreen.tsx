@@ -1,11 +1,5 @@
 import { useContext, useState } from 'react';
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	Platform,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { Formik } from 'formik';
@@ -78,13 +72,7 @@ const RegisterScreen = () => {
 	};
 
 	return (
-		<ThemedView
-			style={
-				colorScheme === 'light'
-					? styles.container
-					: styles.containerDark
-			}
-		>
+		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
 			<ThemedText type='title' style={styles.title}>
 				Registro
 			</ThemedText>
@@ -95,27 +83,10 @@ const RegisterScreen = () => {
 				}}
 				validationSchema={validationSchema}
 			>
-				{({
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					values,
-					errors,
-					touched,
-				}) => (
-					<ThemedView
-						style={
-							colorScheme === 'light'
-								? styles.form
-								: styles.formDark
-						}
-					>
+				{({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+					<ThemedView style={colorScheme === 'light' ? styles.form : styles.formDark}>
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Correo electrónico'
 							onChangeText={handleChange('email')}
 							onBlur={handleBlur('email')}
@@ -124,20 +95,13 @@ const RegisterScreen = () => {
 						/>
 
 						{errors.email && touched.email && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.email}
 							</ThemedText>
 						)}
 
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Contraseña'
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
@@ -146,20 +110,13 @@ const RegisterScreen = () => {
 						/>
 
 						{errors.password && touched.password && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.password}
 							</ThemedText>
 						)}
 
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Confirmar contraseña'
 							onChangeText={handleChange('confirmPassword')}
 							onBlur={handleBlur('confirmPassword')}
@@ -168,27 +125,18 @@ const RegisterScreen = () => {
 						/>
 
 						{errors.confirmPassword && touched.confirmPassword && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.confirmPassword}
 							</ThemedText>
 						)}
 
 						{error && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								Ha ocurrido un error: {error}
 							</ThemedText>
 						)}
 
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => handleSubmit()}
-						>
+						<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 							<Text style={styles.buttonText}>Registrarse</Text>
 						</TouchableOpacity>
 					</ThemedView>

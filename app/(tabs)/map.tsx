@@ -14,7 +14,7 @@ import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocationPermission from '@/hooks/useLocationPermission';
-import * as Location from 'expo-location';
+// import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
 import getErrorMessage from '@/utils/getErrorMessage';
@@ -60,9 +60,7 @@ const Map = () => {
 	const location = useLocationPermission();
 
 	// indica si esta activa la ubicacion en el dispositivo
-	const [servicesEnabled, setServicesEnabled] = useState<boolean | null>(
-		null,
-	);
+	const [servicesEnabled, setServicesEnabled] = useState<boolean | null>(null);
 
 	// Ubicaciones existentes, se renderiza un pin en cada una
 	const [points, setPoints] = useState(lugares);
@@ -77,6 +75,7 @@ const Map = () => {
 	// estado de trazado de ruta del usuario a un lugar determinado (activo o no)
 	const [drawRoute, setDrawRoute] = useState(false);
 
+	/*
 	// funcion para checkear si esta activa la ubicacion
 	const checkServices = async () => {
 		try {
@@ -94,7 +93,7 @@ const Map = () => {
 			);
 		}
 	};
-
+	
 	// detecta cuando se navega fuera de la pantalla actual (map pasa a 'blur')
 	useEffect(() => {
 		let unsubscribe = navigation.addListener('blur', () => {
@@ -105,6 +104,7 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
+	
 	// detecta cuando se navega fuera de la App (la App pasa a segundo plano) y cuando vuelve a primer plano
 	useEffect(() => {
 		const appStateListener = AppState.addEventListener(
@@ -125,17 +125,13 @@ const Map = () => {
 			appStateListener.remove();
 		};
 	}, []);
+	*/
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
 		return (
-			<TouchableOpacity
-				style={styles.button}
-				onPress={DrawRouteButtonPress}
-			>
-				<Text style={styles.buttonText}>
-					Mostrar el camino a {newDestination?.name}
-				</Text>
+			<TouchableOpacity style={styles.button} onPress={DrawRouteButtonPress}>
+				<Text style={styles.buttonText}>Mostrar el camino a {newDestination?.name}</Text>
 			</TouchableOpacity>
 		);
 	};
@@ -191,27 +187,11 @@ const Map = () => {
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
 	const AlertaPermisos = () => {
 		return (
-			<ThemedView
-				style={
-					colorScheme === 'light'
-						? styles.alertContainer
-						: styles.alertContainerDark
-				}
-			>
-				<Icon
-					name='exclamation'
-					color={'red'}
-					size={80}
-					style={styles.alertIcon}
-				/>
-				<ThemedText
-					type='defaultSemiBold'
-					style={styles.alertMessage}
-					adjustsFontSizeToFit
-				>
-					Parece que los permisos de ubicación fueron negados, otorga
-					los permisos y reinicia la App si deseas ver tu ubicación o
-					trazar una ruta...
+			<ThemedView style={colorScheme === 'light' ? styles.alertContainer : styles.alertContainerDark}>
+				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
+				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
+					Parece que los permisos de ubicación fueron negados, otorga los permisos y reinicia la App si deseas
+					ver tu ubicación o trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
@@ -220,27 +200,11 @@ const Map = () => {
 	// Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
 	const AlertaUbicacionActivada = () => {
 		return (
-			<ThemedView
-				style={
-					colorScheme === 'light'
-						? styles.alertContainer
-						: styles.alertContainerDark
-				}
-			>
-				<Icon
-					name='exclamation'
-					color={'red'}
-					size={80}
-					style={styles.alertIcon}
-				/>
-				<ThemedText
-					type='defaultSemiBold'
-					style={styles.alertMessage}
-					adjustsFontSizeToFit
-				>
-					La ubicación en tu dispositivo está desactivada, actívala y
-					recarga la App si deseas conocer tu ubicación actual y/o
-					trazar una ruta...
+			<ThemedView style={colorScheme === 'light' ? styles.alertContainer : styles.alertContainerDark}>
+				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
+				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
+					La ubicación en tu dispositivo está desactivada, actívala y recarga la App si deseas conocer tu
+					ubicación actual y/o trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
@@ -256,7 +220,6 @@ const Map = () => {
 				showsUserLocation
 				showsMyLocationButton
 				loadingEnabled
-				onMapLoaded={() => checkServices()}
 				toolbarEnabled={false}
 				showsPointsOfInterest={false}
 				showsIndoors={false}
@@ -287,10 +250,7 @@ const Map = () => {
 							strokeColor='#001f7e'
 							optimizeWaypoints={false}
 							onError={(error) => {
-								console.error(
-									'Ha ocurrido un error: ',
-									getErrorMessage(error),
-								);
+								console.error('Ha ocurrido un error: ', getErrorMessage(error));
 							}}
 						/>
 					)
@@ -298,17 +258,16 @@ const Map = () => {
 			</MapView>
 			{
 				// muestra el boton de trazar ruta:
-				drawRouteButton &&
-					location.permissionGranted &&
-					servicesEnabled && <DrawRouteButton />
+				drawRouteButton && location.permissionGranted && servicesEnabled && <DrawRouteButton />
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
 				!location.permissionGranted && <AlertaPermisos />
 			}
-			{!servicesEnabled && location.permissionGranted && (
-				<AlertaUbicacionActivada />
-			)}
+			{
+				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
+				!servicesEnabled && location.permissionGranted && <AlertaUbicacionActivada />
+			}
 		</SafeAreaView>
 	);
 };

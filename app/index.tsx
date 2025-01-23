@@ -1,11 +1,4 @@
-import {
-	View,
-	StyleSheet,
-	ImageBackground,
-	SafeAreaView,
-	TouchableOpacity,
-	Text,
-} from 'react-native';
+import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
@@ -24,30 +17,17 @@ const Index = () => {
 			>
 				<View style={styles.buttonContainer}>
 					<View style={styles.continue}>
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => router.push('/(tabs)/home')}
-						>
-							<ThemedText style={styles.buttonText}>
-								Continuar sin iniciar sesión
-							</ThemedText>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/home')}>
+							<ThemedText style={styles.buttonText}>Continuar sin iniciar sesión</ThemedText>
 						</TouchableOpacity>
 					</View>
 
 					<View style={styles.loginRegister}>
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => router.push('/auth/loginScreen')}
-						>
-							<Text style={styles.buttonText}>
-								Iniciar sesión
-							</Text>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/loginScreen')}>
+							<Text style={styles.buttonText}>Iniciar sesión</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => router.push('/auth/registerScreen')}
-						>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/registerScreen')}>
 							<Text style={styles.buttonText}>Registrarse</Text>
 						</TouchableOpacity>
 					</View>

@@ -1,12 +1,5 @@
 import { useState, useContext } from 'react';
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	Platform,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, Platform, useColorScheme } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { useRouter } from 'expo-router';
@@ -71,13 +64,7 @@ const LoginScreen = () => {
 	};
 
 	return (
-		<ThemedView
-			style={
-				colorScheme === 'light'
-					? styles.container
-					: styles.containerDark
-			}
-		>
+		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
 			<ThemedText type='title' style={styles.title}>
 				Inicio de sesión
 			</ThemedText>
@@ -88,27 +75,10 @@ const LoginScreen = () => {
 				}}
 				validationSchema={validationSchema}
 			>
-				{({
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					values,
-					errors,
-					touched,
-				}) => (
-					<ThemedView
-						style={
-							colorScheme === 'light'
-								? styles.form
-								: styles.formDark
-						}
-					>
+				{({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+					<ThemedView style={colorScheme === 'light' ? styles.form : styles.formDark}>
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Correo electrónico'
 							onChangeText={handleChange('email')}
 							onBlur={handleBlur('email')}
@@ -119,20 +89,13 @@ const LoginScreen = () => {
 						/>
 
 						{errors.email && touched.email && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.email}
 							</ThemedText>
 						)}
 
 						<TextInput
-							style={
-								colorScheme === 'light'
-									? styles.input
-									: styles.inputDark
-							}
+							style={colorScheme === 'light' ? styles.input : styles.inputDark}
 							placeholder='Contraseña'
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
@@ -143,37 +106,22 @@ const LoginScreen = () => {
 						/>
 
 						{errors.password && touched.password && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								{errors.password}
 							</ThemedText>
 						)}
 
 						{error && (
-							<ThemedText
-								type='defaultSemiBold'
-								style={styles.errorText}
-							>
+							<ThemedText type='defaultSemiBold' style={styles.errorText}>
 								Ha ocurrido un error: {error}
 							</ThemedText>
 						)}
 
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => handleSubmit()}
-						>
-							<Text style={styles.buttonText}>
-								Iniciar sesión
-							</Text>
+						<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+							<Text style={styles.buttonText}>Iniciar sesión</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity
-							onPress={() =>
-								router.push('/auth/forgotPasswordScreen')
-							}
-						>
+						<TouchableOpacity onPress={() => router.push('/auth/forgotPasswordScreen')}>
 							<ThemedText type='link' style={styles.link}>
 								Olvidaste tu contraseña?
 							</ThemedText>

@@ -26,10 +26,7 @@ type QRInputProps = {
 
 // esquema de validacion de datos
 const validationSchema = yup.object().shape({
-	parquimetro: yup
-		.string()
-		.required('Se requiere seleccionar un parquímetro')
-		.label('Parquimetro'),
+	parquimetro: yup.string().required('Se requiere seleccionar un parquímetro').label('Parquimetro'),
 	puesto: yup
 		.number()
 		.typeError('Debe ser un número')
@@ -55,10 +52,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 	];
 
 	// submit al presionar el boton "Buscar"
-	const handleLoadInput = async (
-		parquimetro: string,
-		puesto: number | undefined,
-	) => {
+	const handleLoadInput = async (parquimetro: string, puesto: number | undefined) => {
 		const url = `https://${parquimetro}/${puesto}`;
 
 		try {
@@ -97,20 +91,10 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 
 	return (
 		<KeyboardAvoidingView
-			style={
-				colorScheme === 'light'
-					? styles.container
-					: styles.containerDark
-			}
+			style={colorScheme === 'light' ? styles.container : styles.containerDark}
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
-			<Icon
-				name='close'
-				color={'#d00b27'}
-				size={50}
-				onPress={onClose}
-				style={styles.closeButton}
-			/>
+			<Icon name='close' color={'#d00b27'} size={50} onPress={onClose} style={styles.closeButton} />
 
 			{/*Formulario Parquimetro y Puesto con Formik y Yup*/}
 			<SafeAreaView style={styles.container2}>
@@ -122,13 +106,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 					}}
 					validationSchema={validationSchema}
 				>
-					{({
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						values,
-						errors,
-					}) => (
+					{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 						<View>
 							<ThemedText type='subtitle' style={styles.label}>
 								Parquímetro
@@ -152,15 +130,10 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 														: styles.dropdownButtonText
 												}
 											>
-												{selectedItem ||
-													'Seleccionar parquímetro'}
+												{selectedItem || 'Seleccionar parquímetro'}
 											</Text>
 											<Icon
-												name={
-													isOpen
-														? 'chevron-left'
-														: 'chevron-down'
-												}
+												name={isOpen ? 'chevron-left' : 'chevron-down'}
 												size={25}
 												color='#333'
 											/>
@@ -177,11 +150,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 												}),
 											}}
 										>
-											<Text
-												style={styles.dropdownItemText}
-											>
-												{item}
-											</Text>
+											<Text style={styles.dropdownItemText}>{item}</Text>
 										</View>
 									);
 								}}
@@ -194,21 +163,11 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 								searchInputTxtColor='#151E26'
 								searchInputTxtStyle={styles.searchText}
 								renderSearchInputLeftIcon={() => {
-									return (
-										<Icon
-											name='search'
-											color={'#72808D'}
-											size={18}
-										/>
-									);
+									return <Icon name='search' color={'#72808D'} size={18} />;
 								}}
 							/>
 
-							{errors.parquimetro && (
-								<Text style={styles.errorText}>
-									{errors.parquimetro}
-								</Text>
-							)}
+							{errors.parquimetro && <Text style={styles.errorText}>{errors.parquimetro}</Text>}
 
 							<ThemedText type='subtitle' style={styles.label}>
 								Puesto
@@ -223,20 +182,10 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 								keyboardType='number-pad'
 							/>
 
-							{errors.puesto && (
-								<Text style={styles.errorText}>
-									{errors.puesto}
-								</Text>
-							)}
+							{errors.puesto && <Text style={styles.errorText}>{errors.puesto}</Text>}
 
-							<TouchableOpacity
-								style={styles.button}
-								onPress={() => handleSubmit()}
-							>
-								<ThemedText
-									type='subtitle'
-									style={styles.buttonText}
-								>
+							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+								<ThemedText type='subtitle' style={styles.buttonText}>
 									Buscar
 								</ThemedText>
 							</TouchableOpacity>

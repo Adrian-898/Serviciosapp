@@ -1,14 +1,5 @@
 import { useState, Suspense } from 'react';
-import {
-	StyleSheet,
-	Text,
-	SafeAreaView,
-	View,
-	Button,
-	ActivityIndicator,
-	Alert,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Button, ActivityIndicator, Alert, useColorScheme } from 'react-native';
 import { CameraView, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
@@ -83,28 +74,18 @@ const QRScanner = () => {
 	// si se niega el permiso de uso de la camara se muestra el mensaje siguiente
 	if (!permission || !permission.granted) {
 		return (
-			<ThemedView
-				style={
-					colorScheme === 'light'
-						? styles.container
-						: styles.containerDark
-				}
-			>
+			<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
 				<ThemedText style={styles.message} adjustsFontSizeToFit>
-					No hubo respuesta a la solicitud de permisos o se ha negado
-					la misma, para usar la cámara, puede conceder los permisos
-					de uso en la configuración de la App en su dispositivo, o
-					puede ingresar manualmente los datos con el botón de abajo.
+					No hubo respuesta a la solicitud de permisos o se ha negado la misma, para usar la cámara, puede
+					conceder los permisos de uso en la configuración de la App en su dispositivo, o puede ingresar
+					manualmente los datos con el botón de abajo.
 				</ThemedText>
 
 				<View style={styles.noPermissionInput}>
 					<InputButton />
 				</View>
 
-				<QRInput
-					visible={inputState}
-					onClose={() => setInputState(false)}
-				/>
+				<QRInput visible={inputState} onClose={() => setInputState(false)} />
 			</ThemedView>
 		);
 	}
@@ -112,19 +93,13 @@ const QRScanner = () => {
 	// al aceptar permisos de uso de camara se carga la misma con los demas componentes.
 	return (
 		<SafeAreaView style={styles.container}>
-			<Suspense
-				fallback={
-					<ActivityIndicator size={'large'} color={'#001f7e'} />
-				}
-			>
+			<Suspense fallback={<ActivityIndicator size={'large'} color={'#001f7e'} />}>
 				{isFocused && (
 					<CameraView
 						style={styles.camera}
 						autofocus='on'
 						enableTorch={torch}
-						onBarcodeScanned={
-							scanned ? undefined : handleBarCodeScanned
-						}
+						onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
 						barcodeScannerSettings={{
 							barcodeTypes: ['qr'],
 						}}
@@ -140,17 +115,9 @@ const QRScanner = () => {
 					<InputButton />
 				</View>
 
-				<QRInput
-					visible={inputState}
-					onClose={() => setInputState(false)}
-				/>
+				<QRInput visible={inputState} onClose={() => setInputState(false)} />
 
-				{scanned && (
-					<Button
-						title='Presiona para escanear de nuevo'
-						onPress={() => setScanned(false)}
-					/>
-				)}
+				{scanned && <Button title='Presiona para escanear de nuevo' onPress={() => setScanned(false)} />}
 			</Suspense>
 		</SafeAreaView>
 	);

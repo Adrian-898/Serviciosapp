@@ -1,15 +1,7 @@
 import 'expo-dev-client';
 import { useState, useEffect } from 'react';
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-} from '@react-navigation/native';
-import {
-	QueryClient,
-	QueryClientProvider,
-	focusManager,
-} from '@tanstack/react-query';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider, focusManager } from '@tanstack/react-query';
 import { PaperProvider } from 'react-native-paper';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -80,16 +72,10 @@ const RootLayout = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<AuthContext.Provider value={{ user, setUser }}>
-				<ThemeProvider
-					value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-				>
+				<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 					<PaperProvider>
 						<Stack screenOptions={{ headerShown: false }}>
-							{user ? (
-								<Stack.Screen name='(tabs)' />
-							) : (
-								<Stack.Screen name='index' />
-							)}
+							{user ? <Stack.Screen name='(tabs)' /> : <Stack.Screen name='index' />}
 							<Stack.Screen name='+not-found' />
 						</Stack>
 					</PaperProvider>

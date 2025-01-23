@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-	Text,
-	ScrollView,
-	View,
-	StyleSheet,
-	ImageBackground,
-	SafeAreaView,
-	TouchableOpacity,
-} from 'react-native';
+import { Text, ScrollView, View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
@@ -54,71 +46,28 @@ const Home = () => {
 
 				<ScrollView contentContainerStyle={styles.container2}>
 					<View style={styles.buttonContainer}>
-						<Icon
-							name='car-emergency'
-							size={40}
-							color={'black'}
-							style={styles.icon}
-						/>
-						<LinkButton
-							title='Emergencias'
-							url='https://www.google.com'
-						/>
+						<Icon name='car-emergency' size={40} color={'black'} style={styles.icon} />
+						<LinkButton title='Emergencias' url='https://www.google.com' />
 					</View>
 					<View style={styles.buttonContainer}>
-						<Icon
-							name='car-brake-parking'
-							size={40}
-							style={styles.icon}
-						/>
-						<LinkButton
-							title='Parquímetro'
-							url='https://www.google.com'
-						/>
+						<Icon name='car-brake-parking' size={40} style={styles.icon} />
+						<LinkButton title='Parquímetro' url='https://www.google.com' />
 					</View>
 					<View style={styles.buttonContainer}>
-						<Icon2
-							name='electrical-services'
-							size={40}
-							style={styles.icon}
-						/>
-						<LinkButton
-							title='Servicios'
-							url='https://www.google.com'
-						/>
+						<Icon2 name='electrical-services' size={40} style={styles.icon} />
+						<LinkButton title='Servicios' url='https://www.google.com' />
 					</View>
 					<View style={styles.buttonContainer}>
-						<Icon2
-							name='currency-exchange'
-							size={40}
-							style={styles.icon}
-						/>
-						<LinkButton
-							title='Comercio'
-							url='https://www.google.com'
-						/>
+						<Icon2 name='currency-exchange' size={40} style={styles.icon} />
+						<LinkButton title='Comercio' url='https://www.google.com' />
 					</View>
 					<View style={styles.buttonContainer}>
-						<Icon
-							name='account-alert'
-							size={40}
-							style={styles.icon}
-						/>
-						<LinkButton
-							title='Denuncias'
-							url='https://www.google.com'
-						/>
+						<Icon name='account-alert' size={40} style={styles.icon} />
+						<LinkButton title='Denuncias' url='https://www.google.com' />
 					</View>
 					<View style={styles.buttonContainer}>
-						<Icon
-							name='alert-rhombus'
-							size={40}
-							style={styles.icon}
-						/>
-						<TouchableOpacity
-							onPress={() => router.push('/multas')}
-							style={styles.button}
-						>
+						<Icon name='alert-rhombus' size={40} style={styles.icon} />
+						<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
 							<Text style={styles.texto} adjustsFontSizeToFit>
 								Multas
 							</Text>
