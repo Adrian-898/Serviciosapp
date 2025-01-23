@@ -79,12 +79,19 @@ const Map = () => {
 
 	// funcion para checkear si esta activa la ubicacion
 	const checkServices = async () => {
-		let enabled = await Location.hasServicesEnabledAsync();
+		try {
+			let enabled = await Location.hasServicesEnabledAsync();
 
-		if (enabled) {
-			setServicesEnabled(true);
-		} else {
-			setServicesEnabled(false);
+			if (enabled) {
+				setServicesEnabled(true);
+			} else {
+				setServicesEnabled(false);
+			}
+		} catch (error) {
+			console.error(
+				'Ha ocurrido un error checkeando si los servicios de ubicación estan activos: ',
+				getErrorMessage(error),
+			);
 		}
 	};
 
