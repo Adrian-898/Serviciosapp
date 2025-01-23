@@ -257,7 +257,7 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
-				!servicesEnabled && location.permissionGranted && <AlertaUbicacionActivada />
+				!servicesEnabled && location.permissionGranted && !drawRoute && <AlertaUbicacionActivada />
 			}
 		</SafeAreaView>
 	);
