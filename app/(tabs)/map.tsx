@@ -1,20 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-	SafeAreaView,
-	useWindowDimensions,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	useColorScheme,
-	AppState,
-} from 'react-native';
+import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocationPermission from '@/hooks/useLocationPermission';
-// import * as Location from 'expo-location';
+import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
 import getErrorMessage from '@/utils/getErrorMessage';
@@ -75,7 +67,6 @@ const Map = () => {
 	// estado de trazado de ruta del usuario a un lugar determinado (activo o no)
 	const [drawRoute, setDrawRoute] = useState(false);
 
-	/*
 	// funcion para checkear si esta activa la ubicacion
 	const checkServices = async () => {
 		try {
@@ -93,7 +84,7 @@ const Map = () => {
 			);
 		}
 	};
-	
+
 	// detecta cuando se navega fuera de la pantalla actual (map pasa a 'blur')
 	useEffect(() => {
 		let unsubscribe = navigation.addListener('blur', () => {
@@ -104,7 +95,7 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
-	
+	/*	
 	// detecta cuando se navega fuera de la App (la App pasa a segundo plano) y cuando vuelve a primer plano
 	useEffect(() => {
 		const appStateListener = AppState.addEventListener(
@@ -203,8 +194,8 @@ const Map = () => {
 			<ThemedView style={colorScheme === 'light' ? styles.alertContainer : styles.alertContainerDark}>
 				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
 				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-					La ubicación en tu dispositivo está desactivada, actívala y recarga la App si deseas conocer tu
-					ubicación actual y/o trazar una ruta...
+					La ubicación en tu dispositivo parece estar desactivada, actívala y reinicia la App si deseas
+					conocer tu ubicación actual y/o trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
