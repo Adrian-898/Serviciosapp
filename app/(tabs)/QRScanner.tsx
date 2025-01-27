@@ -1,14 +1,6 @@
 import { useState, Suspense } from 'react';
-import {
-	StyleSheet,
-	Text,
-	SafeAreaView,
-	View,
-	TouchableOpacity,
-	ActivityIndicator,
-	Alert,
-	useColorScheme,
-} from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { Modal, Portal } from 'react-native-paper';
 import { CameraView, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
@@ -21,8 +13,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
 const QRScanner = () => {
-	const colorScheme = useColorScheme();
-
 	// permisos de uso de camara
 	const permission = useCamera();
 
@@ -83,18 +73,21 @@ const QRScanner = () => {
 	// si se niega el permiso de uso de la camara se muestra el mensaje siguiente
 	if (!permission || !permission.granted) {
 		return (
-			<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
+			<ThemedView style={styles.container}>
 				<ThemedText style={styles.message} adjustsFontSizeToFit>
 					No hubo respuesta a la solicitud de permisos o se ha negado la misma, para usar la cámara, puede
 					conceder los permisos de uso en la configuración de la App en su dispositivo, o puede ingresar
-					manualmente los datos con el botón de abajo.
+					manualmente los datos con el botón en la esquina inferior derecha.
 				</ThemedText>
 
 				<View style={styles.noPermissionInput}>
 					<InputButton />
 				</View>
-
-				<QRInput visible={inputState} onClose={() => setInputState(false)} />
+				<Portal>
+					<Modal visible={inputState}>
+						<QRInput onClose={() => setInputState(false)} />
+					</Modal>
+				</Portal>
 			</ThemedView>
 		);
 	}
@@ -131,7 +124,11 @@ const QRScanner = () => {
 					)}
 				</View>
 
-				<QRInput visible={inputState} onClose={() => setInputState(false)} />
+				<Portal>
+					<Modal visible={inputState}>
+						<QRInput onClose={() => setInputState(false)} />
+					</Modal>
+				</Portal>
 			</Suspense>
 		</SafeAreaView>
 	);
@@ -141,11 +138,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-	},
-	containerDark: {
-		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: '#222',
 	},
 	centered: {
 		flex: 1,

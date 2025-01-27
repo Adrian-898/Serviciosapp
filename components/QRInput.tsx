@@ -20,7 +20,6 @@ import getErrorMessage from '@/utils/getErrorMessage';
 
 // parametros del componente principal
 type QRInputProps = {
-	visible: boolean;
 	onClose: () => void;
 };
 
@@ -37,7 +36,7 @@ const validationSchema = yup.object().shape({
 });
 
 // componente que retorna una vista de tipo input para que el usuario ingrese los datos de parquimetro y puesto
-const QRInput = ({ visible, onClose }: QRInputProps) => {
+const QRInput = ({ onClose }: QRInputProps) => {
 	const colorScheme = useColorScheme();
 
 	// array de prueba
@@ -86,8 +85,6 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
     Alert.alert("Ha ocurrido un error: ", error?.message);
   }
   */
-
-	if (!visible) return null;
 
 	return (
 		<KeyboardAvoidingView
