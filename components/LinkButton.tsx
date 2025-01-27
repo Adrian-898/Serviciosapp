@@ -24,7 +24,7 @@ const LinkButton = ({ title, url }: LinkButtonProps) => {
 	return (
 		// Boton a renderizar
 		<TouchableOpacity onPress={() => handlePress(url)} style={styles.button}>
-			<Text style={styles.texto} adjustsFontSizeToFit>
+			<Text style={styles.text} adjustsFontSizeToFit>
 				{title}
 			</Text>
 		</TouchableOpacity>
@@ -39,14 +39,13 @@ const styles = StyleSheet.create({
 		padding: 10,
 		backgroundColor: '#001f7e',
 		borderWidth: 0.5,
-		borderRadius: 15,
-		elevation: 10,
+		borderRadius: 10,
 	},
-	texto: {
-		textAlign: 'left',
+	text: {
+		textAlign: 'center',
 		fontSize: 20,
 		fontWeight: 'bold',
-		color: '#FFFFFF',
+		color: 'white',
 	},
 });
 

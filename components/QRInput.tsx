@@ -1,4 +1,5 @@
 import {
+	View,
 	Text,
 	StyleSheet,
 	TextInput,
@@ -105,83 +106,87 @@ const QRInput = ({ onClose }: QRInputProps) => {
 				>
 					{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 						<ThemedView>
-							<ThemedText type='subtitle' style={styles.label}>
-								Parquímetro
-							</ThemedText>
-							<SelectDropdown
-								data={park}
-								statusBarTranslucent
-								defaultValueByIndex={0}
-								onBlur={() => handleBlur('parquimetro')}
-								onSelect={(selectedItem, index) => {
-									values.parquimetro = selectedItem;
-									handleChange('parquimetro');
-								}}
-								renderButton={(selectedItem, isOpen) => {
-									return (
-										<ThemedView style={styles.dropdownButton}>
-											<Text
-												style={
-													selectedItem
-														? styles.dropdownButtonTextSelected
-														: styles.dropdownButtonText
-												}
+							<ThemedView style={styles.parquimetro}>
+								<ThemedText type='subtitle' style={styles.label}>
+									Parquímetro
+								</ThemedText>
+								<SelectDropdown
+									data={park}
+									statusBarTranslucent
+									defaultValueByIndex={0}
+									onBlur={() => handleBlur('parquimetro')}
+									onSelect={(selectedItem, index) => {
+										values.parquimetro = selectedItem;
+										handleChange('parquimetro');
+									}}
+									renderButton={(selectedItem, isOpen) => {
+										return (
+											<View style={styles.dropdownButton}>
+												<Text
+													style={
+														selectedItem
+															? styles.dropdownButtonTextSelected
+															: styles.dropdownButtonText
+													}
+												>
+													{selectedItem || 'Seleccionar parquímetro'}
+												</Text>
+												<Icon
+													name={isOpen ? 'chevron-left' : 'chevron-down'}
+													size={25}
+													color='#333'
+												/>
+											</View>
+										);
+									}}
+									renderItem={(item, index, isSelected) => {
+										return (
+											<View
+												style={{
+													...styles.dropdownItem,
+													...(isSelected && {
+														backgroundColor: '#D2D9DF',
+													}),
+												}}
 											>
-												{selectedItem || 'Seleccionar parquímetro'}
-											</Text>
-											<Icon
-												name={isOpen ? 'chevron-left' : 'chevron-down'}
-												size={25}
-												color='#333'
-											/>
-										</ThemedView>
-									);
-								}}
-								renderItem={(item, index, isSelected) => {
-									return (
-										<ThemedView
-											style={{
-												...styles.dropdownItem,
-												...(isSelected && {
-													backgroundColor: '#D2D9DF',
-												}),
-											}}
-										>
-											<Text style={styles.dropdownItemText}>{item}</Text>
-										</ThemedView>
-									);
-								}}
-								showsVerticalScrollIndicator={false}
-								dropdownStyle={styles.dropdown}
-								search={true}
-								searchPlaceHolder='Busca tu parquímetro'
-								searchPlaceHolderColor='#888'
-								searchInputStyle={styles.search}
-								searchInputTxtColor='#151E26'
-								searchInputTxtStyle={styles.searchText}
-								renderSearchInputLeftIcon={() => {
-									return <Icon name='search' color={'#72808D'} size={18} />;
-								}}
-							/>
+												<Text style={styles.dropdownItemText}>{item}</Text>
+											</View>
+										);
+									}}
+									showsVerticalScrollIndicator={false}
+									dropdownStyle={styles.dropdown}
+									search={true}
+									searchPlaceHolder='Busca tu parquímetro'
+									searchPlaceHolderColor='#888'
+									searchInputStyle={styles.search}
+									searchInputTxtColor='#151E26'
+									searchInputTxtStyle={styles.searchText}
+									renderSearchInputLeftIcon={() => {
+										return <Icon name='search' color={'#72808D'} size={18} />;
+									}}
+								/>
 
-							{errors.parquimetro && (
-								<ThemedText style={styles.errorText}>{errors.parquimetro}</ThemedText>
-							)}
+								{errors.parquimetro && (
+									<ThemedText style={styles.errorText}>{errors.parquimetro}</ThemedText>
+								)}
+							</ThemedView>
 
-							<ThemedText type='subtitle' style={styles.label}>
-								Puesto
-							</ThemedText>
-							<TextInput
-								style={styles.input}
-								placeholder='Ingresar puesto'
-								placeholderTextColor={'#888'}
-								onChangeText={handleChange('puesto')}
-								onBlur={handleBlur('puesto')}
-								value={values.puesto}
-								keyboardType='number-pad'
-							/>
+							<ThemedView style={styles.puesto}>
+								<ThemedText type='subtitle' style={styles.label}>
+									Puesto
+								</ThemedText>
+								<TextInput
+									style={styles.input}
+									placeholder='Ingresar puesto'
+									placeholderTextColor={'#888'}
+									onChangeText={handleChange('puesto')}
+									onBlur={handleBlur('puesto')}
+									value={values.puesto}
+									keyboardType='number-pad'
+								/>
 
-							{errors.puesto && <ThemedText style={styles.errorText}>{errors.puesto}</ThemedText>}
+								{errors.puesto && <ThemedText style={styles.errorText}>{errors.puesto}</ThemedText>}
+							</ThemedView>
 
 							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 								<ThemedText type='subtitle' style={styles.buttonText}>
@@ -234,6 +239,12 @@ const styles = StyleSheet.create({
 	closeButton: {
 		alignSelf: 'flex-end',
 	},
+	parquimetro: {
+		marginBottom: 10,
+	},
+	puesto: {
+		marginBottom: 20,
+	},
 	dropdown: {
 		position: 'relative',
 		backgroundColor: '#fff',
@@ -275,8 +286,9 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	button: {
-		marginVertical: 20,
-		padding: 10,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
 		backgroundColor: '#001f7e',
 		borderRadius: 10,
 		shadowColor: 'black',
@@ -286,7 +298,6 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: '#fff',
-		textAlign: 'center',
 	},
 	errorText: {
 		color: 'red',

@@ -30,19 +30,19 @@ const Settings = () => {
 				Configuración
 			</ThemedText>
 			<TouchableOpacity style={styles.option}>
-				<Icon name='person' size={30} color='#0caf50' />
+				<Icon name='person' size={40} color='#0caf50' />
 				<Text style={styles.optionText}>Cuenta</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
 			<TouchableOpacity style={styles.option}>
-				<Icon name='information-circle' size={30} color='#001f7e' />
+				<Icon name='information-circle' size={40} color='#001f7e' />
 				<Text style={styles.optionText}>Sobre nosotros</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
 			<TouchableOpacity style={styles.option} onPress={handleLogout}>
-				<Icon name='log-out' size={30} color='#d00b27' />
+				<Icon name='log-out' size={40} color='#d00b27' />
 				<Text style={styles.optionText}>Cerrar sesión</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
@@ -56,19 +56,17 @@ const styles = StyleSheet.create({
 		padding: Constants.statusBarHeight,
 	},
 	header: {
-		fontSize: 32,
 		marginVertical: 20,
 		textAlign: 'center',
 	},
 	option: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingVertical: 15,
-		paddingHorizontal: 10,
+		padding: 10,
 		borderRadius: 10,
 		backgroundColor: 'white',
-		marginBottom: 15,
-		elevation: 5,
+		marginBottom: 20,
+		elevation: 10,
 	},
 	optionText: {
 		flex: 1,

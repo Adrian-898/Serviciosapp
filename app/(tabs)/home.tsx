@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, ScrollView, View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
@@ -8,6 +8,8 @@ import Icon2 from '@expo/vector-icons/MaterialIcons';
 import ModalInfo from '@/components/ModalInfo';
 import LinkButton from '@/components/LinkButton';
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+// import AuthContext from '@/contexts/AuthContext';
 
 const Home = () => {
 	// Navegacion con expo-router
@@ -15,6 +17,9 @@ const Home = () => {
 
 	// estado del modal, visible o no visible
 	const [modalState, setModalState] = useState<boolean>(false);
+
+	// Usuario loggeado
+	// const { user, setUser } = useContext(AuthContext);
 
 	return (
 		<ThemedView style={styles.container}>
@@ -25,6 +30,9 @@ const Home = () => {
 			</Portal>
 
 			<View style={styles.header}>
+				<ThemedText type='subtitle' style={styles.welcome} adjustsFontSizeToFit>
+					Bienvenido Usuario!
+				</ThemedText>
 				<Icon
 					name='information-outline'
 					color='black'
@@ -35,34 +43,34 @@ const Home = () => {
 			</View>
 
 			<ScrollView contentContainerStyle={styles.container2}>
-				<View style={styles.buttonContainer}>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon name='car-emergency' size={40} color={'black'} style={styles.icon} />
 					<LinkButton title='Emergencias' url='https://www.google.com' />
-				</View>
-				<View style={styles.buttonContainer}>
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon name='car-brake-parking' size={40} style={styles.icon} />
 					<LinkButton title='Parquímetro' url='https://www.google.com' />
-				</View>
-				<View style={styles.buttonContainer}>
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon2 name='electrical-services' size={40} style={styles.icon} />
 					<LinkButton title='Servicios' url='https://www.google.com' />
-				</View>
-				<View style={styles.buttonContainer}>
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon2 name='currency-exchange' size={40} style={styles.icon} />
 					<LinkButton title='Comercio' url='https://www.google.com' />
-				</View>
-				<View style={styles.buttonContainer}>
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon name='account-alert' size={40} style={styles.icon} />
 					<LinkButton title='Denuncias' url='https://www.google.com' />
-				</View>
-				<View style={styles.buttonContainer}>
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
 					<Icon name='alert-rhombus' size={40} style={styles.icon} />
 					<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
-						<Text style={styles.texto} adjustsFontSizeToFit>
+						<Text style={styles.text} adjustsFontSizeToFit>
 							Multas
 						</Text>
 					</TouchableOpacity>
-				</View>
+				</ThemedView>
 			</ScrollView>
 		</ThemedView>
 	);
@@ -73,14 +81,23 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingTop: Constants.statusBarHeight,
 	},
-	fondo: {
-		flex: 1,
-	},
 	header: {
 		margin: 10,
 		padding: 5,
-		justifyContent: 'flex-end',
+		justifyContent: 'space-around',
 		flexDirection: 'row',
+	},
+	welcome: {
+		textAlign: 'center',
+		textAlignVertical: 'center',
+	},
+	info: {
+		verticalAlign: 'middle',
+		textAlign: 'center',
+		padding: 4,
+		backgroundColor: 'white',
+		borderRadius: 12,
+		elevation: 10,
 	},
 	container2: {
 		flex: 1,
@@ -88,42 +105,20 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	buttonContainer: {
+		backgroundColor: 'white',
 		flexDirection: 'row',
+		padding: 0,
+		borderRadius: 12,
+		elevation: 10,
 	},
 	icon: {
 		color: 'black',
 		backgroundColor: 'white',
-		borderWidth: 0.5,
 		borderRadius: 10,
 		paddingHorizontal: 10,
 		marginHorizontal: 10,
 		verticalAlign: 'middle',
 		textAlign: 'center',
-		shadowOpacity: 5,
-		shadowRadius: 20,
-		elevation: 5,
-	},
-	welcome: {
-		backgroundColor: 'white',
-		borderRadius: 10,
-		borderWidth: 0.5,
-		borderColor: 'black',
-		textAlign: 'center',
-		textAlignVertical: 'center',
-		color: 'black',
-		margin: 5,
-		padding: 5,
-	},
-	info: {
-		verticalAlign: 'middle',
-		textAlign: 'center',
-		padding: 2,
-		backgroundColor: 'white',
-		borderRadius: 10,
-		borderWidth: 0.5,
-		shadowOpacity: 5,
-		shadowRadius: 20,
-		elevation: 5,
 	},
 	button: {
 		alignItems: 'center',
@@ -132,14 +127,13 @@ const styles = StyleSheet.create({
 		padding: 10,
 		backgroundColor: '#001f7e',
 		borderWidth: 0.5,
-		borderRadius: 15,
-		elevation: 10,
+		borderRadius: 10,
 	},
-	texto: {
-		textAlign: 'left',
+	text: {
+		textAlign: 'center',
 		fontSize: 20,
 		fontWeight: 'bold',
-		color: '#FFFFFF',
+		color: 'white',
 	},
 	modal: {
 		flex: 1,
