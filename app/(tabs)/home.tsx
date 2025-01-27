@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
 	buttonContainer: {
 		backgroundColor: 'white',
 		flexDirection: 'row',
-		padding: 0,
 		borderRadius: 12,
 		elevation: 10,
 	},
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
 		minWidth: '50%',
 		padding: 10,
 		backgroundColor: '#001f7e',
-		borderWidth: 0.5,
 		borderRadius: 10,
 	},
 	text: {
