@@ -208,9 +208,10 @@ const Map = () => {
 				provider={PROVIDER_GOOGLE}
 				style={{ width: windowWidth, height: windowHeight }}
 				userLocationUpdateInterval={5000}
+				loadingEnabled
+				loadingIndicatorColor='#001f7e'
 				showsUserLocation
 				showsMyLocationButton
-				loadingEnabled
 				toolbarEnabled={false}
 				showsPointsOfInterest={false}
 				showsIndoors={false}

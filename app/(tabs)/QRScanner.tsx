@@ -1,5 +1,5 @@
 import { useState, Suspense } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Alert } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { CameraView, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
@@ -11,6 +11,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 import { useIsFocused } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import Loading from '@/components/LoadingState';
 
 const QRScanner = () => {
 	// permisos de uso de camara
@@ -70,6 +71,15 @@ const QRScanner = () => {
 		);
 	};
 
+	// boton para escanear de nuevo un codigo QR
+	const ScanAgainButton = () => {
+		return (
+			<TouchableOpacity onPress={() => setScanned(false)} style={styles.tryAgainButton}>
+				<Text style={styles.tryAgainButtonText}>Presiona para escanear de nuevo</Text>
+			</TouchableOpacity>
+		);
+	};
+
 	// si se niega el permiso de uso de la camara se muestra el mensaje siguiente
 	if (!permission || !permission.granted) {
 		return (
@@ -95,7 +105,7 @@ const QRScanner = () => {
 	// al aceptar permisos de uso de camara se carga la misma con los demas componentes.
 	return (
 		<SafeAreaView style={styles.container}>
-			<Suspense fallback={<ActivityIndicator size={'large'} color={'#001f7e'} />}>
+			<Suspense fallback={<Loading />}>
 				{isFocused && (
 					<CameraView
 						style={styles.camera}
@@ -117,11 +127,7 @@ const QRScanner = () => {
 						<TorchButton />
 						<InputButton />
 					</View>
-					{scanned && (
-						<TouchableOpacity onPress={() => setScanned(false)} style={styles.tryAgainButton}>
-							<Text style={styles.tryAgainButtonText}>Presiona para escanear de nuevo</Text>
-						</TouchableOpacity>
-					)}
+					{scanned && <ScanAgainButton />}
 				</View>
 
 				<Portal>

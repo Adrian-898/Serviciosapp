@@ -18,6 +18,8 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import * as WebBrowser from 'expo-web-browser';
 import getErrorMessage from '@/utils/getErrorMessage';
+import { Suspense } from 'react';
+import Loading from './LoadingState';
 
 // parametros del componente principal
 type QRInputProps = {
@@ -92,111 +94,113 @@ const QRInput = ({ onClose }: QRInputProps) => {
 			style={colorScheme === 'light' ? styles.container : styles.containerDark}
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
-			<Icon name='close' color={'#d00b27'} size={50} onPress={onClose} style={styles.closeButton} />
+			<Suspense fallback={<Loading />}>
+				<Icon name='close' color={'#d00b27'} size={50} onPress={onClose} style={styles.closeButton} />
 
-			{/*Formulario Parquimetro y Puesto con Formik y Yup*/}
-			<ThemedView style={styles.container2}>
-				<Formik
-					initialValues={{ parquimetro: '', puesto: undefined }}
-					onSubmit={(values) => {
-						console.log(values);
-						handleLoadInput(values.parquimetro, values.puesto);
-					}}
-					validationSchema={validationSchema}
-				>
-					{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-						<ThemedView>
-							<ThemedView style={styles.parquimetro}>
-								<ThemedText type='subtitle' style={styles.label}>
-									Parquímetro
-								</ThemedText>
-								<SelectDropdown
-									data={park}
-									statusBarTranslucent
-									defaultValueByIndex={0}
-									onBlur={() => handleBlur('parquimetro')}
-									onSelect={(selectedItem, index) => {
-										values.parquimetro = selectedItem;
-										handleChange('parquimetro');
-									}}
-									renderButton={(selectedItem, isOpen) => {
-										return (
-											<View style={styles.dropdownButton}>
-												<Text
-													style={
-														selectedItem
-															? styles.dropdownButtonTextSelected
-															: styles.dropdownButtonText
-													}
+				{/*Formulario Parquimetro y Puesto con Formik y Yup*/}
+				<ThemedView style={styles.container2}>
+					<Formik
+						initialValues={{ parquimetro: '', puesto: undefined }}
+						onSubmit={(values) => {
+							console.log(values);
+							handleLoadInput(values.parquimetro, values.puesto);
+						}}
+						validationSchema={validationSchema}
+					>
+						{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+							<ThemedView>
+								<ThemedView style={styles.parquimetro}>
+									<ThemedText type='subtitle' style={styles.label}>
+										Parquímetro
+									</ThemedText>
+									<SelectDropdown
+										data={park}
+										statusBarTranslucent
+										defaultValueByIndex={0}
+										onBlur={() => handleBlur('parquimetro')}
+										onSelect={(selectedItem, index) => {
+											values.parquimetro = selectedItem;
+											handleChange('parquimetro');
+										}}
+										renderButton={(selectedItem, isOpen) => {
+											return (
+												<View style={styles.dropdownButton}>
+													<Text
+														style={
+															selectedItem
+																? styles.dropdownButtonTextSelected
+																: styles.dropdownButtonText
+														}
+													>
+														{selectedItem || 'Seleccionar parquímetro'}
+													</Text>
+													<Icon
+														name={isOpen ? 'chevron-left' : 'chevron-down'}
+														size={25}
+														color='#333'
+													/>
+												</View>
+											);
+										}}
+										renderItem={(item, index, isSelected) => {
+											return (
+												<View
+													style={{
+														...styles.dropdownItem,
+														...(isSelected && {
+															backgroundColor: '#D2D9DF',
+														}),
+													}}
 												>
-													{selectedItem || 'Seleccionar parquímetro'}
-												</Text>
-												<Icon
-													name={isOpen ? 'chevron-left' : 'chevron-down'}
-													size={25}
-													color='#333'
-												/>
-											</View>
-										);
-									}}
-									renderItem={(item, index, isSelected) => {
-										return (
-											<View
-												style={{
-													...styles.dropdownItem,
-													...(isSelected && {
-														backgroundColor: '#D2D9DF',
-													}),
-												}}
-											>
-												<Text style={styles.dropdownItemText}>{item}</Text>
-											</View>
-										);
-									}}
-									showsVerticalScrollIndicator={false}
-									dropdownStyle={styles.dropdown}
-									search={true}
-									searchPlaceHolder='Busca tu parquímetro'
-									searchPlaceHolderColor='#888'
-									searchInputStyle={styles.search}
-									searchInputTxtColor='#151E26'
-									searchInputTxtStyle={styles.searchText}
-									renderSearchInputLeftIcon={() => {
-										return <Icon name='search' color={'#72808D'} size={18} />;
-									}}
-								/>
+													<Text style={styles.dropdownItemText}>{item}</Text>
+												</View>
+											);
+										}}
+										showsVerticalScrollIndicator={false}
+										dropdownStyle={styles.dropdown}
+										search={true}
+										searchPlaceHolder='Busca tu parquímetro'
+										searchPlaceHolderColor='#888'
+										searchInputStyle={styles.search}
+										searchInputTxtColor='#151E26'
+										searchInputTxtStyle={styles.searchText}
+										renderSearchInputLeftIcon={() => {
+											return <Icon name='search' color={'#72808D'} size={18} />;
+										}}
+									/>
 
-								{errors.parquimetro && (
-									<ThemedText style={styles.errorText}>{errors.parquimetro}</ThemedText>
-								)}
+									{errors.parquimetro && (
+										<ThemedText style={styles.errorText}>{errors.parquimetro}</ThemedText>
+									)}
+								</ThemedView>
+
+								<ThemedView style={styles.puesto}>
+									<ThemedText type='subtitle' style={styles.label}>
+										Puesto
+									</ThemedText>
+									<TextInput
+										style={styles.input}
+										placeholder='Ingresar puesto'
+										placeholderTextColor={'#888'}
+										onChangeText={handleChange('puesto')}
+										onBlur={handleBlur('puesto')}
+										value={values.puesto}
+										keyboardType='number-pad'
+									/>
+
+									{errors.puesto && <ThemedText style={styles.errorText}>{errors.puesto}</ThemedText>}
+								</ThemedView>
+
+								<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+									<ThemedText type='subtitle' style={styles.buttonText}>
+										Buscar
+									</ThemedText>
+								</TouchableOpacity>
 							</ThemedView>
-
-							<ThemedView style={styles.puesto}>
-								<ThemedText type='subtitle' style={styles.label}>
-									Puesto
-								</ThemedText>
-								<TextInput
-									style={styles.input}
-									placeholder='Ingresar puesto'
-									placeholderTextColor={'#888'}
-									onChangeText={handleChange('puesto')}
-									onBlur={handleBlur('puesto')}
-									value={values.puesto}
-									keyboardType='number-pad'
-								/>
-
-								{errors.puesto && <ThemedText style={styles.errorText}>{errors.puesto}</ThemedText>}
-							</ThemedView>
-
-							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-								<ThemedText type='subtitle' style={styles.buttonText}>
-									Buscar
-								</ThemedText>
-							</TouchableOpacity>
-						</ThemedView>
-					)}
-				</Formik>
-			</ThemedView>
+						)}
+					</Formik>
+				</ThemedView>
+			</Suspense>
 		</KeyboardAvoidingView>
 	);
 };

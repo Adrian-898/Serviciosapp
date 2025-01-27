@@ -1,38 +1,42 @@
+import { Suspense } from 'react';
 import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import Fondo from '@/assets/images/cinta-costera.jpg';
+import Loading from '@/components/LoadingState';
 
 const Index = () => {
 	const router = useRouter();
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ImageBackground
-				source={Fondo}
-				style={styles.fondo}
-				resizeMode='cover'
-				onError={() => console.log('Error cargando imagen de fondo...')}
-			>
-				<View style={styles.buttonContainer}>
-					<View style={styles.continue}>
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/home')}>
-							<ThemedText style={styles.buttonText}>Continuar sin iniciar sesión</ThemedText>
-						</TouchableOpacity>
-					</View>
+			<Suspense fallback={<Loading />}>
+				<ImageBackground
+					source={Fondo}
+					style={styles.fondo}
+					resizeMode='cover'
+					onError={() => console.log('Error cargando imagen de fondo...')}
+				>
+					<View style={styles.buttonContainer}>
+						<View style={styles.continue}>
+							<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/home')}>
+								<ThemedText style={styles.buttonText}>Continuar sin iniciar sesión</ThemedText>
+							</TouchableOpacity>
+						</View>
 
-					<View style={styles.loginRegister}>
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/loginScreen')}>
-							<Text style={styles.buttonText}>Iniciar sesión</Text>
-						</TouchableOpacity>
+						<View style={styles.loginRegister}>
+							<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/loginScreen')}>
+								<Text style={styles.buttonText}>Iniciar sesión</Text>
+							</TouchableOpacity>
 
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/registerScreen')}>
-							<Text style={styles.buttonText}>Registrarse</Text>
-						</TouchableOpacity>
+							<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/registerScreen')}>
+								<Text style={styles.buttonText}>Registrarse</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
-				</View>
-			</ImageBackground>
+				</ImageBackground>
+			</Suspense>
 		</SafeAreaView>
 	);
 };
