@@ -1,8 +1,7 @@
 // import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
-import { StatusBar } from 'react-native';
-import { useColorScheme } from 'react-native';
+import Constants from 'expo-constants';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 // import getErrorMessage from "@/utils/getErrorMessage";
@@ -10,8 +9,7 @@ import { ThemedText } from '@/components/ThemedText';
 // import { logout } from "@/services/AuthService";
 // import AuthContext from "@/contexts/AuthContext";
 
-const User = () => {
-	const colorScheme = useColorScheme();
+const Settings = () => {
 	// const router = useRouter();
 	// const { setUser } = useContext(AuthContext);
 
@@ -27,27 +25,24 @@ const User = () => {
 	};
 
 	return (
-		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
+		<ThemedView style={styles.container}>
 			<ThemedText type='title' style={styles.header}>
-				Usuario
+				Configuración
 			</ThemedText>
-			<TouchableOpacity style={colorScheme === 'light' ? styles.option : styles.optionDark}>
-				<Icon name='person' size={24} color='#0caf50' />
+			<TouchableOpacity style={styles.option}>
+				<Icon name='person' size={40} color='#0caf50' />
 				<Text style={styles.optionText}>Cuenta</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
-			<TouchableOpacity style={colorScheme === 'light' ? styles.option : styles.optionDark}>
-				<Icon name='information-circle' size={24} color='#001f7e' />
+			<TouchableOpacity style={styles.option}>
+				<Icon name='information-circle' size={40} color='#001f7e' />
 				<Text style={styles.optionText}>Sobre nosotros</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
-			<TouchableOpacity
-				style={colorScheme === 'light' ? styles.option : styles.optionDark}
-				onPress={handleLogout}
-			>
-				<Icon name='log-out' size={24} color='#d00b27' />
+			<TouchableOpacity style={styles.option} onPress={handleLogout}>
+				<Icon name='log-out' size={40} color='#d00b27' />
 				<Text style={styles.optionText}>Cerrar sesión</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
@@ -58,12 +53,7 @@ const User = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: StatusBar.currentHeight,
-	},
-	containerDark: {
-		backgroundColor: '#222',
-		flex: 1,
-		padding: StatusBar.currentHeight,
+		padding: Constants.statusBarHeight,
 	},
 	header: {
 		fontSize: 32,
@@ -80,17 +70,6 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		elevation: 5,
 	},
-	optionDark: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		paddingVertical: 15,
-		paddingHorizontal: 10,
-		borderRadius: 10,
-		backgroundColor: '#ddd',
-		borderColor: 'black',
-		marginBottom: 15,
-		elevation: 5,
-	},
 	optionText: {
 		flex: 1,
 		fontSize: 18,
@@ -102,4 +81,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default User;
+export default Settings;

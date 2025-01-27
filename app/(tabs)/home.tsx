@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, ScrollView, View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
@@ -7,7 +7,7 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import Icon2 from '@expo/vector-icons/MaterialIcons';
 import ModalInfo from '@/components/ModalInfo';
 import LinkButton from '@/components/LinkButton';
-import Fondo from '@/assets/images/cinta-costera.jpg';
+import { ThemedView } from '@/components/ThemedView';
 
 const Home = () => {
 	// Navegacion con expo-router
@@ -17,7 +17,7 @@ const Home = () => {
 	const [modalState, setModalState] = useState<boolean>(false);
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<ThemedView style={styles.container}>
 			<Portal>
 				<Modal visible={modalState} onDismiss={() => setModalState(false)} contentContainerStyle={styles.modal}>
 					<ModalInfo onClose={() => setModalState(false)} />
@@ -64,7 +64,7 @@ const Home = () => {
 					</TouchableOpacity>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</ThemedView>
 	);
 };
 
