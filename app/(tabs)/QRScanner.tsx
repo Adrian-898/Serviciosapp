@@ -1,5 +1,14 @@
 import { useState, Suspense } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, Button, ActivityIndicator, Alert, useColorScheme } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	SafeAreaView,
+	View,
+	TouchableOpacity,
+	ActivityIndicator,
+	Alert,
+	useColorScheme,
+} from 'react-native';
 import { CameraView, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
@@ -111,19 +120,22 @@ const QRScanner = () => {
 				</View>
 
 				<View style={styles.footer}>
-					<TorchButton />
-					<InputButton />
+					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+						<TorchButton />
+						<InputButton />
+					</View>
+					{scanned && (
+						<TouchableOpacity onPress={() => setScanned(false)} style={styles.tryAgainButton}>
+							<Text style={styles.tryAgainButtonText}>Presiona para escanear de nuevo</Text>
+						</TouchableOpacity>
+					)}
 				</View>
 
 				<QRInput visible={inputState} onClose={() => setInputState(false)} />
-
-				{scanned && <Button title='Presiona para escanear de nuevo' onPress={() => setScanned(false)} />}
 			</Suspense>
 		</SafeAreaView>
 	);
 };
-
-/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
 
 const styles = StyleSheet.create({
 	container: {
@@ -168,8 +180,6 @@ const styles = StyleSheet.create({
 	},
 	footer: {
 		position: 'absolute',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
 		bottom: 0,
 		left: 0,
 		right: 0,
@@ -186,6 +196,20 @@ const styles = StyleSheet.create({
 		opacity: 0.7,
 		padding: 10,
 		borderRadius: 20,
+	},
+	tryAgainButton: {
+		backgroundColor: '#001f7e',
+		borderWidth: 0.5,
+		borderRadius: 15,
+		elevation: 10,
+		paddingVertical: 10,
+		marginTop: 20,
+	},
+	tryAgainButtonText: {
+		textAlign: 'center',
+		fontSize: 18,
+		fontWeight: 'bold',
+		color: '#FFFFFF',
 	},
 	noPermissionInput: {
 		flex: 1,
