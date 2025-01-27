@@ -54,7 +54,11 @@ const Multas = () => {
 								onBlur={handleBlur('cedula')}
 							/>
 
-							{errors.cedula && <Text style={styles.errorText}>{errors.cedula}</Text>}
+							{errors.cedula && (
+								<ThemedText type='defaultSemiBold' style={styles.errorText}>
+									{errors.cedula}
+								</ThemedText>
+							)}
 
 							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 								<ThemedText type='subtitle' style={styles.buttonText}>

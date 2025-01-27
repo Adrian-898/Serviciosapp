@@ -30,19 +30,19 @@ const Settings = () => {
 				Configuración
 			</ThemedText>
 			<TouchableOpacity style={styles.option}>
-				<Icon name='person' size={40} color='#0caf50' />
+				<Icon name='person' size={30} color='#0caf50' />
 				<Text style={styles.optionText}>Cuenta</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
 			<TouchableOpacity style={styles.option}>
-				<Icon name='information-circle' size={40} color='#001f7e' />
+				<Icon name='information-circle' size={30} color='#001f7e' />
 				<Text style={styles.optionText}>Sobre nosotros</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>
 
 			<TouchableOpacity style={styles.option} onPress={handleLogout}>
-				<Icon name='log-out' size={40} color='#d00b27' />
+				<Icon name='log-out' size={30} color='#d00b27' />
 				<Text style={styles.optionText}>Cerrar sesión</Text>
 				<Icon name='arrow-forward' size={24} color='black' style={styles.optionIcon} />
 			</TouchableOpacity>

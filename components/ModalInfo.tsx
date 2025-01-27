@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 
@@ -7,11 +7,9 @@ type modalInfoProps = {
 };
 
 const ModalInfo = (props: modalInfoProps) => {
-	const colorScheme = useColorScheme();
-
 	// Contenido del modal mostrando la informacion en el Home de la app
 	return (
-		<ThemedView style={colorScheme === 'light' ? styles.modalContainer : styles.modalContainerDark}>
+		<ThemedView style={styles.modalContainer}>
 			<ThemedText style={styles.modalText}>
 				Bienvenido a tu App La Guaira, aquí encontrarás distintos servicios a los que puedes acceder desde los
 				enlaces disponibles en la pantalla de inicio, en la barra de navegación inferior podrás acceder a
@@ -27,24 +25,9 @@ const ModalInfo = (props: modalInfoProps) => {
 	);
 };
 
-/** !EDITAR ESTILOS DE MODO OSCURO, USAR UN SOLO STYLESHEET PARA CADA COMPONENTE CON LA VARIABLE COLORSCHEME GLOBAL! **/
-
 const styles = StyleSheet.create({
 	modalContainer: {
 		backfaceVisibility: 'visible',
-		width: '90%',
-		padding: 20,
-		borderRadius: 10,
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
-	modalContainerDark: {
-		backgroundColor: '#222',
 		width: '90%',
 		padding: 20,
 		borderRadius: 10,

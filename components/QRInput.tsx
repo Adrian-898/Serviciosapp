@@ -3,14 +3,14 @@ import {
 	StyleSheet,
 	TextInput,
 	KeyboardAvoidingView,
-	SafeAreaView,
-	View,
+	useColorScheme,
 	TouchableOpacity,
 	Alert,
 	Platform,
-	useColorScheme,
 } from 'react-native';
+import Colors from '@/constants/Colors';
 import { ThemedText } from './ThemedText';
+import { ThemedView } from './ThemedView';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { Formik } from 'formik';
@@ -97,7 +97,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 			<Icon name='close' color={'#d00b27'} size={50} onPress={onClose} style={styles.closeButton} />
 
 			{/*Formulario Parquimetro y Puesto con Formik y Yup*/}
-			<SafeAreaView style={styles.container2}>
+			<ThemedView style={styles.container2}>
 				<Formik
 					initialValues={{ parquimetro: '', puesto: undefined }}
 					onSubmit={(values) => {
@@ -107,7 +107,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 					validationSchema={validationSchema}
 				>
 					{({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-						<View>
+						<ThemedView>
 							<ThemedText type='subtitle' style={styles.label}>
 								Parquímetro
 							</ThemedText>
@@ -122,7 +122,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 								}}
 								renderButton={(selectedItem, isOpen) => {
 									return (
-										<View style={styles.dropdownButton}>
+										<ThemedView style={styles.dropdownButton}>
 											<Text
 												style={
 													selectedItem
@@ -137,12 +137,12 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 												size={25}
 												color='#333'
 											/>
-										</View>
+										</ThemedView>
 									);
 								}}
 								renderItem={(item, index, isSelected) => {
 									return (
-										<View
+										<ThemedView
 											style={{
 												...styles.dropdownItem,
 												...(isSelected && {
@@ -151,7 +151,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 											}}
 										>
 											<Text style={styles.dropdownItemText}>{item}</Text>
-										</View>
+										</ThemedView>
 									);
 								}}
 								showsVerticalScrollIndicator={false}
@@ -167,7 +167,9 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 								}}
 							/>
 
-							{errors.parquimetro && <Text style={styles.errorText}>{errors.parquimetro}</Text>}
+							{errors.parquimetro && (
+								<ThemedText style={styles.errorText}>{errors.parquimetro}</ThemedText>
+							)}
 
 							<ThemedText type='subtitle' style={styles.label}>
 								Puesto
@@ -182,17 +184,17 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 								keyboardType='number-pad'
 							/>
 
-							{errors.puesto && <Text style={styles.errorText}>{errors.puesto}</Text>}
+							{errors.puesto && <ThemedText style={styles.errorText}>{errors.puesto}</ThemedText>}
 
 							<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 								<ThemedText type='subtitle' style={styles.buttonText}>
 									Buscar
 								</ThemedText>
 							</TouchableOpacity>
-						</View>
+						</ThemedView>
 					)}
 				</Formik>
-			</SafeAreaView>
+			</ThemedView>
 		</KeyboardAvoidingView>
 	);
 };
@@ -200,7 +202,7 @@ const QRInput = ({ visible, onClose }: QRInputProps) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'white',
+		backgroundColor: Colors.light.background,
 		position: 'absolute',
 		alignSelf: 'center',
 		minWidth: '90%',
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
 	},
 	containerDark: {
 		flex: 1,
-		backgroundColor: '#222',
+		backgroundColor: Colors.dark.background,
 		position: 'absolute',
 		alignSelf: 'center',
 		minWidth: '90%',
@@ -228,9 +230,8 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		backgroundColor: '#EAEAEA',
-		marginBottom: 20,
-		fontSize: 18,
 		padding: 10,
+		fontSize: 18,
 		borderRadius: 10,
 	},
 	closeButton: {
@@ -245,7 +246,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EAEAEA',
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginBottom: 20,
 		borderRadius: 10,
 		padding: 10,
 	},
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	button: {
-		marginVertical: 5,
+		marginVertical: 20,
 		padding: 10,
 		backgroundColor: '#001f7e',
 		borderRadius: 10,
@@ -293,7 +293,6 @@ const styles = StyleSheet.create({
 	},
 	errorText: {
 		color: 'red',
-		marginBottom: 10,
 	},
 });
 

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, Platform, useColorScheme } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { useRouter } from 'expo-router';
@@ -25,7 +25,6 @@ const validationSchema = yup.object().shape({
 });
 
 const LoginScreen = () => {
-	const colorScheme = useColorScheme();
 	const router = useRouter();
 	const { setUser } = useContext(AuthContext);
 	const [error, setError] = useState<string>('');
@@ -64,7 +63,7 @@ const LoginScreen = () => {
 	};
 
 	return (
-		<ThemedView style={colorScheme === 'light' ? styles.container : styles.containerDark}>
+		<ThemedView style={styles.container}>
 			<ThemedText type='title' style={styles.title}>
 				Inicio de sesión
 			</ThemedText>
@@ -76,9 +75,9 @@ const LoginScreen = () => {
 				validationSchema={validationSchema}
 			>
 				{({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-					<ThemedView style={colorScheme === 'light' ? styles.form : styles.formDark}>
+					<ThemedView style={styles.form}>
 						<TextInput
-							style={colorScheme === 'light' ? styles.input : styles.inputDark}
+							style={styles.input}
 							placeholder='Correo electrónico'
 							onChangeText={handleChange('email')}
 							onBlur={handleBlur('email')}
@@ -95,7 +94,7 @@ const LoginScreen = () => {
 						)}
 
 						<TextInput
-							style={colorScheme === 'light' ? styles.input : styles.inputDark}
+							style={styles.input}
 							placeholder='Contraseña'
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
@@ -139,26 +138,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 20,
-		backgroundColor: '#f5f5f5',
-	},
-	containerDark: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 20,
-		backgroundColor: '#222',
 	},
 	title: {
 		marginBottom: 24,
 	},
 	form: {
 		width: '100%',
-		backgroundColor: '#f5f5f5',
-		borderRadius: 10,
-	},
-	formDark: {
-		width: '100%',
-		backgroundColor: '#222',
 		borderRadius: 10,
 	},
 	input: {
@@ -169,15 +154,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		marginBottom: 15,
 		backgroundColor: '#fff',
-	},
-	inputDark: {
-		height: 50,
-		borderColor: '#999',
-		borderWidth: 1,
-		borderRadius: 10,
-		paddingHorizontal: 20,
-		marginBottom: 15,
-		backgroundColor: '#f5f5f5',
 	},
 	errorText: {
 		color: 'red',
