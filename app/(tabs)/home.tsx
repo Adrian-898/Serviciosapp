@@ -18,63 +18,52 @@ const Home = () => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ImageBackground
-				source={Fondo}
-				style={styles.fondo}
-				resizeMode='cover'
-				onError={() => console.log('Error cargando imagen de fondo...')}
-			>
-				<Portal>
-					<Modal
-						visible={modalState}
-						onDismiss={() => setModalState(false)}
-						contentContainerStyle={styles.modal}
-					>
-						<ModalInfo onClose={() => setModalState(false)} />
-					</Modal>
-				</Portal>
+			<Portal>
+				<Modal visible={modalState} onDismiss={() => setModalState(false)} contentContainerStyle={styles.modal}>
+					<ModalInfo onClose={() => setModalState(false)} />
+				</Modal>
+			</Portal>
 
-				<View style={styles.header}>
-					<Icon
-						name='information-outline'
-						color='black'
-						size={50}
-						onPress={() => setModalState(true)}
-						style={styles.info}
-					/>
+			<View style={styles.header}>
+				<Icon
+					name='information-outline'
+					color='black'
+					size={50}
+					onPress={() => setModalState(true)}
+					style={styles.info}
+				/>
+			</View>
+
+			<ScrollView contentContainerStyle={styles.container2}>
+				<View style={styles.buttonContainer}>
+					<Icon name='car-emergency' size={40} color={'black'} style={styles.icon} />
+					<LinkButton title='Emergencias' url='https://www.google.com' />
 				</View>
-
-				<ScrollView contentContainerStyle={styles.container2}>
-					<View style={styles.buttonContainer}>
-						<Icon name='car-emergency' size={40} color={'black'} style={styles.icon} />
-						<LinkButton title='Emergencias' url='https://www.google.com' />
-					</View>
-					<View style={styles.buttonContainer}>
-						<Icon name='car-brake-parking' size={40} style={styles.icon} />
-						<LinkButton title='Parquímetro' url='https://www.google.com' />
-					</View>
-					<View style={styles.buttonContainer}>
-						<Icon2 name='electrical-services' size={40} style={styles.icon} />
-						<LinkButton title='Servicios' url='https://www.google.com' />
-					</View>
-					<View style={styles.buttonContainer}>
-						<Icon2 name='currency-exchange' size={40} style={styles.icon} />
-						<LinkButton title='Comercio' url='https://www.google.com' />
-					</View>
-					<View style={styles.buttonContainer}>
-						<Icon name='account-alert' size={40} style={styles.icon} />
-						<LinkButton title='Denuncias' url='https://www.google.com' />
-					</View>
-					<View style={styles.buttonContainer}>
-						<Icon name='alert-rhombus' size={40} style={styles.icon} />
-						<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
-							<Text style={styles.texto} adjustsFontSizeToFit>
-								Multas
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</ScrollView>
-			</ImageBackground>
+				<View style={styles.buttonContainer}>
+					<Icon name='car-brake-parking' size={40} style={styles.icon} />
+					<LinkButton title='Parquímetro' url='https://www.google.com' />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Icon2 name='electrical-services' size={40} style={styles.icon} />
+					<LinkButton title='Servicios' url='https://www.google.com' />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Icon2 name='currency-exchange' size={40} style={styles.icon} />
+					<LinkButton title='Comercio' url='https://www.google.com' />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Icon name='account-alert' size={40} style={styles.icon} />
+					<LinkButton title='Denuncias' url='https://www.google.com' />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Icon name='alert-rhombus' size={40} style={styles.icon} />
+					<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
+						<Text style={styles.texto} adjustsFontSizeToFit>
+							Multas
+						</Text>
+					</TouchableOpacity>
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };
