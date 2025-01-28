@@ -30,8 +30,7 @@ export default {
 				'WRITE_EXTERNAL_STORAGE',
 			],
 			adaptiveIcon: {
-				foregroundImage: './assets/images/adaptive-icon.png',
-				backgroundColor: '#ffffff',
+				foregroundImage: './assets/images/logo.png',
 			},
 			package: 'com.anonymous.applaguaira',
 		},
