@@ -6,11 +6,11 @@ export default {
 		slug: 'app-la-guaira',
 		version: '1.0.0',
 		orientation: 'portrait',
-		icon: './assets/images/icon.png',
+		icon: './assets/images/logo.png',
 		scheme: 'myapp',
 		userInterfaceStyle: 'automatic',
 		splash: {
-			image: './assets/images/splash.png',
+			image: './assets/images/splash-screen.png',
 			resizeMode: 'contain',
 		},
 		ios: {
