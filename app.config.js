@@ -29,6 +29,7 @@ export default {
 				'READ_EXTERNAL_STORAGE',
 				'WRITE_EXTERNAL_STORAGE',
 			],
+			icon: './assets/images/logo.png',
 			adaptiveIcon: {
 				foregroundImage: './assets/images/logo.png',
 			},
