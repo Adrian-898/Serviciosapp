@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { Formik } from 'formik';
 import { useRouter } from 'expo-router';
-import AuthContext from '@/contexts/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { register } from '@/services/AuthService';
 import { loadUser } from '@/services/AuthService';
 import * as yup from 'yup';
@@ -31,17 +31,11 @@ const validationSchema = yup.object().shape({
 
 const RegisterScreen = () => {
 	const router = useRouter();
-	const { setUser } = useContext(AuthContext);
+	const { setUser } = useAuthContext();
 	const [error, setError] = useState<string>('');
 
 	// control del registro al presionar "Registrar"
 	const handleRegister = async (values: RegisterCredentials) => {
-		// elimina el error al llamar a setUser (no se puede invocar un objeto posiblemente null)
-		if (!setUser) {
-			console.error('Login ERROR: setUser = NULL');
-			return;
-		}
-
 		setError('');
 		try {
 			// post

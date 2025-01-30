@@ -8,7 +8,7 @@ import ModalInfo from '@/components/ModalInfo';
 import LinkButton from '@/components/LinkButton';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
-// import AuthContext from '@/contexts/AuthContext';
+// import useAuthContext from '@/contexts/AuthContext';
 import Loading from '@/components/LoadingState';
 
 const Home = () => {

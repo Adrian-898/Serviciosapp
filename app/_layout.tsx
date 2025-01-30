@@ -9,7 +9,7 @@ import { Platform, type AppStateStatus } from 'react-native';
 import { useColorScheme } from 'react-native';
 import useAppState from '@/hooks/useAppState';
 import useOnlineManager from '@/hooks/useOnlineManager';
-import AuthContext from '@/contexts/AuthContext';
+import { AuthContextProvider, useAuthContext } from '@/contexts/AuthContext';
 import { loadUser } from '@/services/AuthService';
 import getErrorMessage from '@/utils/getErrorMessage';
 //import { DevToolsBubble } from "react-native-react-query-devtools";
@@ -27,8 +27,8 @@ function onAppStateChange(status: AppStateStatus) {
 const RootLayout = () => {
 	useAppState(onAppStateChange);
 	useOnlineManager();
+	const { user, setUser } = useAuthContext();
 	const colorScheme = useColorScheme();
-	const [user, setUser] = useState<{} | null>(null);
 	const [status, setStatus] = useState('loading');
 	const [queryClient] = useState(
 		() =>
@@ -71,7 +71,7 @@ const RootLayout = () => {
 	// Layout de navegacion de la app
 	return (
 		<QueryClientProvider client={queryClient}>
-			<AuthContext.Provider value={{ user, setUser }}>
+			<AuthContextProvider>
 				<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 					<PaperProvider>
 						<Stack screenOptions={{ headerShown: false }}>
@@ -80,7 +80,7 @@ const RootLayout = () => {
 						</Stack>
 					</PaperProvider>
 				</ThemeProvider>
-			</AuthContext.Provider>
+			</AuthContextProvider>
 		</QueryClientProvider>
 	);
 };

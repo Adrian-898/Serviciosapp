@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { useRouter } from 'expo-router';
 import { Formik } from 'formik';
 import { login, loadUser } from '@/services/AuthService';
-import AuthContext from '@/contexts/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import * as yup from 'yup';
 import getErrorMessage from '@/utils/getErrorMessage';
 import type { LoginCredentials } from '@/utils/types';
@@ -26,16 +26,11 @@ const validationSchema = yup.object().shape({
 
 const LoginScreen = () => {
 	const router = useRouter();
-	const { setUser } = useContext(AuthContext);
+	const { setUser } = useAuthContext();
 	const [error, setError] = useState<string>('');
 
 	// control del login al presionar "Iniciar sesion"
 	const handleLogin = async (values: LoginCredentials) => {
-		if (!setUser) {
-			console.error('Login ERROR: setUser = NULL');
-			return;
-		}
-
 		setError('');
 		try {
 			// post
