@@ -50,7 +50,7 @@ const LoginScreen = () => {
 				router.replace('/(tabs)/home');
 			} else {
 				setError(postStatus);
-				console.log('statusText: ', postStatus);
+				console.log('statusText (Error): ', postStatus);
 			}
 
 			// get
