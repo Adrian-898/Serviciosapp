@@ -14,9 +14,11 @@ const useCamera = () => {
 			}
 		};
 		loadCamera();
-	}, []);
+	}, [requestPermission]);
 
 	return permission;
 };
 
 export default useCamera;
+
+// BUG: arreglar este hook, una opcion es usar useCameraPermissions directamente en qrScanner, eso o encontrar una forma de actualizar la vista de qrScanner cuando el usuario de los permisos

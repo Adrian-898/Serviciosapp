@@ -2,6 +2,7 @@ import { useState, Suspense } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Alert } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { CameraView, type BarcodeScanningResult } from 'expo-camera';
+import * as Linking from 'expo-linking';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import QRInput from '@/components/QRInput';
@@ -14,7 +15,7 @@ import { ThemedText } from '@/components/ThemedText';
 import Loading from '@/components/LoadingState';
 
 const QRScanner = () => {
-	// permisos de uso de camara
+	// estado de permisos de uso de camara, se solicitan permisos cuando se abre la app y cuando cambia el estado
 	const permission = useCamera();
 
 	// estado de la pantalla activa o no, se usa para el renderizado condicional de la camara (Solo si esta el usuario en la pantalla de QRScanner)
@@ -42,6 +43,16 @@ const QRScanner = () => {
 			}
 		} catch (error) {
 			console.warn(error + ' Mensaje: ' + getErrorMessage(error));
+		}
+	};
+
+	// funcion para abrir la configuracion de la app
+	const handleSettings = async () => {
+		try {
+			await Linking.openSettings();
+		} catch (error) {
+			console.warn(error + ' Mensaje: ' + getErrorMessage(error));
+			Alert.alert('Error', 'No se pudo abrir la configuración de la app, por favor intente manualmente.');
 		}
 	};
 
@@ -80,15 +91,27 @@ const QRScanner = () => {
 		);
 	};
 
-	// si se niega el permiso de uso de la camara se muestra el mensaje siguiente
+	// si se niega el permiso de uso de la camara o no se responde a la solicitud se muestra el mensaje siguiente
 	if (!permission || !permission.granted) {
 		return (
 			<ThemedView style={styles.container}>
-				<ThemedText style={styles.message} adjustsFontSizeToFit>
-					No hubo respuesta a la solicitud de permisos o se ha negado la misma, para usar la cámara, puede
-					conceder los permisos de uso en la configuración de la App en su dispositivo, o puede ingresar
-					manualmente los datos con el botón en la esquina inferior derecha.
-				</ThemedText>
+				<ThemedView style={styles.centered}>
+					<ThemedText style={styles.message} adjustsFontSizeToFit>
+						No hubo respuesta a la solicitud de permisos o se ha negado la misma, para usar la cámara, puede
+						conceder los permisos de uso en la configuración de la App, o puede ingresar manualmente los
+						datos con el botón en la esquina inferior derecha.
+					</ThemedText>
+
+					<ThemedText
+						type='link'
+						style={styles.link}
+						onPress={() => {
+							handleSettings();
+						}}
+					>
+						Ir a configuración
+					</ThemedText>
+				</ThemedView>
 
 				<View style={styles.noPermissionInput}>
 					<InputButton />
@@ -147,15 +170,19 @@ const styles = StyleSheet.create({
 	},
 	centered: {
 		flex: 1,
+		position: 'absolute',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	message: {
-		position: 'absolute',
-		alignSelf: 'center',
-		textAlign: 'center',
+		textAlign: 'justify',
 		fontSize: 18,
 		marginHorizontal: 20,
+	},
+	link: {
+		textDecorationLine: 'underline',
+		fontSize: 20,
+		margin: 20,
 	},
 	camera: {
 		flex: 1,

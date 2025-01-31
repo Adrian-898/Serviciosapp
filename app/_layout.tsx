@@ -36,6 +36,8 @@ const RootLayout = () => {
 
 	// carga el usuario al iniciar la app
 	useEffect(() => {
+		// console.log('Inicio useEffect: getUser');
+
 		const getUser = async () => {
 			try {
 				const user = await loadUser();
@@ -47,7 +49,7 @@ const RootLayout = () => {
 			}
 		};
 		getUser();
-	}, []);
+	}, [setUser]);
 
 	console.log('Status: ', status);
 

@@ -124,7 +124,7 @@ const Map = () => {
 			setDestination(newDestination);
 			setDrawRoute(true);
 		} else {
-			Alert.alert('Oops!', 'Ya existe esta ruta en el mapa...');
+			Alert.alert('Error', 'Ya existe esta ruta en el mapa...');
 		}
 	};
 
