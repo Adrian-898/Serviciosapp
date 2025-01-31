@@ -1,13 +1,11 @@
 import 'expo-dev-client';
 import { useState, useEffect } from 'react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { QueryClient, QueryClientProvider, focusManager } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PaperProvider } from 'react-native-paper';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { Platform, type AppStateStatus } from 'react-native';
 import { useColorScheme } from 'react-native';
-import useAppState from '@/hooks/useAppState';
 import useOnlineManager from '@/hooks/useOnlineManager';
 import { AuthContextProvider, useAuthContext } from '@/contexts/AuthContext';
 import { loadUser } from '@/services/AuthService';
@@ -17,15 +15,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 // Previene al splash screen de ocultarse antes de que los recursos esten cargados.
 SplashScreen.preventAutoHideAsync();
 
-function onAppStateChange(status: AppStateStatus) {
-	// React Query ya soporta el refetch al reconectarse en web
-	if (Platform.OS !== 'web') {
-		focusManager.setFocused(status === 'active');
-	}
-}
-
 const RootLayout = () => {
-	useAppState(onAppStateChange);
 	useOnlineManager();
 	const { user, setUser } = useAuthContext();
 	const colorScheme = useColorScheme();
@@ -46,7 +36,7 @@ const RootLayout = () => {
 
 	// carga el usuario al iniciar la app
 	useEffect(() => {
-		const runEffect = async () => {
+		const getUser = async () => {
 			try {
 				const user = await loadUser();
 				setUser(user);
@@ -56,7 +46,7 @@ const RootLayout = () => {
 				console.error(error + ' Mensaje: ' + getErrorMessage(error));
 			}
 		};
-		runEffect();
+		getUser();
 	}, []);
 
 	console.log('Status: ', status);

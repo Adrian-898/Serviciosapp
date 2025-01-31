@@ -1,19 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import {
-	SafeAreaView,
-	useWindowDimensions,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	useColorScheme,
-	AppState,
-} from 'react-native';
+import { useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocationPermission from '@/hooks/useLocationPermission';
+import useAppState from '@/hooks/useAppState';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
@@ -44,7 +37,8 @@ const lugares: Lugar[] = [
 
 // componente principal
 const Map = () => {
-	const colorScheme = useColorScheme();
+	// detecta el cambio de estado de la aplicacion
+	const appState = useAppState();
 
 	// Clave de API de google maps, se usa para trazar rutas en el mapa
 	const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY!;
@@ -75,7 +69,7 @@ const Map = () => {
 	// estado de trazado de ruta del usuario a un lugar determinado (activo o no)
 	const [drawRoute, setDrawRoute] = useState(false);
 
-	// funcion para checkear si esta activa la ubicacion
+	// funcion para checkear si esta activa la ubicacion en el dispositivo
 	const checkServices = async () => {
 		try {
 			let enabled = await Location.hasServicesEnabledAsync();
@@ -93,7 +87,18 @@ const Map = () => {
 		}
 	};
 
-	// detecta cuando se navega fuera de la pantalla actual (map pasa a 'blur')
+	// ejecuta checkServices() antes de montar el componente
+	useLayoutEffect(() => {
+		checkServices();
+	}, []);
+
+	// detecta cuando cambia el estado de la aplicacion y ejecuta CheckServices()
+	useEffect(() => {
+		console.log(appState);
+		checkServices();
+	}, [appState]);
+
+	// detecta cuando se navega fuera del componente actual <Map> (map pasa a 'blur') y ejecuta checkServices()
 	useEffect(() => {
 		let unsubscribe = navigation.addListener('blur', () => {
 			console.log('map screen blurred');
@@ -102,21 +107,6 @@ const Map = () => {
 		});
 		return unsubscribe;
 	}, [navigation]);
-
-	// detecta cuando se navega fuera de la App (la App pasa a segundo plano) y cuando vuelve a primer plano
-	useEffect(() => {
-		const appStateListener = AppState.addEventListener('change', (nextAppState) => {
-			console.log('AppState changed to: ', nextAppState);
-
-			if (nextAppState === 'background' || nextAppState === 'active') {
-				checkServices();
-			}
-		});
-
-		return () => {
-			appStateListener.remove();
-		};
-	}, []);
 
 	// boton para trazar rutas
 	const DrawRouteButton = () => {
@@ -146,7 +136,7 @@ const Map = () => {
 		}
 	};
 
-	// componente Pin en el mapa
+	// componente Pin en el mapa, el useCallback reutiliza la funcion para evitar re-renderizar el componente siempre y cuando no cambie la lista de marcadores [points]
 	const MarkerComponent = useCallback(
 		({ lugar }: { lugar: Lugar }) => (
 			<Marker
@@ -178,7 +168,7 @@ const Map = () => {
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
 	const AlertaPermisos = () => {
 		return (
-			<ThemedView style={colorScheme === 'light' ? styles.alertContainer : styles.alertContainerDark}>
+			<ThemedView style={styles.alertContainer}>
 				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
 				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
 					Parece que los permisos de ubicación fueron negados, otorga los permisos y reinicia la App si deseas
@@ -191,11 +181,11 @@ const Map = () => {
 	// Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
 	const AlertaUbicacionActivada = () => {
 		return (
-			<ThemedView style={colorScheme === 'light' ? styles.alertContainer : styles.alertContainerDark}>
+			<ThemedView style={styles.alertContainer}>
 				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
 				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-					La ubicación en tu dispositivo parece estar desactivada, actívala y reinicia la App si deseas
-					conocer tu ubicación actual y/o trazar una ruta...
+					La ubicación en tu dispositivo parece estar desactivada, actívala y carga el mapa nuevamente si
+					deseas conocer tu ubicación actual y/o trazar una ruta...
 				</ThemedText>
 			</ThemedView>
 		);
@@ -258,7 +248,7 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
-				!servicesEnabled && location.permissionGranted && !drawRoute && <AlertaUbicacionActivada />
+				!servicesEnabled && location.permissionGranted && <AlertaUbicacionActivada />
 			}
 		</SafeAreaView>
 	);
@@ -269,18 +259,6 @@ const styles = StyleSheet.create({
 		paddingTop: Constants.statusBarHeight,
 	},
 	alertContainer: {
-		flexDirection: 'row',
-		position: 'absolute',
-		alignItems: 'center',
-		alignSelf: 'center',
-		maxWidth: '98%',
-		maxHeight: '30%',
-		borderRadius: 10,
-		bottom: 50,
-		paddingRight: 10,
-	},
-	alertContainerDark: {
-		backgroundColor: '#222',
 		flexDirection: 'row',
 		position: 'absolute',
 		alignItems: 'center',
