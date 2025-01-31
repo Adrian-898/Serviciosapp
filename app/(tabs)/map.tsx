@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useLayoutEffect } from 'react';
-import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -124,7 +124,7 @@ const Map = () => {
 			setDestination(newDestination);
 			setDrawRoute(true);
 		} else {
-			console.log('Ya existe esta ruta en el mapa...');
+			Alert.alert('Oops!', 'Ya existe esta ruta en el mapa...');
 		}
 	};
 
