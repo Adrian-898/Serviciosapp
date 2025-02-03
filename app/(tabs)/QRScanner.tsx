@@ -1,22 +1,19 @@
-import { useState, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Alert } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
-import { CameraView, type BarcodeScanningResult } from 'expo-camera';
-import * as Linking from 'expo-linking';
+import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import QRInput from '@/components/QRInput';
-import useCamera from '@/hooks/useCamera';
 import * as WebBrowser from 'expo-web-browser';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { useIsFocused } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
-import Loading from '@/components/LoadingState';
 
 const QRScanner = () => {
-	// estado de permisos de uso de camara, se solicitan permisos cuando se abre la app y cuando cambia el estado
-	const permission = useCamera();
+	// Hook para solicitar y obtener estado de los permisos de uso de la cámara.
+	const [permission, requestPermission] = useCameraPermissions();
 
 	// estado de la pantalla activa o no, se usa para el renderizado condicional de la camara (Solo si esta el usuario en la pantalla de QRScanner)
 	const isFocused = useIsFocused();
@@ -29,6 +26,11 @@ const QRScanner = () => {
 
 	// estado de visibilidad del input manual de datos
 	const [inputState, setInputState] = useState<boolean>(false);
+
+	// solicita permisos de uso de camara al cargar el componente
+	useEffect(() => {
+		requestPermission();
+	}, []);
 
 	// funcion ejecutada al leer un QR
 	const handleBarCodeScanned = async (Scan: BarcodeScanningResult) => {
@@ -46,22 +48,12 @@ const QRScanner = () => {
 		}
 	};
 
-	// funcion para abrir la configuracion de la app
-	const handleSettings = async () => {
-		try {
-			await Linking.openSettings();
-		} catch (error) {
-			console.warn(error + ' Mensaje: ' + getErrorMessage(error));
-			Alert.alert('Error', 'No se pudo abrir la configuración de la app, por favor intente manualmente.');
-		}
-	};
-
 	// boton para abrir la ventana de ingresar datos manualmente
 	const InputButton = () => {
 		return (
 			<Icon
-				name='form-textbox'
-				color={'white'}
+				name={!inputState ? 'form-textbox' : 'form-textbox-lock'}
+				color={!inputState ? 'white' : 'lightblue'}
 				size={60}
 				onPress={() => setInputState(true)}
 				style={styles.inputButton}
@@ -73,8 +65,8 @@ const QRScanner = () => {
 	const TorchButton = () => {
 		return (
 			<Icon
-				name='flashlight'
-				color={'white'}
+				name={!torch ? 'flashlight' : 'flashlight-off'}
+				color={!torch ? 'white' : 'lightblue'}
 				size={60}
 				onPress={() => setTorch(!torch)}
 				style={styles.torchButton}
@@ -92,24 +84,24 @@ const QRScanner = () => {
 	};
 
 	// si se niega el permiso de uso de la camara o no se responde a la solicitud se muestra el mensaje siguiente
-	if (!permission || !permission.granted) {
+	if (!permission || permission.status !== 'granted') {
 		return (
 			<ThemedView style={styles.container}>
 				<ThemedView style={styles.centered}>
 					<ThemedText style={styles.message} adjustsFontSizeToFit>
 						No hubo respuesta a la solicitud de permisos o se ha negado la misma, para usar la cámara, puede
-						conceder los permisos de uso en la configuración de la App, o puede ingresar manualmente los
-						datos con el botón en la esquina inferior derecha.
+						conceder los permisos de uso, o puede ingresar manualmente los datos con el botón en la esquina
+						inferior derecha.
 					</ThemedText>
 
 					<ThemedText
 						type='link'
 						style={styles.link}
 						onPress={() => {
-							handleSettings();
+							requestPermission();
 						}}
 					>
-						Ir a configuración
+						Conceder permisos
 					</ThemedText>
 				</ThemedView>
 
@@ -128,37 +120,35 @@ const QRScanner = () => {
 	// al aceptar permisos de uso de camara se carga la misma con los demas componentes.
 	return (
 		<SafeAreaView style={styles.container}>
-			<Suspense fallback={<Loading />}>
-				{isFocused && (
-					<CameraView
-						style={styles.camera}
-						autofocus='on'
-						enableTorch={torch}
-						onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-						barcodeScannerSettings={{
-							barcodeTypes: ['qr'],
-						}}
-					/>
-				)}
+			{isFocused && (
+				<CameraView
+					style={styles.camera}
+					autofocus='on'
+					enableTorch={torch}
+					onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+					barcodeScannerSettings={{
+						barcodeTypes: ['qr'],
+					}}
+				/>
+			)}
 
-				<View style={styles.back}>
-					<Text style={styles.title}>Escanea un código QR</Text>
+			<View style={styles.titleContainer}>
+				<Text style={styles.title}>Escanea un código QR</Text>
+			</View>
+
+			<View style={styles.footer}>
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+					<TorchButton />
+					<InputButton />
 				</View>
+				{scanned && <ScanAgainButton />}
+			</View>
 
-				<View style={styles.footer}>
-					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-						<TorchButton />
-						<InputButton />
-					</View>
-					{scanned && <ScanAgainButton />}
-				</View>
-
-				<Portal>
-					<Modal visible={inputState}>
-						<QRInput onClose={() => setInputState(false)} />
-					</Modal>
-				</Portal>
-			</Suspense>
+			<Portal>
+				<Modal visible={inputState}>
+					<QRInput onClose={() => setInputState(false)} />
+				</Modal>
+			</Portal>
 		</SafeAreaView>
 	);
 };
@@ -187,7 +177,7 @@ const styles = StyleSheet.create({
 	camera: {
 		flex: 1,
 	},
-	back: {
+	titleContainer: {
 		marginTop: Constants.statusBarHeight,
 		position: 'absolute',
 		backgroundColor: 'black',
