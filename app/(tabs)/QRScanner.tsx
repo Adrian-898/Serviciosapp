@@ -137,7 +137,7 @@ const QRScanner = () => {
 			</View>
 
 			<View style={styles.footer}>
-				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<View style={styles.buttonContainer}>
 					<TorchButton />
 					<InputButton />
 				</View>
@@ -199,6 +199,10 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		padding: 20,
+	},
+	buttonContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	torchButton: {
 		backgroundColor: 'black',
