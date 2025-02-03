@@ -108,7 +108,7 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
-	// boton para trazar rutas
+	// boton para trazar rutas:
 	const DrawRouteButton = () => {
 		return (
 			<TouchableOpacity style={styles.button} onPress={DrawRouteButtonPress}>
@@ -117,7 +117,7 @@ const Map = () => {
 		);
 	};
 
-	// al presionar el boton para trazar rutas
+	// al presionar el boton para trazar rutas:
 	const DrawRouteButtonPress = () => {
 		setDrawRouteButton(false);
 		if (destination !== newDestination) {
@@ -125,14 +125,6 @@ const Map = () => {
 			setDrawRoute(true);
 		} else {
 			Alert.alert('Error', 'Ya existe esta ruta en el mapa...');
-		}
-	};
-
-	// al presionar un marcador
-	const MarkerPress = (lugar: Lugar) => {
-		if (!destination || destination.id !== lugar.id) {
-			setNewDestination(lugar);
-			setDrawRouteButton(true);
 		}
 	};
 
@@ -164,6 +156,14 @@ const Map = () => {
 		),
 		[points],
 	);
+
+	// al presionar un marcador:
+	const MarkerPress = (lugar: Lugar) => {
+		if (!destination || destination.id !== lugar.id) {
+			setNewDestination(lugar);
+			setDrawRouteButton(true);
+		}
+	};
 
 	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
 	const AlertaPermisos = () => {
