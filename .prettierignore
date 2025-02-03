@@ -1,5 +1,6 @@
 .expo/
 expo-env.d.ts
+.vscode
 .env
 .gitignore
 .eslintignore

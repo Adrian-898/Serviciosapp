@@ -5,8 +5,9 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import useLocationPermission from '@/hooks/useLocationPermission';
+import useLocation from '@/hooks/useLocation';
 import useAppState from '@/hooks/useAppState';
+import * as Linking from 'expo-linking';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
@@ -51,7 +52,7 @@ const Map = () => {
 	const navigation = useNavigation();
 
 	// hook usado para permisos de ubicacion y geolocalizacion del ususario
-	const location = useLocationPermission();
+	const location = useLocation();
 
 	// indica si esta activa la ubicacion en el dispositivo
 	const [servicesEnabled, setServicesEnabled] = useState<boolean | null>(null);
@@ -95,6 +96,7 @@ const Map = () => {
 	// detecta cuando cambia el estado de la aplicacion y ejecuta CheckServices()
 	useEffect(() => {
 		console.log(appState);
+
 		checkServices();
 	}, [appState]);
 
@@ -170,9 +172,20 @@ const Map = () => {
 		return (
 			<ThemedView style={styles.alertContainer}>
 				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
+
 				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-					Parece que los permisos de ubicación fueron negados, otorga los permisos y reinicia la App si deseas
-					ver tu ubicación o trazar una ruta...
+					Parece que los permisos de ubicación fueron negados, otorga los permisos para acceder a las
+					funciones del mapa...{'\n'}
+					<ThemedText
+						type='link'
+						style={{ fontSize: 20, textDecorationLine: 'underline' }}
+						onPress={async () => {
+							await location.getLocationPermission();
+						}}
+						adjustsFontSizeToFit
+					>
+						Conceder permisos
+					</ThemedText>
 				</ThemedText>
 			</ThemedView>
 		);
