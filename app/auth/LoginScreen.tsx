@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		paddingHorizontal: 20,
 		marginBottom: 15,
+		elevation: 5,
 		backgroundColor: '#fff',
 	},
 	errorText: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
 		borderColor: '#999',
 		borderRadius: 10,
 		marginTop: 10,
-		elevation: 5,
+		elevation: 10,
 	},
 	buttonText: {
 		color: '#fff',

@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 		shadowColor: 'black',
 		shadowOpacity: 5,
 		shadowRadius: 20,
-		elevation: 5,
+		elevation: 10,
 		width: '50%',
 	},
 	buttonText: {

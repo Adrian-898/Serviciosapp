@@ -7,16 +7,12 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import QRInput from '@/components/QRInput';
 import * as WebBrowser from 'expo-web-browser';
 import getErrorMessage from '@/utils/getErrorMessage';
-import { useIsFocused } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
 const QRScanner = () => {
 	// Hook para solicitar y obtener estado de los permisos de uso de la cámara.
 	const [permission, requestPermission] = useCameraPermissions();
-
-	// estado de la pantalla activa o no, se usa para el renderizado condicional de la camara (Solo si esta el usuario en la pantalla de QRScanner)
-	const isFocused = useIsFocused();
 
 	// estado de escaneo de QR, se usa para mostrar el botón de escaneo de nuevo
 	const [scanned, setScanned] = useState<boolean>(false);
@@ -120,17 +116,15 @@ const QRScanner = () => {
 	// al aceptar permisos de uso de camara se carga la misma con los demas componentes.
 	return (
 		<SafeAreaView style={styles.container}>
-			{isFocused && (
-				<CameraView
-					style={styles.camera}
-					autofocus='on'
-					enableTorch={torch}
-					onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-					barcodeScannerSettings={{
-						barcodeTypes: ['qr'],
-					}}
-				/>
-			)}
+			<CameraView
+				style={styles.camera}
+				autofocus='on'
+				enableTorch={torch}
+				onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+				barcodeScannerSettings={{
+					barcodeTypes: ['qr'],
+				}}
+			/>
 
 			<View style={styles.titleContainer}>
 				<Text style={styles.title}>Escanea un código QR</Text>

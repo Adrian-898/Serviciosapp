@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import { useState } from 'react';
 import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
@@ -9,7 +9,6 @@ import LinkButton from '@/components/LinkButton';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 // import useAuthContext from '@/contexts/AuthContext';
-import Loading from '@/components/LoadingState';
 
 const Home = () => {
 	// Navegacion con expo-router
@@ -43,36 +42,34 @@ const Home = () => {
 			</View>
 
 			<ScrollView contentContainerStyle={styles.container2}>
-				<Suspense fallback={<Loading />}>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='emergency' size={40} color={'black'} style={styles.icon} />
-						<LinkButton title='Emergencias' url='https://www.google.com' />
-					</ThemedView>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='directions-car' size={40} style={styles.icon} />
-						<LinkButton title='Parquímetro' url='https://www.google.com' />
-					</ThemedView>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='electrical-services' size={40} style={styles.icon} />
-						<LinkButton title='Servicios' url='https://www.google.com' />
-					</ThemedView>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='currency-exchange' size={40} style={styles.icon} />
-						<LinkButton title='Comercio' url='https://www.google.com' />
-					</ThemedView>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='crisis-alert' size={40} style={styles.icon} />
-						<LinkButton title='Denuncias' url='https://www.google.com' />
-					</ThemedView>
-					<ThemedView style={styles.buttonContainer}>
-						<Icon name='report-gmailerrorred' size={40} style={styles.icon} />
-						<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
-							<Text style={styles.text} adjustsFontSizeToFit>
-								Multas
-							</Text>
-						</TouchableOpacity>
-					</ThemedView>
-				</Suspense>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='emergency' size={40} color={'black'} style={styles.icon} />
+					<LinkButton title='Emergencias' url='https://www.google.com' />
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='directions-car' size={40} style={styles.icon} />
+					<LinkButton title='Parquímetro' url='https://www.google.com' />
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='electrical-services' size={40} style={styles.icon} />
+					<LinkButton title='Servicios' url='https://www.google.com' />
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='currency-exchange' size={40} style={styles.icon} />
+					<LinkButton title='Comercio' url='https://www.google.com' />
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='crisis-alert' size={40} style={styles.icon} />
+					<LinkButton title='Denuncias' url='https://www.google.com' />
+				</ThemedView>
+				<ThemedView style={styles.buttonContainer}>
+					<Icon name='report-gmailerrorred' size={40} style={styles.icon} />
+					<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
+						<Text style={styles.text} adjustsFontSizeToFit>
+							Multas
+						</Text>
+					</TouchableOpacity>
+				</ThemedView>
 			</ScrollView>
 		</ThemedView>
 	);
