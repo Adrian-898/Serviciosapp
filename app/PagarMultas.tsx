@@ -81,7 +81,7 @@ const PagarMultas = () => {
 	}, [itemsPerPage]);
 
 	if (!isOnline) {
-		return <Loading></Loading>;
+		return <Loading />;
 	}
 
 	if (!data) return;
@@ -90,8 +90,8 @@ const PagarMultas = () => {
 	const to = Math.min((page + 1) * itemsPerPage, data.length);
 
 	return (
-		<ThemedView style={styles.container}>
-			<Suspense fallback={<Loading />}>
+		<Suspense fallback={<Loading />}>
+			<ThemedView style={styles.container}>
 				<DataTable>
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<ThemedView style={styles.header}>
@@ -143,8 +143,8 @@ const PagarMultas = () => {
 						/>
 					</ScrollView>
 				</DataTable>
-			</Suspense>
-		</ThemedView>
+			</ThemedView>
+		</Suspense>
 	);
 };
 
