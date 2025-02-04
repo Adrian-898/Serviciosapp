@@ -8,6 +8,7 @@ import { DataTable } from 'react-native-paper';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import getErrorMessage from '../utils/getErrorMessage';
+import { useNetInfo } from '@react-native-community/netinfo';
 import axios from 'axios';
 import Loading from '@/components/LoadingState';
 
@@ -37,6 +38,9 @@ type User = {
 };
 
 const PagarMultas = () => {
+	// detecta el estado de la conexion a internet
+	const isOnline = useNetInfo().isConnected;
+
 	// Configuracion del componente DataTable
 	const [page, setPage] = useState<number>(0);
 	const [numberOfItemsPerPageList] = useState([1, 2, 5, 10]);
@@ -75,6 +79,10 @@ const PagarMultas = () => {
 	useEffect(() => {
 		setPage(0);
 	}, [itemsPerPage]);
+
+	if (!isOnline) {
+		return <Loading></Loading>;
+	}
 
 	if (!data) return;
 
