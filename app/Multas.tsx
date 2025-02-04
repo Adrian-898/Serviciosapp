@@ -32,7 +32,7 @@ const Multas = () => {
 					onSubmit={(value) => {
 						console.log(value);
 						router.push({
-							pathname: '/pagarMultas',
+							pathname: '/consultarMultas',
 							params: { cedula: value.cedula },
 						});
 					}}

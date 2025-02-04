@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import Constants from 'expo-constants';
@@ -9,8 +9,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import getErrorMessage from '../utils/getErrorMessage';
 import axios from 'axios';
-import NetworkAwareReset from '@/components/NetworkAwareReset';
-import Loading from '@/components/LoadingState';
+import LoadingState from '@/components/LoadingState';
 
 // tipo de dato User de prueba
 type User = {
@@ -48,8 +47,11 @@ const PagarMultas = () => {
 
 	// guarda los datos consultados a la API
 	const [data, setData] = useState<User[] | null>(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		if (loading || !data) return;
+
 		// activa el modo Landscape al entrar en la pantalla para ver la tabla con los datos
 		ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
@@ -57,17 +59,21 @@ const PagarMultas = () => {
 		return () => {
 			ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 		};
-	}, []);
+	}, [loading, data]);
 
 	useEffect(() => {
 		// GET a la API para obtener los datos...
 		const listUsers = async () => {
 			try {
+				setLoading(true);
 				// consulta de prueba
 				const response = await axios.get('https://jsonplaceholder.typicode.com/users');
 				setData(response.data);
 			} catch (error) {
 				console.error('Ha ocurrido un error: ', getErrorMessage(error));
+				setData(null);
+			} finally {
+				setLoading(false);
 			}
 		};
 		listUsers();
@@ -77,69 +83,65 @@ const PagarMultas = () => {
 		setPage(0);
 	}, [itemsPerPage]);
 
-	if (!data) return;
+	if (loading || !data) return <LoadingState />;
 
 	const from = page * itemsPerPage;
 	const to = Math.min((page + 1) * itemsPerPage, data.length);
 
 	return (
-		<NetworkAwareReset>
-			<Suspense fallback={<Loading />}>
-				<ThemedView style={styles.container}>
-					<DataTable>
-						<ScrollView showsVerticalScrollIndicator={false}>
-							<ThemedView style={styles.header}>
-								<ThemedText type='defaultSemiBold'>Multas de: {params.cedula}</ThemedText>
-							</ThemedView>
+		<ThemedView style={styles.container}>
+			<DataTable>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<ThemedView style={styles.header}>
+						<ThemedText type='defaultSemiBold'>Multas de: {params.cedula}</ThemedText>
+					</ThemedView>
 
-							<DataTable.Header>
-								<DataTable.Title style={styles.title}>Descripción</DataTable.Title>
-								<DataTable.Title style={styles.title}>Fecha</DataTable.Title>
-								<DataTable.Title style={styles.title}>Estatus</DataTable.Title>
-								<DataTable.Title style={styles.title}>Pagar</DataTable.Title>
-							</DataTable.Header>
+					<DataTable.Header>
+						<DataTable.Title style={styles.title}>Descripción</DataTable.Title>
+						<DataTable.Title style={styles.title}>Fecha</DataTable.Title>
+						<DataTable.Title style={styles.title}>Estatus</DataTable.Title>
+						<DataTable.Title style={styles.title}>Pagar</DataTable.Title>
+					</DataTable.Header>
 
-							{data.slice(from, to).map((item) => (
-								<DataTable.Row key={item.id}>
-									<DataTable.Cell style={styles.cell}>{item.name}</DataTable.Cell>
-									<DataTable.Cell style={styles.cell}>{item.phone}</DataTable.Cell>
-									<DataTable.Cell style={styles.cell}>{item.id}</DataTable.Cell>
-									<DataTable.Cell style={styles.cell}>
-										<IconButton
-											mode='contained'
-											size={30}
-											icon='receipt'
-											rippleColor='#001f7e'
-											onPress={() => console.log('Pagar')}
-										/>
-									</DataTable.Cell>
-								</DataTable.Row>
-							))}
+					{data.slice(from, to).map((item) => (
+						<DataTable.Row key={item.id}>
+							<DataTable.Cell style={styles.cell}>{item.name}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>{item.phone}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>{item.id}</DataTable.Cell>
+							<DataTable.Cell style={styles.cell}>
+								<IconButton
+									mode='contained'
+									size={30}
+									icon='receipt'
+									rippleColor='#001f7e'
+									onPress={() => console.log('Pagar')}
+								/>
+							</DataTable.Cell>
+						</DataTable.Row>
+					))}
 
-							<DataTable.Pagination
-								theme={{
-									roundness: 5,
-								}}
-								page={page}
-								numberOfPages={Math.ceil(data.length / itemsPerPage)}
-								onPageChange={(page) => setPage(page)}
-								label={`${from + 1}-${to} de ${data.length}`}
-								numberOfItemsPerPageList={numberOfItemsPerPageList}
-								numberOfItemsPerPage={itemsPerPage}
-								onItemsPerPageChange={onItemsPerPageChange}
-								showFastPaginationControls
-								selectPageDropdownLabel={'Filas por página'}
-								selectPageDropdownRippleColor={'#001f7e'}
-								paginationControlRippleColor={'#001f7e'}
-								dropdownItemRippleColor={'#001f7e'}
-								collapsable={false}
-								style={styles.pagination}
-							/>
-						</ScrollView>
-					</DataTable>
-				</ThemedView>
-			</Suspense>
-		</NetworkAwareReset>
+					<DataTable.Pagination
+						theme={{
+							roundness: 5,
+						}}
+						page={page}
+						numberOfPages={Math.ceil(data.length / itemsPerPage)}
+						onPageChange={(page) => setPage(page)}
+						label={`${from + 1}-${to} de ${data.length}`}
+						numberOfItemsPerPageList={numberOfItemsPerPageList}
+						numberOfItemsPerPage={itemsPerPage}
+						onItemsPerPageChange={onItemsPerPageChange}
+						showFastPaginationControls
+						selectPageDropdownLabel={'Filas por página'}
+						selectPageDropdownRippleColor={'#001f7e'}
+						paginationControlRippleColor={'#001f7e'}
+						dropdownItemRippleColor={'#001f7e'}
+						collapsable={false}
+						style={styles.pagination}
+					/>
+				</ScrollView>
+			</DataTable>
+		</ThemedView>
 	);
 };
 

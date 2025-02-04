@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { ThemedView } from './ThemedView';
-import LoadingState from './LoadingState';
 
 /*
 children: componente a remontar
@@ -20,10 +19,10 @@ const NetworkAwareReset = ({ children, onReconnect }: NetworkAwareResetProps) =>
 
 	// calcula el estado actual de la conexion a internet
 	const netInfo = useNetInfo();
-	const isOnline = netInfo.isInternetReachable && netInfo.isConnected;
+	const isOnline = !!netInfo.isInternetReachable && !!netInfo.isConnected;
 
 	useEffect(() => {
-		if (isOnline === true) {
+		if (isOnline) {
 			// al reconectarse se vuelve a montar el componente (children) por el cambio en el valor de key
 			setKey((prev) => prev + 1);
 
@@ -31,8 +30,6 @@ const NetworkAwareReset = ({ children, onReconnect }: NetworkAwareResetProps) =>
 			onReconnect?.();
 		}
 	}, [isOnline, onReconnect]);
-
-	if (!netInfo.isInternetReachable) return <LoadingState />;
 
 	return (
 		<ThemedView key={key} style={styles.container}>
