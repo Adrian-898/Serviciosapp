@@ -7,7 +7,6 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import useLocation from '@/hooks/useLocation';
 import useAppState from '@/hooks/useAppState';
-import * as Linking from 'expo-linking';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
