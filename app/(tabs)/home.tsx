@@ -63,7 +63,7 @@ const Home = () => {
 					<LinkButton title='Denuncias' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
-					<Icon name='report-gmailerrorred' size={40} style={styles.icon} />
+					<Icon name='taxi-alert' size={40} style={styles.icon} />
 					<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
 						<Text style={styles.text} adjustsFontSizeToFit>
 							Multas

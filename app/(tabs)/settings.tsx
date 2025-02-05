@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Icon from '@expo/vector-icons/Ionicons';
+import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import SettingsButton from '@/components/SettingsButton';
 import getErrorMessage from '@/utils/getErrorMessage';
 // import { useRouter } from "expo-router";
 import { logout } from '@/services/AuthService';
@@ -26,23 +26,20 @@ const Settings = () => {
 			<ThemedText type='title' style={styles.header}>
 				Configuración
 			</ThemedText>
-			<TouchableOpacity style={styles.option}>
-				<Icon name='person' size={40} color='#0caf50' />
-				<Text style={styles.optionText}>Cuenta</Text>
-				<Icon name='arrow-forward' size={30} color='black' style={styles.optionIcon} />
-			</TouchableOpacity>
 
-			<TouchableOpacity style={styles.option}>
-				<Icon name='information-circle' size={40} color='#001f7e' />
-				<Text style={styles.optionText}>Sobre nosotros</Text>
-				<Icon name='arrow-forward' size={30} color='black' style={styles.optionIcon} />
-			</TouchableOpacity>
-
-			<TouchableOpacity style={styles.option} onPress={handleLogout}>
-				<Icon name='log-out' size={40} color='#d00b27' />
-				<Text style={styles.optionText}>Cerrar sesión</Text>
-				<Icon name='arrow-forward' size={30} color='black' style={styles.optionIcon} />
-			</TouchableOpacity>
+			<SettingsButton iconName='person' iconColor='#0caf50' text='Usuario' onPress={() => {}} />
+			<SettingsButton
+				iconName='information-circle'
+				iconColor='#001f7e'
+				text='Sobre nosotros'
+				onPress={() => {}}
+			/>
+			<SettingsButton
+				iconName='log-out'
+				iconColor='#d00b27'
+				text='Cerrar sesión'
+				onPress={() => handleLogout()}
+			/>
 		</ThemedView>
 	);
 };
@@ -55,24 +52,6 @@ const styles = StyleSheet.create({
 	header: {
 		marginVertical: 20,
 		textAlign: 'center',
-	},
-	option: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		padding: 10,
-		borderRadius: 10,
-		backgroundColor: 'white',
-		marginBottom: 20,
-		elevation: 10,
-	},
-	optionText: {
-		flex: 1,
-		fontSize: 18,
-		marginLeft: 10,
-		color: 'black',
-	},
-	optionIcon: {
-		marginLeft: 'auto',
 	},
 });
 
