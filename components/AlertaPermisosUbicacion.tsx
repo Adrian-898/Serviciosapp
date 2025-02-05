@@ -4,13 +4,24 @@ import { ThemedText } from './ThemedText';
 import Icon from '@expo/vector-icons/FontAwesome';
 
 // Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
-const AlertaUbicacionInactiva = () => {
+const AlertaPermisosUbicacion = ({ onPress }: { onPress: () => void }) => {
 	return (
 		<ThemedView style={styles.alertContainer}>
 			<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
+
 			<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-				La ubicación en tu dispositivo parece estar desactivada, actívala y carga el mapa nuevamente si deseas
-				conocer tu ubicación actual y/o trazar una ruta...
+				Parece que los permisos de ubicación fueron negados, otorga los permisos para acceder a las funciones
+				del mapa...{'\n'}
+				<ThemedText
+					type='link'
+					style={{ fontSize: 20, textDecorationLine: 'underline' }}
+					onPress={() => {
+						onPress();
+					}}
+					adjustsFontSizeToFit
+				>
+					Conceder permisos
+				</ThemedText>
 			</ThemedText>
 		</ThemedView>
 	);
@@ -32,4 +43,4 @@ const styles = StyleSheet.create({
 	alertMessage: { flex: 1 },
 });
 
-export default AlertaUbicacionInactiva;
+export default AlertaPermisosUbicacion;

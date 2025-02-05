@@ -5,10 +5,9 @@ import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import useLocation from '@/hooks/useLocation';
 import useAppState from '@/hooks/useAppState';
+import AlertaPermisosUbicacion from '@/components/AlertaPermisosUbicacion';
 import AlertaUbicacionInactiva from '@/components/AlertaUbicacionInactiva';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { type Lugar, type Region } from '@/utils/types';
@@ -92,18 +91,14 @@ const Map = () => {
 		checkServices();
 	}, []);
 
-	// detecta cuando cambia el estado de la aplicacion y ejecuta CheckServices()
+	// ejecuta checkServices() cuando el estado de los permisos cambie o el estado de la aplicacion cambie
 	useEffect(() => {
-		console.log(appState);
-
 		checkServices();
-	}, [appState]);
+	}, [appState, location.permissionGranted]);
 
 	// detecta cuando se navega fuera del componente actual <Map> (map pasa a 'blur') y ejecuta checkServices()
 	useEffect(() => {
 		let unsubscribe = navigation.addListener('blur', () => {
-			console.log('map screen blurred');
-
 			checkServices();
 		});
 		return unsubscribe;
@@ -166,30 +161,6 @@ const Map = () => {
 		}
 	};
 
-	// Mensaje de alerta cuando no hay permisos de uso de ubicacion
-	const AlertaPermisos = () => {
-		return (
-			<ThemedView style={styles.alertContainer}>
-				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
-
-				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-					Parece que los permisos de ubicación fueron negados, otorga los permisos para acceder a las
-					funciones del mapa...{'\n'}
-					<ThemedText
-						type='link'
-						style={{ fontSize: 20, textDecorationLine: 'underline' }}
-						onPress={async () => {
-							await location.getLocationPermission();
-						}}
-						adjustsFontSizeToFit
-					>
-						Conceder permisos
-					</ThemedText>
-				</ThemedText>
-			</ThemedView>
-		);
-	};
-
 	// renderiza el mapa y demas componentes
 	return (
 		<SafeAreaView style={styles.container}>
@@ -208,6 +179,7 @@ const Map = () => {
 				showsScale={false}
 				showsIndoorLevelPicker={false}
 				showsTraffic={false}
+				onMapLoaded={() => checkServices()}
 				mapPadding={{ bottom: 50, left: 0, right: 0, top: 0 }}
 				initialRegion={initialRegion}
 				region={location.origin}
@@ -243,7 +215,13 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
-				!location.permissionGranted && <AlertaPermisos />
+				!location.permissionGranted && (
+					<AlertaPermisosUbicacion
+						onPress={async () => {
+							await location.getLocationPermission();
+						}}
+					/>
+				)
 			}
 			{
 				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
@@ -256,17 +234,6 @@ const Map = () => {
 const styles = StyleSheet.create({
 	container: {
 		paddingTop: Constants.statusBarHeight,
-	},
-	alertContainer: {
-		flexDirection: 'row',
-		position: 'absolute',
-		alignItems: 'center',
-		alignSelf: 'center',
-		maxWidth: '98%',
-		maxHeight: '30%',
-		borderRadius: 10,
-		bottom: 50,
-		paddingRight: 10,
 	},
 	button: {
 		position: 'absolute',
@@ -285,8 +252,6 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: 'bold',
 	},
-	alertIcon: { margin: 10 },
-	alertMessage: { flex: 1 },
 });
 
 export default Map;
