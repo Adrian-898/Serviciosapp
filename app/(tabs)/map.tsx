@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useCallback } from 'react';
-import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, useWindowDimensions, Text, StyleSheet, Alert } from 'react-native';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
@@ -9,6 +9,7 @@ import useLocation from '@/hooks/useLocation';
 import useAppState from '@/hooks/useAppState';
 import AlertaPermisosUbicacion from '@/components/AlertaPermisosUbicacion';
 import AlertaUbicacionInactiva from '@/components/AlertaUbicacionInactiva';
+import DrawRouteButton from '@/components/DrawRouteButton';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { type Lugar, type Region } from '@/utils/types';
 
@@ -59,8 +60,8 @@ const Map = () => {
 	const [points, setPoints] = useState(lugares);
 
 	// destino establecido al que ir, una vez se selecciona un marcador
-	const [destination, setDestination] = useState<Lugar | undefined>();
-	const [newDestination, setNewDestination] = useState<Lugar | undefined>();
+	const [destination, setDestination] = useState<Lugar>();
+	const [newDestination, setNewDestination] = useState<Lugar>();
 
 	// estado visual (mostrado o no segun se toque un marcador del mapa) del boton para trazar ruta del usuario a un lugar determinado
 	const [drawRouteButton, setDrawRouteButton] = useState(false);
@@ -104,26 +105,6 @@ const Map = () => {
 		return unsubscribe;
 	}, [navigation]);
 
-	// boton para trazar rutas:
-	const DrawRouteButton = () => {
-		return (
-			<TouchableOpacity style={styles.button} onPress={DrawRouteButtonPress}>
-				<Text style={styles.buttonText}>Mostrar el camino a {newDestination?.name}</Text>
-			</TouchableOpacity>
-		);
-	};
-
-	// al presionar el boton para trazar rutas:
-	const DrawRouteButtonPress = () => {
-		setDrawRouteButton(false);
-		if (destination !== newDestination) {
-			setDestination(newDestination);
-			setDrawRoute(true);
-		} else {
-			Alert.alert('Error', 'Ya existe esta ruta en el mapa...');
-		}
-	};
-
 	// componente Pin en el mapa, el useCallback reutiliza la funcion para evitar re-renderizar el componente siempre y cuando no cambie la lista de marcadores [points]
 	const MarkerComponent = useCallback(
 		({ lugar }: { lugar: Lugar }) => (
@@ -161,6 +142,17 @@ const Map = () => {
 		}
 	};
 
+	// al presionar el boton para trazar rutas:
+	const DrawRouteButtonPress = () => {
+		setDrawRouteButton(false);
+		if (destination !== newDestination) {
+			setDestination(newDestination);
+			setDrawRoute(true);
+		} else {
+			Alert.alert('Error', 'Ya existe esta ruta en el mapa...');
+		}
+	};
+
 	// renderiza el mapa y demas componentes
 	return (
 		<SafeAreaView style={styles.container}>
@@ -180,7 +172,7 @@ const Map = () => {
 				showsIndoorLevelPicker={false}
 				showsTraffic={false}
 				onMapLoaded={() => checkServices()}
-				mapPadding={{ bottom: 50, left: 0, right: 0, top: 0 }}
+				mapPadding={styles.mapPadding}
 				initialRegion={initialRegion}
 				region={location.origin}
 			>
@@ -211,7 +203,9 @@ const Map = () => {
 			</MapView>
 			{
 				// muestra el boton de trazar ruta:
-				drawRouteButton && location.permissionGranted && servicesEnabled && <DrawRouteButton />
+				drawRouteButton && location.permissionGranted && servicesEnabled && newDestination && (
+					<DrawRouteButton onPress={() => DrawRouteButtonPress()} newDestinationName={newDestination.name} />
+				)
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
@@ -235,22 +229,11 @@ const styles = StyleSheet.create({
 	container: {
 		paddingTop: Constants.statusBarHeight,
 	},
-	button: {
-		position: 'absolute',
-		backgroundColor: '#001f7e',
-		justifyContent: 'center',
-		alignSelf: 'center',
-		borderColor: '#999',
-		padding: 10,
-		borderRadius: 10,
-		bottom: 60,
-		borderWidth: 0.5,
-		elevation: 5,
-	},
-	buttonText: {
-		color: '#fff',
-		fontSize: 18,
-		fontWeight: 'bold',
+	mapPadding: {
+		bottom: 50,
+		left: 0,
+		right: 0,
+		top: 0,
 	},
 });
 

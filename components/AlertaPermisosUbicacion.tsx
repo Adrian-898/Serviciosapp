@@ -14,7 +14,7 @@ const AlertaPermisosUbicacion = ({ onPress }: { onPress: () => void }) => {
 				del mapa...{'\n'}
 				<ThemedText
 					type='link'
-					style={{ fontSize: 20, textDecorationLine: 'underline' }}
+					style={styles.link}
 					onPress={() => {
 						onPress();
 					}}
@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
 	},
 	alertIcon: { margin: 10 },
 	alertMessage: { flex: 1 },
+	link: {
+		fontSize: 20,
+		textDecorationLine: 'underline',
+	},
 });
 
 export default AlertaPermisosUbicacion;
