@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Alert } from 'react-native';
 import { Modal, Portal } from 'react-native-paper';
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';

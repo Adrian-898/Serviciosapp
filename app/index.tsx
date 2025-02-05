@@ -1,7 +1,6 @@
 import { View, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
 import Fondo from '@/assets/images/cinta-costera.jpg';
 
 const Index = () => {
@@ -18,7 +17,7 @@ const Index = () => {
 				<View style={styles.buttonContainer}>
 					<View style={styles.continue}>
 						<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/home')}>
-							<ThemedText style={styles.buttonText}>Continuar sin iniciar sesión</ThemedText>
+							<Text style={styles.buttonText}>Continuar sin iniciar sesión</Text>
 						</TouchableOpacity>
 					</View>
 

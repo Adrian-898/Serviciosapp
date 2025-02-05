@@ -1,17 +1,17 @@
 import { useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import { SafeAreaView, useWindowDimensions, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import Icon from '@expo/vector-icons/FontAwesome';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import useLocation from '@/hooks/useLocation';
-import useAppState from '@/hooks/useAppState';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import useLocation from '@/hooks/useLocation';
+import useAppState from '@/hooks/useAppState';
+import AlertaUbicacionInactiva from '@/components/AlertaUbicacionInactiva';
 import getErrorMessage from '@/utils/getErrorMessage';
-import type { Lugar, Region } from '@/utils/types';
+import { type Lugar, type Region } from '@/utils/types';
 
 // Ubicacion inicial donde se carga el mapa (coordenadas de la guaira), se actualiza al obtener la ubicacion actual
 const initialRegion: Region = {
@@ -190,19 +190,6 @@ const Map = () => {
 		);
 	};
 
-	// Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
-	const AlertaUbicacionActivada = () => {
-		return (
-			<ThemedView style={styles.alertContainer}>
-				<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
-				<ThemedText type='defaultSemiBold' style={styles.alertMessage} adjustsFontSizeToFit>
-					La ubicación en tu dispositivo parece estar desactivada, actívala y carga el mapa nuevamente si
-					deseas conocer tu ubicación actual y/o trazar una ruta...
-				</ThemedText>
-			</ThemedView>
-		);
-	};
-
 	// renderiza el mapa y demas componentes
 	return (
 		<SafeAreaView style={styles.container}>
@@ -260,7 +247,7 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
-				!servicesEnabled && location.permissionGranted && <AlertaUbicacionActivada />
+				!servicesEnabled && location.permissionGranted && <AlertaUbicacionInactiva />
 			}
 		</SafeAreaView>
 	);
