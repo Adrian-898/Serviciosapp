@@ -6,11 +6,11 @@ import { ThemedText } from './ThemedText';
 import QRInputButton from './QRInputButton';
 import QRInput from './QRInput';
 
-type PermissionDeniedQRProps = {
+type QRPermissionDeniedProps = {
 	onRequestPermission: () => void;
 };
 
-const QRPermissionDenied = (props: PermissionDeniedQRProps) => {
+const QRPermissionDenied = (props: QRPermissionDeniedProps) => {
 	// estado de visibilidad del input manual de datos
 	const [inputState, setInputState] = useState(false);
 

@@ -3,12 +3,12 @@ import * as WebBrowser from 'expo-web-browser';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 // propiedades del boton: titulo y url a la que enlaza
-type LinkButtonProps = {
+type HomeLinkButtonProps = {
 	title: string;
 	url: string;
 };
 
-const HomeLinkButton = ({ title, url }: LinkButtonProps) => {
+const HomeLinkButton = ({ title, url }: HomeLinkButtonProps) => {
 	// abre la url del boton seleccionado
 	const handlePress = async (url: string) => {
 		try {

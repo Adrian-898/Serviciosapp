@@ -35,7 +35,7 @@ export type RequestRegister = RegisterCredentials & {
 };
 
 // Datos de el contexto AuthContext (provee la informacion del usuario logeado)
-export type authContextProps = {
+export type AuthContextProps = {
 	user: {} | null;
 	setUser: React.Dispatch<React.SetStateAction<{} | null>>;
 };

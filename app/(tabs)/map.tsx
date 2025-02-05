@@ -106,7 +106,7 @@ const Map = () => {
 	}, [navigation]);
 
 	// componente Pin en el mapa, el useCallback reutiliza la funcion para evitar re-renderizar el componente siempre y cuando no cambie la lista de marcadores [points]
-	const Marcador = useCallback(
+	const MarkerComponent = useCallback(
 		({ lugar }: { lugar: Lugar }) => (
 			<Marker
 				coordinate={{
@@ -143,7 +143,7 @@ const Map = () => {
 	};
 
 	// al presionar el boton para trazar rutas:
-	const TrazarRuta = () => {
+	const DrawRouteButtonPress = () => {
 		setDrawRouteButton(false);
 		if (destination !== newDestination) {
 			setDestination(newDestination);
@@ -179,7 +179,7 @@ const Map = () => {
 				{
 					// itera el arreglo lugares y renderiza un pin para cada instancia existente
 					points.map((lugar, index) => (
-						<Marcador key={index} lugar={lugar} />
+						<MarkerComponent key={index} lugar={lugar} />
 					))
 				}
 				{
@@ -204,7 +204,10 @@ const Map = () => {
 			{
 				// muestra el boton de trazar ruta:
 				drawRouteButton && location.permissionGranted && servicesEnabled && newDestination && (
-					<MapDrawRouteButton onPress={() => TrazarRuta()} newDestinationName={newDestination.name} />
+					<MapDrawRouteButton
+						onPress={() => DrawRouteButtonPress()}
+						newDestinationName={newDestination.name}
+					/>
 				)
 			}
 			{

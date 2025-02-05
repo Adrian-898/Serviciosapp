@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
-import { authContextProps } from '../utils/types';
+import { AuthContextProps } from '../utils/types';
 
-const AuthContext = createContext<authContextProps>({
+const AuthContext = createContext<AuthContextProps>({
 	user: null,
 	setUser: () => {},
 });

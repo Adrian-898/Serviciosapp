@@ -2,11 +2,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 
-type modalInfoProps = {
+type HomeModalInfoProps = {
 	onClose: () => void;
 };
 
-const HomeModalInfo = (props: modalInfoProps) => {
+const HomeModalInfo = (props: HomeModalInfoProps) => {
 	// Contenido del modal mostrando la informacion en el Home de la app
 	return (
 		<ThemedView style={styles.modalContainer}>

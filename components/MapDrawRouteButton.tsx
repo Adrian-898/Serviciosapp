@@ -1,12 +1,12 @@
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-type DrawRouteButtonProps = {
+type MapDrawRouteButtonProps = {
 	onPress: () => void;
 	newDestinationName: string;
 };
 
 // boton para trazar rutas:
-const MapDrawRouteButton = (props: DrawRouteButtonProps) => {
+const MapDrawRouteButton = (props: MapDrawRouteButtonProps) => {
 	return (
 		<TouchableOpacity style={styles.button} onPress={() => props.onPress()}>
 			<Text style={styles.buttonText}>Mostrar el camino a {props.newDestinationName}</Text>
