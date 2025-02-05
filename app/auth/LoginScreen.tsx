@@ -42,7 +42,7 @@ const LoginScreen = () => {
 
 			// control de errores y redireccion a inicio en caso de login exitoso
 			if (postStatus === 'OK') {
-				router.replace('/(tabs)/home');
+				router.replace('/(tabs)/Home');
 			} else {
 				setError(postStatus);
 				console.log('statusText (Error): ', postStatus);
@@ -115,7 +115,7 @@ const LoginScreen = () => {
 							<Text style={styles.buttonText}>Iniciar sesión</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity onPress={() => router.push('/auth/forgotPasswordScreen')}>
+						<TouchableOpacity onPress={() => router.push('/auth/ForgotPasswordScreen')}>
 							<ThemedText type='link' style={styles.link}>
 								Olvidaste tu contraseña?
 							</ThemedText>

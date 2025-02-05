@@ -64,7 +64,7 @@ const Home = () => {
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='taxi-alert' size={40} style={styles.icon} />
-					<TouchableOpacity onPress={() => router.push('/multas')} style={styles.button}>
+					<TouchableOpacity onPress={() => router.push('/Multas')} style={styles.button}>
 						<Text style={styles.text} adjustsFontSizeToFit>
 							Multas
 						</Text>

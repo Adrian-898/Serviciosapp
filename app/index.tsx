@@ -16,17 +16,17 @@ const Index = () => {
 			>
 				<View style={styles.buttonContainer}>
 					<View style={styles.continue}>
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/home')}>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/Home')}>
 							<Text style={styles.buttonText}>Continuar sin iniciar sesión</Text>
 						</TouchableOpacity>
 					</View>
 
 					<View style={styles.loginRegister}>
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/loginScreen')}>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/LoginScreen')}>
 							<Text style={styles.buttonText}>Iniciar sesión</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/registerScreen')}>
+						<TouchableOpacity style={styles.button} onPress={() => router.push('/auth/RegisterScreen')}>
 							<Text style={styles.buttonText}>Registrarse</Text>
 						</TouchableOpacity>
 					</View>

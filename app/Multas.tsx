@@ -32,7 +32,7 @@ const Multas = () => {
 					onSubmit={(value) => {
 						console.log(value);
 						router.push({
-							pathname: '/consultarMultas',
+							pathname: '/NetworkAwareMultas',
 							params: { cedula: value.cedula },
 						});
 					}}
