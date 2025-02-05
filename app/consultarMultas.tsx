@@ -1,5 +1,5 @@
 import NetworkAwareReset from '@/components/NetworkAwareReset';
-import PagarMultas from './pagarMultas';
+import PagarMultas from '../components/pagarMultas';
 
 const ConsultarMultas = () => {
 	return (
