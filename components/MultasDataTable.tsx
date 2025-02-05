@@ -49,17 +49,36 @@ const MultasDataTable = () => {
 	const [data, setData] = useState<User[] | null>(null);
 	const [loading, setLoading] = useState(true);
 
+	// Estado de la orientacion de la pantalla
+	const [orientation, setOrientation] = useState(0);
+
 	useEffect(() => {
-		if (loading || !data) return;
+		let subscription: any;
 
-		// activa el modo Landscape al entrar en la pantalla para ver la tabla con los datos
-		ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+		const init = async () => {
+			// 1. First unlock any previous locks
+			await ScreenOrientation.unlockAsync();
 
-		// Al desmontar el componente regresa al modo Portrait
-		return () => {
-			ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+			// 2. Get initial orientation
+			const initial = await ScreenOrientation.getOrientationAsync();
+			setOrientation(initial);
+
+			// 3. Add orientation listener
+			subscription = ScreenOrientation.addOrientationChangeListener((e) => {
+				setOrientation(e.orientationInfo.orientation);
+			});
 		};
-	}, [loading, data]);
+
+		init();
+
+		return () => {
+			// Cleanup: Remove listener and reset to default
+			if (subscription) subscription.remove();
+
+			// Lock to your app's default orientation (usually portrait)
+			ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+		};
+	}, []);
 
 	useEffect(() => {
 		// GET a la API para obtener los datos...
