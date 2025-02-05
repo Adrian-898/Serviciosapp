@@ -6,7 +6,7 @@ type DrawRouteButtonProps = {
 };
 
 // boton para trazar rutas:
-const DrawRouteButton = (props: DrawRouteButtonProps) => {
+const MapDrawRouteButton = (props: DrawRouteButtonProps) => {
 	return (
 		<TouchableOpacity style={styles.button} onPress={() => props.onPress()}>
 			<Text style={styles.buttonText}>Mostrar el camino a {props.newDestinationName}</Text>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default DrawRouteButton;
+export default MapDrawRouteButton;

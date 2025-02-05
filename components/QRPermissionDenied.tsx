@@ -10,7 +10,7 @@ type PermissionDeniedQRProps = {
 	onRequestPermission: () => void;
 };
 
-const PermissionDeniedQR = (props: PermissionDeniedQRProps) => {
+const QRPermissionDenied = (props: PermissionDeniedQRProps) => {
 	// estado de visibilidad del input manual de datos
 	const [inputState, setInputState] = useState(false);
 
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default PermissionDeniedQR;
+export default QRPermissionDenied;

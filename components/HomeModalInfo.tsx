@@ -6,7 +6,7 @@ type modalInfoProps = {
 	onClose: () => void;
 };
 
-const ModalInfo = (props: modalInfoProps) => {
+const HomeModalInfo = (props: modalInfoProps) => {
 	// Contenido del modal mostrando la informacion en el Home de la app
 	return (
 		<ThemedView style={styles.modalContainer}>
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ModalInfo;
+export default HomeModalInfo;

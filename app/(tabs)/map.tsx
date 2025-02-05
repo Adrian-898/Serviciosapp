@@ -7,9 +7,9 @@ import Constants from 'expo-constants';
 import { useNavigation } from 'expo-router';
 import useLocation from '@/hooks/useLocation';
 import useAppState from '@/hooks/useAppState';
-import AlertaPermisosUbicacion from '@/components/AlertaPermisosUbicacion';
-import AlertaUbicacionInactiva from '@/components/AlertaUbicacionInactiva';
-import DrawRouteButton from '@/components/DrawRouteButton';
+import MapLocationDeniedPermissions from '@/components/MapLocationDeniedPermissions';
+import MapLocationDisabled from '@/components/MapLocationDisabled';
+import MapDrawRouteButton from '@/components/MapDrawRouteButton';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { type Lugar, type Region } from '@/utils/types';
 
@@ -106,7 +106,7 @@ const Map = () => {
 	}, [navigation]);
 
 	// componente Pin en el mapa, el useCallback reutiliza la funcion para evitar re-renderizar el componente siempre y cuando no cambie la lista de marcadores [points]
-	const MarkerComponent = useCallback(
+	const Marcador = useCallback(
 		({ lugar }: { lugar: Lugar }) => (
 			<Marker
 				coordinate={{
@@ -134,7 +134,7 @@ const Map = () => {
 		[points],
 	);
 
-	// al presionar un marcador:
+	// al presionar un marcador se agregan las coordenadas al destino:
 	const MarkerPress = (lugar: Lugar) => {
 		if (!destination || destination.id !== lugar.id) {
 			setNewDestination(lugar);
@@ -143,7 +143,7 @@ const Map = () => {
 	};
 
 	// al presionar el boton para trazar rutas:
-	const DrawRouteButtonPress = () => {
+	const TrazarRuta = () => {
 		setDrawRouteButton(false);
 		if (destination !== newDestination) {
 			setDestination(newDestination);
@@ -179,7 +179,7 @@ const Map = () => {
 				{
 					// itera el arreglo lugares y renderiza un pin para cada instancia existente
 					points.map((lugar, index) => (
-						<MarkerComponent key={index} lugar={lugar} />
+						<Marcador key={index} lugar={lugar} />
 					))
 				}
 				{
@@ -204,13 +204,13 @@ const Map = () => {
 			{
 				// muestra el boton de trazar ruta:
 				drawRouteButton && location.permissionGranted && servicesEnabled && newDestination && (
-					<DrawRouteButton onPress={() => DrawRouteButtonPress()} newDestinationName={newDestination.name} />
+					<MapDrawRouteButton onPress={() => TrazarRuta()} newDestinationName={newDestination.name} />
 				)
 			}
 			{
 				// muestra un mensaje si no hay permisos de uso de ubicacion:
 				!location.permissionGranted && (
-					<AlertaPermisosUbicacion
+					<MapLocationDeniedPermissions
 						onPress={async () => {
 							await location.getLocationPermission();
 						}}
@@ -219,7 +219,7 @@ const Map = () => {
 			}
 			{
 				// muestra un mensaje si la ubicacion esta desactivada pero SI hay permisos
-				!servicesEnabled && location.permissionGranted && <AlertaUbicacionInactiva />
+				!servicesEnabled && location.permissionGranted && <MapLocationDisabled />
 			}
 		</SafeAreaView>
 	);

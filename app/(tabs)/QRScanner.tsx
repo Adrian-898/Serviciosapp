@@ -4,7 +4,7 @@ import { Modal, Portal } from 'react-native-paper';
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
-import PermissionDeniedQR from '@/components/PermissionDeniedQR';
+import QRPermissionDenied from '@/components/QRPermissionDenied';
 import QRInput from '@/components/QRInput';
 import QRInputButton from '@/components/QRInputButton';
 import QRTorchButton from '@/components/QRTorchButton';
@@ -48,7 +48,7 @@ const QRScanner = () => {
 	// si se niega el permiso de uso de la camara o no se responde a la solicitud se muestra el mensaje siguiente
 	if (!permission || permission.status !== 'granted') {
 		return (
-			<PermissionDeniedQR
+			<QRPermissionDenied
 				onRequestPermission={() => {
 					requestPermission();
 				}}

@@ -4,8 +4,8 @@ import { Modal, Portal } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
 import Icon from '@expo/vector-icons/MaterialIcons';
-import ModalInfo from '@/components/ModalInfo';
-import LinkButton from '@/components/LinkButton';
+import HomeModalInfo from '@/components/HomeModalInfo';
+import HomeLinkButton from '@/components/HomeLinkButton';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 // import useAuthContext from '@/contexts/AuthContext';
@@ -24,7 +24,7 @@ const Home = () => {
 		<ThemedView style={styles.container}>
 			<Portal>
 				<Modal visible={modalState} onDismiss={() => setModalState(false)} contentContainerStyle={styles.modal}>
-					<ModalInfo onClose={() => setModalState(false)} />
+					<HomeModalInfo onClose={() => setModalState(false)} />
 				</Modal>
 			</Portal>
 
@@ -44,23 +44,23 @@ const Home = () => {
 			<ScrollView contentContainerStyle={styles.container2}>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='emergency' size={40} color={'black'} style={styles.icon} />
-					<LinkButton title='Emergencias' url='https://www.google.com' />
+					<HomeLinkButton title='Emergencias' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='directions-car' size={40} style={styles.icon} />
-					<LinkButton title='Parquímetro' url='https://www.google.com' />
+					<HomeLinkButton title='Parquímetro' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='electrical-services' size={40} style={styles.icon} />
-					<LinkButton title='Servicios' url='https://www.google.com' />
+					<HomeLinkButton title='Servicios' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='currency-exchange' size={40} style={styles.icon} />
-					<LinkButton title='Comercio' url='https://www.google.com' />
+					<HomeLinkButton title='Comercio' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='crisis-alert' size={40} style={styles.icon} />
-					<LinkButton title='Denuncias' url='https://www.google.com' />
+					<HomeLinkButton title='Denuncias' url='https://www.google.com' />
 				</ThemedView>
 				<ThemedView style={styles.buttonContainer}>
 					<Icon name='taxi-alert' size={40} style={styles.icon} />

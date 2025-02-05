@@ -4,7 +4,7 @@ import { ThemedText } from './ThemedText';
 import Icon from '@expo/vector-icons/FontAwesome';
 
 // Mensaje de alerta cuando no esta activada la ubicacion pero SI hay permisos de uso
-const AlertaUbicacionInactiva = () => {
+const MapLocationDisabled = () => {
 	return (
 		<ThemedView style={styles.alertContainer}>
 			<Icon name='exclamation' color={'red'} size={80} style={styles.alertIcon} />
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
 	alertMessage: { flex: 1 },
 });
 
-export default AlertaUbicacionInactiva;
+export default MapLocationDisabled;

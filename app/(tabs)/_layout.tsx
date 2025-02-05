@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import TabBarIcon from '@/components/navigation/TabBarIcon';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from 'react-native';
 
@@ -15,7 +15,7 @@ export default function TabLayout() {
 			}}
 		>
 			<Tabs.Screen
-				name='home'
+				name='Home'
 				options={{
 					headerShown: false,
 					title: 'Inicio',
@@ -25,7 +25,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='qrScanner'
+				name='QRScanner'
 				options={{
 					title: 'QR',
 					tabBarIcon: ({ color, focused }) => (
@@ -34,7 +34,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='map'
+				name='Map'
 				options={{
 					title: 'Ubicación',
 					tabBarIcon: ({ color, focused }) => (
@@ -43,7 +43,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='settings'
+				name='Settings'
 				options={{
 					title: 'Configuración',
 					tabBarIcon: ({ color, focused }) => (

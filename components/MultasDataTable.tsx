@@ -36,7 +36,7 @@ type User = {
 	};
 };
 
-const PagarMultas = () => {
+const MultasDataTable = () => {
 	// Configuracion del componente DataTable
 	const [page, setPage] = useState<number>(0);
 	const [numberOfItemsPerPageList] = useState([1, 2, 5, 10]);
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
 	pagination: { alignSelf: 'center' },
 });
 
-export default PagarMultas;
+export default MultasDataTable;
