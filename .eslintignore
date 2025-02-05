@@ -8,5 +8,5 @@ expo-env.d.ts
 assets/
 package-lock.json
 package.json
-unused
+trash
 README.md

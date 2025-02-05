@@ -12,6 +12,7 @@ web-build/
 .env*
 .vscode
 eas.json
+trash
 
 # macOS
 .DS_Store
