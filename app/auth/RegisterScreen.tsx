@@ -48,7 +48,7 @@ const RegisterScreen = () => {
 
 			// control de errores y redireccion a inicio en caso de login exitoso
 			if (postStatus === 'OK') {
-				router.replace('/(tabs)/home');
+				router.replace('/(tabs)/Home');
 			} else {
 				setError(postStatus);
 				console.log('statusText: ', postStatus);

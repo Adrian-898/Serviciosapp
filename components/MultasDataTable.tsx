@@ -49,33 +49,15 @@ const MultasDataTable = () => {
 	const [data, setData] = useState<User[] | null>(null);
 	const [loading, setLoading] = useState(true);
 
-	// Estado de la orientacion de la pantalla
-	const [orientation, setOrientation] = useState(0);
-
 	useEffect(() => {
-		let subscription: any;
-
-		const init = async () => {
-			// 1. First unlock any previous locks
+		const unlock = async () => {
+			// Al montar el componente se desbloquea la orientacion para que el usuario pueda ver la tabla en modo horizontal y leer la informacion.
 			await ScreenOrientation.unlockAsync();
-
-			// 2. Get initial orientation
-			const initial = await ScreenOrientation.getOrientationAsync();
-			setOrientation(initial);
-
-			// 3. Add orientation listener
-			subscription = ScreenOrientation.addOrientationChangeListener((e) => {
-				setOrientation(e.orientationInfo.orientation);
-			});
 		};
+		unlock();
 
-		init();
-
+		// Se regresa al bloqueo en modo vertical al desmontar el componente
 		return () => {
-			// Cleanup: Remove listener and reset to default
-			if (subscription) subscription.remove();
-
-			// Lock to your app's default orientation (usually portrait)
 			ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 		};
 	}, []);

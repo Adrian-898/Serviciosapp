@@ -35,7 +35,6 @@ const lugares: Lugar[] = [
 	},
 ];
 
-// componente principal
 const Map = () => {
 	// detecta el cambio de estado de la aplicacion
 	const appState = useAppState();

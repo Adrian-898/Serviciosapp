@@ -28,12 +28,14 @@ const Settings = () => {
 			</ThemedText>
 
 			<SettingsButton iconName='person' iconColor='#0caf50' text='Usuario' onPress={() => {}} />
+
 			<SettingsButton
 				iconName='information-circle'
 				iconColor='#001f7e'
 				text='Sobre nosotros'
 				onPress={() => {}}
 			/>
+
 			<SettingsButton
 				iconName='log-out'
 				iconColor='#d00b27'
