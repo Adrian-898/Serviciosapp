@@ -15,7 +15,7 @@ export default function TabLayout() {
 			}}
 		>
 			<Tabs.Screen
-				name='Home'
+				name='home'
 				options={{
 					headerShown: false,
 					title: 'Inicio',
@@ -34,7 +34,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='Map'
+				name='map'
 				options={{
 					title: 'Ubicación',
 					tabBarIcon: ({ color, focused }) => (
@@ -43,7 +43,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name='Settings'
+				name='settings'
 				options={{
 					title: 'Configuración',
 					tabBarIcon: ({ color, focused }) => (
