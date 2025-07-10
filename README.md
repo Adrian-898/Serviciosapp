@@ -8,14 +8,14 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 ## Get started
 ## Para correr la app sigue las instrucciones:
 
-1. Instala las dependencias con npm install
+# Instala las dependencias con npm install
 1. Install dependencies
 
    ```bash
    npm install
    ```
 
-2. Inicia la app con npx expo start
+# Inicia la app con npx expo start
 2. Start the app
 
    ```bash
@@ -23,9 +23,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```
 
 3. Puedes abrir el proyecto desde un navegador o en un telefono con la app Expo Go, la terminal te guiara paso a paso...
-
-4. tambien puedes ejecutar la app con estas otras alternativas como:
-4. In the output, you'll find options to open the app in a:
+# tambien puedes ejecutar la app con estas otras alternativas como:
+# In the output, you'll find options to open the app in a:
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
