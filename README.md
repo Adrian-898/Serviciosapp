@@ -25,7 +25,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 3. Puedes abrir el proyecto desde un navegador o en un telefono con la app Expo Go, la terminal te guiara paso a paso...
 
 4. tambien puedes ejecutar la app con estas otras alternativas como:
-In the output, you'll find options to open the app in a:
+4. In the output, you'll find options to open the app in a:
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
