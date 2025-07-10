@@ -39,7 +39,9 @@ const Map = () => {
 	// detecta el cambio de estado de la aplicacion
 	const appState = useAppState();
 
-	// Clave de API de google maps, se usa para trazar rutas en el mapa
+	// Clave de API de google maps, se usa para trazar rutas en el mapa y se guarda en el archivo .env (no se sube a github por obvias razones)
+	// Es necesaria para poder utilizar el componente MapViewDirections
+	// sin embargo, no es necesaria para mostrar el mapa y la ubicacion del usuario (componente MapView)
 	const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY!;
 
 	// dimensiones del dispositivo
